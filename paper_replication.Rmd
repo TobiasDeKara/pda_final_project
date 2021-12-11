@@ -2,6 +2,12 @@
 title: "paper_replication"
 output: pdf_document
 ---
+
+BIG PROBLEM: data on abortion restrictions starts at the end of December 2018, but data on abortion counts only goes up to (max) 2018
+   * Option 1: Somehow find abortion restriction data from before December 2018 - I tried with no luck yet
+   * Option 2: Somehow find abortion count data for 2019 on - Also tried with no luck yet 
+         - I found this by state but not by county.
+   
 TODO: classify counties as highly restrictive or not
     - option 1: we can use the summary data that Alice linked to
     (https://www.guttmacher.org/article/2019/08/state-abortion-policy-landscape-hostile-supportive)
@@ -11,11 +17,12 @@ TODO: classify counties as highly restrictive or not
 TODO: Calculate distances to nearest clinic
     - I added 'county_pop_centroids.csv' from the Census Bureau
     - In the paper they did centroid of county of residence centroid of nearest county  with a clinic, but I think because we have the lat and long in the provider list we can do centroid of county of residence to nearest clinic
+    
+TODO: Calculate abortion rates by county
 
 TODO: model the propensity weights
     - If I understand this right, we're modeling the propensity for a county to be located in a highly restrictive state.  Is that right?  So we want an estimated probability of a binary outcome, so we want logistic regression. Is that right?
-    
-    
+
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}

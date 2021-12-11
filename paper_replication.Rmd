@@ -1,0 +1,48 @@
+---
+title: "paper_replication"
+output: pdf_document
+---
+TODO: classify counties as highly restrictive or not
+    - option 1: we can use the summary data that Alice linked to
+    (https://www.guttmacher.org/article/2019/08/state-abortion-policy-landscape-hostile-supportive)
+    - option 2: dig through the detailed legislation data and use the 3/4 types classification they did in the paper (http://lawatlas.org/datasets/abortion-laws)
+    I'd say let's start with the summary data, and we do the extra work to make a more faithful replication later if we have time at the end.
+    
+TODO: Calculate distances to nearest clinic
+    - I added 'county_pop_centroids.csv' from the Census Bureau
+    - In the paper they did centroid of county of residence centroid of nearest county  with a clinic, but I think because we have the lat and long in the provider list we can do centroid of county of residence to nearest clinic
+
+TODO: model the propensity weights
+    - If I understand this right, we're modeling the propensity for a county to be located in a highly restrictive state.  Is that right?  So we want an estimated probability of a binary outcome, so we want logistic regression. Is that right?
+    
+    
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+options(tidyverse.quiet=TRUE)
+library(tidyverse)
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+provider_list_geo <- read.csv('data/provider_list_geo.csv')
+
+
+
+```
+
+
+
+
+
+\newpage
+
+## Sources 
+
+Data on the county population centroids came from the United States Census Bureau.
+Available at https://www.census.gov/geographies/reference-files/time-series/geo/centers-population.html Accessed 12/11/21.
+
+
+## Code Appendix
+```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```

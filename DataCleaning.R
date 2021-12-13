@@ -76,3 +76,40 @@ for (i in 1:nrow(countycentroids)) {
 
 write.csv(countycentroids, "countypopcentroids")
 
+
+abortions <- read.csv("cleanedabortiondata.csv")
+names(abortions)
+abortions2010 <- abortions %>% dplyr::select(state, county, X2010)
+
+countydem <- read.csv("county_demographics.csv")
+library(stringr)
+for (i in 1:nrow(countydem)) {
+  countydem$state[i] <- unlist(strsplit(countydem$NAME[i], ", "))[length(unlist(strsplit(countydem$NAME[i], ", ")))]
+  county <- unlist(strsplit(countydem$NAME[i], " "))[unlist(strsplit(countydem$NAME[i], " ")) != "County," & unlist(strsplit(countydem$NAME[i], " ")) != countydem$state[i]]
+  countydem$county[i] <- paste(county, collapse = " ")
+}
+
+countydem <- countydem %>% filter(countydem$state %in% state.name)
+
+for (i in 1:nrow(countydem)) {
+  countydem$state.abb[i] <- state.abb[which(state.name == countydem$state[i])]
+}
+
+for (i in 1:nrow(abortions2010)) {
+  if (length(countydem$Women[countydem$state.abb == abortions2010$state[i] & countydem$county == abortions2010$county[i]]) == 0) {
+    abortions2010$Women[i] <- NA
+  }
+  else {
+    abortions2010$Women[i] <- countydem$Women[countydem$state.abb == abortions2010$state[i] & countydem$county == abortions2010$county[i]]
+  }
+}
+
+abortions2010$X2010 <- na_if(abortions2010$X2010, "?")
+abortions2010$X2010 <- na_if(abortions2010$X2010, "")
+abortions2010$X2010 <- as.numeric(abortions2010$X2010)
+abortions2010 <- abortions2010 %>% mutate(rate = X2010/Women)
+
+
+write.csv(abortions2010, "abortionrates2010")
+
+

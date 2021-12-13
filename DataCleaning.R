@@ -51,7 +51,6 @@ min(trapasc$"Effective Date")
 min(trapafl$"Effective Date")
 
 #update files
-write.csv(abortions, "cleanedabortiondata.csv")
 write.csv(preabortionreqs, "preabortionreqs.csv")
 write.csv(minorsreqs, "minorreqs.csv")
 write.csv(abortionbans, "abortionbans.csv")
@@ -67,7 +66,7 @@ state_restrictions$two_trips <- c(0, 0, 1, rep(0, 10), 1, rep(0, 3), 1, rep(0, 5
 state_restrictions$trap <- c(1, 0, 0, 1, rep(0, 9), 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, rep(0,9), 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, rep(0, 6))
 state_restrictions$unconstitutional_ban <- c(1, rep(0, 7), 1, 1, 0, 1, 0, 1, 1, rep(0, 5), 1, 1, rep(0, 3), rep(1, 3), rep(0, 3), rep(1, 3), rep(0, 3), rep(1, 4), 0, 1, 1, 0, 1, 0, 0, 0,1) 
 
-write.csv(state_restrictions, "state_restrictions2010")
+write.csv(state_restrictions, "state_restrictions2010.csv")
 
 # calculate distances from county centroids to closest provider location
 library(geosphere)
@@ -81,6 +80,9 @@ for (i in 1:nrow(countycentroids)) {
 
 write.csv(countycentroids, "countypopcentroids")
 
+names(abortions)
+abortions <- abortions[, c(1:2, 46, 34:45, 22:31, 3:21, 32:33, 47)]
+write.csv(abortions, "cleanedabortiondata.csv")
 
 abortions <- read.csv("cleanedabortiondata.csv")
 names(abortions)

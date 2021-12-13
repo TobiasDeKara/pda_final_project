@@ -22,6 +22,7 @@ library(tidyverse)
 library(readxl)
 library(dplyr)
 library(geosphere)
+library(stringr)
 ```
 
 
@@ -41,7 +42,7 @@ abortions2010 <- abortions %>% dplyr::select(state, county, X2010)
 # clean countydem data to make counties and states match abortion count data 
 countydem <- read.csv("county_demographics.csv")
 
-library(stringr)
+
 for (i in 1:nrow(countydem)) {
   countydem$state[i] <- unlist(strsplit(countydem$NAME[i], ", "))[length(unlist(strsplit(countydem$NAME[i], ", ")))]
 }

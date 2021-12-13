@@ -33,6 +33,7 @@ countycentroids <- read.csv("county_pop_centroids.csv")
 countydem <- read.csv("county_demographics.csv")
 abortions <- read.csv("cleanedabortiondata.csv")
 restrictions <- read.csv("state_restrictions2010.csv")
+countypres <- read.csv("countypres.csv")
 ```
 
 ```{r}
@@ -106,7 +107,10 @@ abortions2010missingwomen <- abortions2010[is.na(abortions2010$Women), ]
 #make rates
 abortions2010 <- abortions2010 %>% mutate(rate = X2010/Women)
 
-countypres <- read.csv("countypres.csv")
+```
+
+```{r}
+## calculate percent democratic votes
 countypresdem2008 <- countypres %>% filter(party == "DEMOCRAT" & year == 2008)
 countypresdem2008$county_name <- str_to_title(countypresdem2008$county_name)
 countypresdem2008$county_name[!(countypresdem2008$county_name %in% countydem$county)]
@@ -135,6 +139,18 @@ for (i in 1:nrow(countycentroids)) {
 
 ```
 
+```{r}
+#make new variable for high vs. low restrictions
+restrictions <- restrictions %>% mutate(totalrestrict = parental_involvement + two_trips + trap + unconstitutional_ban, 
+                                        highorlow = case_when(totalrestrict >= 3 ~ "high", 
+                                                              totalrestrict < 3 ~ "low"))
+```
+
+```{r}
+#make propensity scores
+
+
+```
 
 \newpage
 

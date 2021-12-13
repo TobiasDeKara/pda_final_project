@@ -154,3 +154,21 @@ abortions2010missingwomen <- abortions2010[is.na(abortions2010$Women), ]
 abortions2010 <- abortions2010 %>% mutate(rate = X2010/Women)
 
 write.csv(abortions2010, "abortionrates2010")
+
+countypres <- read.csv("countypres.csv")
+countypresdem2008 <- countypres %>% filter(party == "DEMOCRAT" & year == 2008)
+countypresdem2008$county_name <- str_to_title(countypresdem2008$county_name)
+countypresdem2008$county_name[!(countypresdem2008$county_name %in% countydem$county)]
+
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "City", replacement = "city")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Dekalb", replacement = "DeKalb")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Desoto", replacement = "DeSoto")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Lac Qui Parle", replacement = "Lac qui Parle")
+
+countypresdem2008 <- countypresdem2008 %>% mutate(percentdem2008 = candidatevotes/totalvotes) 
+names(countypresdem2008)
+countypresdem2008 <- countypresdem2008 %>% rename(state.abb = state_po, county = county_name) %>% dplyr::select(state.abb, county, percentdem2008)
+
+countydem <- left_join(countydem, countypresdem2008, by = c("state.abb", "county"))
+write.csv(countydem, "countydem.csv")
+

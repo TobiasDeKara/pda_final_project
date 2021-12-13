@@ -64,3 +64,15 @@ state_restrictions$trap <- c(1, 0, 0, 1, rep(0, 9), 1, 0, 0, 1, 1, 0, 0, 0, 1, 0
 state_restrictions$unconstitutional_ban <- c(1, rep(0, 7), 1, 1, 0, 1, 0, 1, 1, rep(0, 5), 1, 1, rep(0, 3), rep(1, 3), rep(0, 3), rep(1, 3), rep(0, 3), rep(1, 4), 0, 1, 1, 0, 1, 0, 0, 0,1) 
 
 write.csv(state_restrictions, "state_restrictions2010")
+
+library(geosphere)
+
+for (i in 1:nrow(countycentroids)) {
+  lat <- countycentroids$LATITUDE[i]
+  long <- countycentroids$LONGITUDE[i]
+  dists <- distHaversine(cbind(long, lat), cbind(providers$Lon, providers$Lat))
+  countycentroids$distancetoprovider[i] <- min(dists)
+}
+
+write.csv(countycentroids, "countypopcentroids")
+

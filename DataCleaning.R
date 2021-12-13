@@ -54,3 +54,13 @@ write.csv(abortionbans, "abortionbans.csv")
 write.csv(traphospital, "traphospital.csv")
 write.csv(trapasc, "trapasc.csv")
 write.csv(trapafl, "trapafl.csv")
+
+
+state_restrictions <- data.frame(state = state.name)
+
+state_restrictions$parental_involvement <- c(1, 0, 1, 1, 0, 1, 0, rep(1, 3), 0, rep(1, 7), 0, rep(1, 6), 0, 1, rep(0, 5), rep(1, 4), 0, rep(1, 7), 0, 1, 0, rep(1, 3))
+state_restrictions$two_trips <- c(0, 0, 1, rep(0, 10), 1, rep(0, 3), 1, rep(0, 5), 1, 1, rep(0, 9), 1, rep(0, 8), 1, rep(0, 4), 1, 0)
+state_restrictions$trap <- c(1, 0, 0, 1, rep(0, 9), 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, rep(0,9), 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, rep(0, 6))
+state_restrictions$unconstitutional_ban <- c(1, rep(0, 7), 1, 1, 0, 1, 0, 1, 1, rep(0, 5), 1, 1, rep(0, 3), rep(1, 3), rep(0, 3), rep(1, 3), rep(0, 3), rep(1, 4), 0, 1, 1, 0, 1, 0, 0, 0,1) 
+
+write.csv(state_restrictions, "state_restrictions2010")

@@ -88,18 +88,49 @@ abortions2010 <- abortions %>% dplyr::select(state, county, X2010)
 
 # clean countydem data to make counties and states match abortion count data 
 countydem <- read.csv("county_demographics.csv")
+
 library(stringr)
 for (i in 1:nrow(countydem)) {
   countydem$state[i] <- unlist(strsplit(countydem$NAME[i], ", "))[length(unlist(strsplit(countydem$NAME[i], ", ")))]
-  county <- unlist(strsplit(countydem$NAME[i], " "))[unlist(strsplit(countydem$NAME[i], " ")) != "County," & unlist(strsplit(countydem$NAME[i], " ")) != countydem$state[i]]
-  countydem$county[i] <- paste(county, collapse = " ")
 }
+
+countydem$county <- gsub(countydem$NAME, pattern = ", [[:print:]]*$", replacement = "")
+countydem$county <- gsub(countydem$county, pattern = " County", replacement = "")
 
 countydem <- countydem %>% filter(countydem$state %in% state.name)
 
 for (i in 1:nrow(countydem)) {
   countydem$state.abb[i] <- state.abb[which(state.name == countydem$state[i])]
 }
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "[()]", replacement = "")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "ind. city", replacement = "city")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Saint", replacement = "St.")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Dekalb", replacement = "DeKalb")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Desoto", replacement = "DeSoto")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Miami Dade", replacement = "Miami-Dade")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Hawai'i", replacement = "Hawaii")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Kaua'i", replacement = "Kauai")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "City", replacement = "city")
+
+countydem$county <- gsub(countydem$county, pattern = "City", replacement = "city")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Lac Qui Parle", replacement = "Lac qui Parle")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "St.e Genevieve", replacement = "Ste. Genevieve")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Shannon/Oglala Lakota", replacement = "Oglala Lakota")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Lamoure", replacement = "LaMoure")
+
 
 for (i in 1:nrow(abortions2010)) {
   if (length(countydem$Women[countydem$state.abb == abortions2010$state[i] & countydem$county == abortions2010$county[i]]) == 0) {
@@ -114,9 +145,12 @@ for (i in 1:nrow(abortions2010)) {
 abortions2010$X2010 <- na_if(abortions2010$X2010, "?")
 abortions2010$X2010 <- na_if(abortions2010$X2010, "")
 abortions2010$X2010 <- as.numeric(abortions2010$X2010)
+
+abortions2010 <- abortions2010 %>% filter(!(county %in% c("NONRESIDENTS", "PROTECTED", "OTHER STATES", "OTHER COUNTRIES", "NON-RESIDENTS", "OTHER", "NEVADA PROTECTED", "NEVADA UNSPECIFIED", "NEBRASKA PROTECTED", "county", "MARYLAND", "St. Louis County")))
+
+abortions2010missingwomen <- abortions2010[is.na(abortions2010$Women), ]
+
+#make rates
 abortions2010 <- abortions2010 %>% mutate(rate = X2010/Women)
 
-
 write.csv(abortions2010, "abortionrates2010")
-
-

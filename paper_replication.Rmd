@@ -16,17 +16,123 @@ TODO: model the propensity weights
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#load packages
 options(tidyverse.quiet=TRUE)
 library(tidyverse)
+library(readxl)
+library(dplyr)
+library(geosphere)
 ```
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-provider_list_geo <- read.csv('data/provider_list_geo.csv')
+#load in data
+providers <- read.csv("provider_list_geo.csv")
+countycentroids <- read.csv("county_pop_centroids.csv")
+countydem <- read.csv("county_demographics.csv")
+abortions <- read.csv("cleanedabortiondata.csv")
+restrictions <- read.csv("state_restrictions2010.csv")
 ```
 
+```{r}
+########### calculate abortion rates in 2010 ###########
+abortions2010 <- abortions %>% dplyr::select(state, county, X2010)
+
+# clean countydem data to make counties and states match abortion count data 
+countydem <- read.csv("county_demographics.csv")
+
+library(stringr)
+for (i in 1:nrow(countydem)) {
+  countydem$state[i] <- unlist(strsplit(countydem$NAME[i], ", "))[length(unlist(strsplit(countydem$NAME[i], ", ")))]
+}
+
+countydem$county <- gsub(countydem$NAME, pattern = ", [[:print:]]*$", replacement = "")
+countydem$county <- gsub(countydem$county, pattern = " County", replacement = "")
+
+countydem <- countydem %>% filter(countydem$state %in% state.name)
+
+for (i in 1:nrow(countydem)) {
+  countydem$state.abb[i] <- state.abb[which(state.name == countydem$state[i])]
+}
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "[()]", replacement = "")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "ind. city", replacement = "city")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Saint", replacement = "St.")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Dekalb", replacement = "DeKalb")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Desoto", replacement = "DeSoto")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Miami Dade", replacement = "Miami-Dade")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Hawai'i", replacement = "Hawaii")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Kaua'i", replacement = "Kauai")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "City", replacement = "city")
+
+countydem$county <- gsub(countydem$county, pattern = "City", replacement = "city")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Lac Qui Parle", replacement = "Lac qui Parle")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "St.e Genevieve", replacement = "Ste. Genevieve")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Shannon/Oglala Lakota", replacement = "Oglala Lakota")
+
+abortions2010$county <- gsub(abortions2010$county, pattern = "Lamoure", replacement = "LaMoure")
 
 
+for (i in 1:nrow(abortions2010)) {
+  if (length(countydem$Women[countydem$state.abb == abortions2010$state[i] & countydem$county == abortions2010$county[i]]) == 0) {
+    abortions2010$Women[i] <- NA
+  }
+  else {
+    abortions2010$Women[i] <- countydem$Women[countydem$state.abb == abortions2010$state[i] & countydem$county == abortions2010$county[i]]
+  }
+}
+
+#fix NA values
+abortions2010$X2010 <- na_if(abortions2010$X2010, "?")
+abortions2010$X2010 <- na_if(abortions2010$X2010, "")
+abortions2010$X2010 <- as.numeric(abortions2010$X2010)
+
+abortions2010 <- abortions2010 %>% filter(!(county %in% c("NONRESIDENTS", "PROTECTED", "OTHER STATES", "OTHER COUNTRIES", "NON-RESIDENTS", "OTHER", "NEVADA PROTECTED", "NEVADA UNSPECIFIED", "NEBRASKA PROTECTED", "county", "MARYLAND", "St. Louis County")))
+
+abortions2010missingwomen <- abortions2010[is.na(abortions2010$Women), ]
+
+#make rates
+abortions2010 <- abortions2010 %>% mutate(rate = X2010/Women)
+
+countypres <- read.csv("countypres.csv")
+countypresdem2008 <- countypres %>% filter(party == "DEMOCRAT" & year == 2008)
+countypresdem2008$county_name <- str_to_title(countypresdem2008$county_name)
+countypresdem2008$county_name[!(countypresdem2008$county_name %in% countydem$county)]
+
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "City", replacement = "city")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Dekalb", replacement = "DeKalb")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Desoto", replacement = "DeSoto")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Lac Qui Parle", replacement = "Lac qui Parle")
+
+countypresdem2008 <- countypresdem2008 %>% mutate(percentdem2008 = candidatevotes/totalvotes) 
+names(countypresdem2008)
+countypresdem2008 <- countypresdem2008 %>% rename(state.abb = state_po, county = county_name) %>% dplyr::select(state.abb, county, percentdem2008)
+
+countydem <- left_join(countydem, countypresdem2008, by = c("state.abb", "county"))
+```
+
+```{r}
+# calculate distances from county centroids to closest provider location
+
+for (i in 1:nrow(countycentroids)) {
+  lat <- countycentroids$LATITUDE[i]
+  long <- countycentroids$LONGITUDE[i]
+  dists <- distHaversine(cbind(long, lat), cbind(providers$Lon, providers$Lat))
+  countycentroids$distancetoprovider[i] <- min(dists)
+}
+
+```
 
 
 \newpage

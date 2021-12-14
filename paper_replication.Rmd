@@ -2,12 +2,20 @@
 title: "paper_replication"
 output: pdf_document
 ---
+REPLICATION:
+TODO: make sure all the counties match/are represented <- Jo
+TODO: t tests for the demographic info for table 2 <- Toby
+TODO: averages of averages vs. averages for table 2 
+TODO: possibly email Alice asking about this county vs. state table 2 issue <- Jo 
+TODO: change variable name bc it's awful <- Jo
+TODO: write up <- Toby
+TODO: find abortion data used by Brown et al. to compare in discussion <- Toby
 
-TO DO: go through and deal with mismatched counties
-TO DO: create a better measure of high/low restriction for extension
-TO DO: change abortion rates to rates based on females of reproductive age?
-TO DO: find polling data
-TO DO: lit review
+EXTENSION:
+TODO: use all counties we have data on instead of just those 18 states
+TODO: rescore the high vs. low restriction variable to make it make more sense
+TODO: add in rural vs urban, % college grad, more variables do a quick variable selection
+TODO: repeat for mortality and fertility <- Jo look for this data 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load packages

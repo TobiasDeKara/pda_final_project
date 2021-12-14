@@ -3,6 +3,12 @@ title: "paper_replication"
 output: pdf_document
 ---
 
+TO DO: go through and deal with mismatched counties
+TO DO: create a better measure of high/low restriction for extension
+TO DO: change abortion rates to rates based on females of reproductive age?
+TO DO: find polling data
+TO DO: lit review
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load packages
 options(tidyverse.quiet=TRUE)

@@ -3,12 +3,6 @@ title: "paper_replication"
 output: pdf_document
 ---
 
-
-TODO: model the propensity weights
-    - If I understand this right, we're modeling the propensity for a county to be located in a highly restrictive state.  Is that right?  So we want an estimated probability of a binary outcome, so we want logistic regression. Is that right?
-
-
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load packages
 options(tidyverse.quiet=TRUE)
@@ -17,11 +11,13 @@ library(readxl)
 library(dplyr)
 library(geosphere)
 library(stringr)
+library(kableExtra)
+library(table1)
 ```
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#load in data
+#load in relevant data
 providers <- read.csv("provider_list_geo.csv")
 countycentroids <- read.csv("county_pop_centroids.csv")
 countydem <- read.csv("county_demographics.csv")
@@ -30,13 +26,15 @@ restrictions <- read.csv("state_restrictions2010.csv")
 countypres <- read.csv("countypres.csv")
 ```
 
+
 ```{r}
 ########### calculate abortion rates in 2010 ###########
+
+#filter abortion rate data to only 2010
 abortions2010 <- abortions %>% dplyr::select(state, county, X2010)
 
-# clean countydem data to make counties and states match abortion count data 
+# clean countydem data to make counties and states match those in abortion count data 
 countydem <- read.csv("county_demographics.csv")
-
 
 for (i in 1:nrow(countydem)) {
   countydem$state[i] <- unlist(strsplit(countydem$NAME[i], ", "))[length(unlist(strsplit(countydem$NAME[i], ", ")))]
@@ -51,22 +49,19 @@ for (i in 1:nrow(countydem)) {
   countydem$state.abb[i] <- state.abb[which(state.name == countydem$state[i])]
 }
 
+abortions2010$county <- str_to_title(abortions2010$county)
+countydem$county <- str_to_title(countydem$county)
+
 abortions2010$county <- gsub(abortions2010$county, pattern = "[()]", replacement = "")
-abortions2010$county <- gsub(abortions2010$county, pattern = "ind. city", replacement = "city")
+abortions2010$county <- gsub(abortions2010$county, pattern = "Ind. City", replacement = "City")
 abortions2010$county <- gsub(abortions2010$county, pattern = "Saint", replacement = "St.")
-abortions2010$county <- gsub(abortions2010$county, pattern = "Dekalb", replacement = "DeKalb")
-abortions2010$county <- gsub(abortions2010$county, pattern = "Desoto", replacement = "DeSoto")
 abortions2010$county <- gsub(abortions2010$county, pattern = "Miami Dade", replacement = "Miami-Dade")
 abortions2010$county <- gsub(abortions2010$county, pattern = "Hawai'i", replacement = "Hawaii")
 abortions2010$county <- gsub(abortions2010$county, pattern = "Kaua'i", replacement = "Kauai")
-abortions2010$county <- gsub(abortions2010$county, pattern = "City", replacement = "city")
-countydem$county <- gsub(countydem$county, pattern = "City", replacement = "city")
-abortions2010$county <- gsub(abortions2010$county, pattern = "Lac Qui Parle", replacement = "Lac qui Parle")
 abortions2010$county <- gsub(abortions2010$county, pattern = "St.e Genevieve", replacement = "Ste. Genevieve")
 abortions2010$county <- gsub(abortions2010$county, pattern = "Shannon/Oglala Lakota", replacement = "Oglala Lakota")
-abortions2010$county <- gsub(abortions2010$county, pattern = "Lamoure", replacement = "LaMoure")
 
-
+#Add number of women to abortion count data
 for (i in 1:nrow(abortions2010)) {
   if (length(countydem$Women[countydem$state.abb == abortions2010$state[i] & countydem$county == abortions2010$county[i]]) == 0) {
     abortions2010$Women[i] <- NA
@@ -81,35 +76,50 @@ abortions2010$X2010 <- na_if(abortions2010$X2010, "?")
 abortions2010$X2010 <- na_if(abortions2010$X2010, "")
 abortions2010$X2010 <- as.numeric(abortions2010$X2010)
 
-abortions2010 <- abortions2010 %>% filter(!(county %in% c("NONRESIDENTS", "PROTECTED", "OTHER STATES", "OTHER COUNTRIES", "NON-RESIDENTS", "OTHER", "NEVADA PROTECTED", "NEVADA UNSPECIFIED", "NEBRASKA PROTECTED", "county", "MARYLAND", "St. Louis County")))
+#remove non-counties
+abortions2010 <- abortions2010 %>% filter(!(county %in% c("Nonresidents", "Protected", "Other States", "Other Countries", "Non-Residents", "Other", "Nevada Protected", "Nevada Unspecified", "Nebraska Protected", "County", "Maryland")))
 
+#look at counties missing women pop data
 abortions2010missingwomen <- abortions2010[is.na(abortions2010$Women), ]
+#DeWitt, Bedford city, Clifton Forge city in abortion rate data  but not county dem data
 
-#make rates
+#calculate abortion rates
 abortions2010 <- abortions2010 %>% mutate(rate = X2010/Women)
+
+#Add abortion counts to county data
+for (i in 1:nrow(countydem)) {
+  if (length(abortions2010$rate[abortions2010$state == countydem$state.abb[i] & abortions2010$county == countydem$county[i]]) == 0) {
+    countydem$AbortionRate2010[i] <- NA
+  }
+  else {
+    countydem$AbortionRate2010[i] <- abortions2010$rate[abortions2010$state == countydem$state.abb[i] & abortions2010$county == countydem$county[i]]
+  }
+}
 
 ```
 
 ```{r}
-## calculate percent democratic votes
+########### calculate percent democratic votes by county in in 2008 ###########
 countypresdem2008 <- countypres %>% filter(party == "DEMOCRAT" & year == 2008)
 countypresdem2008$county_name <- str_to_title(countypresdem2008$county_name)
-countypresdem2008$county_name[!(countypresdem2008$county_name %in% countydem$county)]
 
-countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "City", replacement = "city")
-countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Dekalb", replacement = "DeKalb")
-countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Desoto", replacement = "DeSoto")
-countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Lac Qui Parle", replacement = "Lac qui Parle")
+countydem$county <- gsub(countydem$county, pattern = " Parish", replacement = "")
+countydem$county <- gsub(countydem$county, pattern = " City", replacement = "")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = " City", replacement = "")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Saint", replacement = "St.")
+countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = " County", replacement = "")
+
+missingcounties <- countypresdem2008[!(countypresdem2008$county_name %in% countydem$county), ]
+
 
 countypresdem2008 <- countypresdem2008 %>% mutate(percentdem2008 = candidatevotes/totalvotes) 
-names(countypresdem2008)
 countypresdem2008 <- countypresdem2008 %>% rename(state.abb = state_po, county = county_name) %>% dplyr::select(state.abb, county, percentdem2008)
 
 countydem <- left_join(countydem, countypresdem2008, by = c("state.abb", "county"))
 ```
 
 ```{r}
-# calculate distances from county centroids to closest provider location
+########### calculate distances from county centroids to closest provider location ###########
 
 for (i in 1:nrow(countycentroids)) {
   lat <- countycentroids$LATITUDE[i]
@@ -128,10 +138,107 @@ restrictions <- restrictions %>% mutate(totalrestrict = parental_involvement + t
 ```
 
 ```{r}
-#make propensity scores
+#look at demographics
+
+countydem <- countydem %>% mutate(inanalysis = case_when(state.abb %in% c("AZ", "DE", "GA", "IL", "IN", "MI", "NY", "NC", "OH", "OK", "OR", "PA", "SC", "TX", "UT", "VT", "WA", "WI") ~ 1, !(state.abb %in% c("AZ", "DE", "GA", "IL", "IN", "MI", "NY", "NC", "OH", "OK", "OR", "PA", "SC", "TX", "UT", "VT", "WA", "WI")) ~ 0))
+
+countydemanalysis <- countydem %>% filter(inanalysis == 1)
+
+summarytable <- countydemanalysis %>% group_by(state) %>% summarize(totalcounties = n())
+usedcounties <- aggregate(AbortionRate2010 ~ state, data = countydemanalysis, function(x) {sum(!(is.na(x)))}, na.action = NULL)
+summarytable <- left_join(summarytable, usedcounties, by = "state")
+summarytable %>% mutate(percent = AbortionRate2010/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Abortion Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Abortion Data Included in Analyses by State") %>% kable_styling()
+names(countydem)
+countydem <- countydem %>% mutate(Total = White + Black + Native.American + Asian + Hispanic, White.pct = White/Total, Black.pct = Black/Total, Native.American.pct = Native.American/Total, Asian.pct = Asian/Total, Hispanic.pct = Hispanic/Total, College.Grad.pct = College.Grad/Total)
+
+countydem$inanalysislabel <- factor(countydem$inanalysis, levels = c(1, 0), labels = c("Counties in States With Abortion Data", "Counties in States Without Abortion Data"))
+
+label(countydem$Women) = "Women"
+label(countydem$White.pct) = "White"
+label(countydem$Black.pct) = "Black"
+label(countydem$Native.American.pct) = "Native American"
+label(countydem$Asian.pct) = "Asian"
+label(countydem$Hispanic.pct) = "Hispanic"
+label(countydem$Median.Income) = "Median Income"
+label(countydem$College.Grad.pct) = "College Graduates"
+label(countydem$percentdem2008) = "Voting for the Democratic candidate in the most recent presidential election"
+
+units(countydem$Women) = "No."
+units(countydem$White.pct) = "%"
+units(countydem$Black.pct) = "%"
+units(countydem$Native.American.pct) = "%"
+units(countydem$Asian.pct) = "%"
+units(countydem$Hispanic.pct) = "%"
+units(countydem$Median.Income) = "$"
+units(countydem$College.Grad.pct) = "%"
+units(countydem$percentdem2008) = "%"
+
+table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | inanalysislabel, data = countydem)
+
+propensitywts <- glm(inanalysis ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008, data=countydem, family=binomial())
+summary(propensitywts)
+
+p.score <- predict(propensitywts, countydem, type = "response")
+df <- countydem
+df$ps <- p.score
+
+#3 plots of distribution of propensity scores 
+
+ggplot(df, aes(x = ps, group = inanalysislabel)) + geom_density(aes(fill = inanalysislabel), alpha = 0.2) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  ylab("Density")
+
+
+ggplot(df, aes(x = ps, fill = inanalysislabel, color = inanalysislabel)) +
+  geom_histogram(alpha = 0.3, position = 'identity', bins=15) +
+  facet_grid(as.factor(inanalysis) ~ .) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  scale_color_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical')
+
+df %>%
+  mutate(ps.grp = round(ps/0.05) * 0.05) %>%
+  group_by(inanalysis, ps.grp) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  mutate(n2 = ifelse(inanalysis == 0, yes = n, no =  -1*n)) %>%
+  ggplot(aes(x = ps.grp, y = n2, fill = as.factor(inanalysis))) +
+  geom_bar(stat = 'identity', position = 'identity') +
+  geom_text(aes(label = n, x = ps.grp, y = n2 + ifelse(inanalysis == 0, 8, -8))) +
+  xlab('Probability of Being in the Analysis') +
+  ylab('N') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete(name = "", labels = c("Counties in States With Abortion Data", "Counties in States Without Abortion Data")) +
+  scale_x_continuous(breaks = seq(0, 1, 0.05)) +
+  theme(legend.position = 'bottom', legend.direction = 'vertical',
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+
+  
+
+```
+
+
+```{r}
+countydemanalysis <- df %>% filter(inanalysis == 1)
+countydemanalysis <- left_join(countydemanalysis, restrictions, by = "state")
+countycentroids <- countycentroids %>% rename(county = COUNAME, state = STNAME)
+countycentroids$county <- str_to_title(countycentroids$county)
+countycentroids <- countycentroids %>% select(county, state, distancetoprovider)
+countydemanalysis <- left_join(countydemanalysis, countycentroids, by = c("state", "county"))
+
+countydemanalysis$highorlow <- factor(countydemanalysis$highorlow, levels = c("low", "high"))
+model <- lm(AbortionRate2010 ~ highorlow + distancetoprovider + highorlow*distancetoprovider, data = countydemanalysis, weights = ps)
+summary(model)
 
 
 ```
+
 
 \newpage
 

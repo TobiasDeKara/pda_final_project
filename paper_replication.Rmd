@@ -4,12 +4,6 @@ output: pdf_document
 ---
 
 
-TODO: classify counties as highly restrictive or not
-    - option 1: we can use the summary data that Alice linked to
-    (https://www.guttmacher.org/article/2019/08/state-abortion-policy-landscape-hostile-supportive)
-    - option 2: dig through the detailed legislation data and use the 3/4 types classification they did in the paper (http://lawatlas.org/datasets/abortion-laws)
-    I'd say let's start with the summary data, and we do the extra work to make a more faithful replication later if we have time at the end.
-    
 TODO: model the propensity weights
     - If I understand this right, we're modeling the propensity for a county to be located in a highly restrictive state.  Is that right?  So we want an estimated probability of a binary outcome, so we want logistic regression. Is that right?
 
@@ -58,31 +52,18 @@ for (i in 1:nrow(countydem)) {
 }
 
 abortions2010$county <- gsub(abortions2010$county, pattern = "[()]", replacement = "")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "ind. city", replacement = "city")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Saint", replacement = "St.")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Dekalb", replacement = "DeKalb")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Desoto", replacement = "DeSoto")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Miami Dade", replacement = "Miami-Dade")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Hawai'i", replacement = "Hawaii")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Kaua'i", replacement = "Kauai")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "City", replacement = "city")
-
 countydem$county <- gsub(countydem$county, pattern = "City", replacement = "city")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Lac Qui Parle", replacement = "Lac qui Parle")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "St.e Genevieve", replacement = "Ste. Genevieve")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Shannon/Oglala Lakota", replacement = "Oglala Lakota")
-
 abortions2010$county <- gsub(abortions2010$county, pattern = "Lamoure", replacement = "LaMoure")
 
 

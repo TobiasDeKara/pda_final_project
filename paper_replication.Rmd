@@ -187,8 +187,26 @@ units(countydem$Median.Income) = "$"
 units(countydem$College.Grad.pct) = "%"
 units(countydem$percentdem2008) = "%"
 
-table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | inanalysislabel, data = countydem)
+# The following function is based on 
+# "Using the table1 Package to Create HTML Tables of Descriptive Statistics"
+# by Benjamin Rich.  Available at:
+# https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html#example-a-column-of-p-values
+p_value_t_test <- function(x, ...){
+    y <- unlist(x[1:2])
+    g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
+    p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
+    p_value <- ifelse(p_value == '0', '< 0.001', p_value)
+}
 
+table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | inanalysislabel, 
+       data = countydem,
+       extra.col = list(`P-value` = p_value_t_test),
+       footnote = 'P-values are derived by two sample t-tests.'
+       )
+```
+
+
+```{r}
 propensitywts <- glm(inanalysis ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008, data=countydem, family=binomial())
 summary(propensitywts)
 

@@ -3,11 +3,9 @@ title: "paper_replication"
 output: pdf_document
 ---
 REPLICATION:
-TODO: make sure all the counties match/are represented <- Jo
 TODO: t tests for the demographic info for table 2 <- Toby
 TODO: averages of averages vs. averages for table 2 
 TODO: possibly email Alice asking about this county vs. state table 2 issue <- Jo 
-TODO: change variable name bc it's awful <- Jo
 TODO: write up <- Toby
 TODO: find abortion data used by Brown et al. to compare in discussion <- Toby
 

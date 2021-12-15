@@ -3,16 +3,16 @@ title: "paper_replication"
 output: pdf_document
 ---
 REPLICATION:
-TODO: averages of averages vs. averages for table 2 
-TODO: possibly email Alice asking about this county vs. state table 2 issue <- Jo 
+TODO: averages of averages vs. averages for table 2
+TODO: possibly email Alice asking about this county vs. state table 2 issue <- Jo
 TODO: write up <- Toby
 TODO: find abortion data used by Brown et al. to compare in discussion <- Toby
 
 EXTENSION:
-TODO: use all counties we have data on instead of just those 18 states
-TODO: rescore the high vs. low restriction variable to make it make more sense
-TODO: add in rural vs urban, % college grad, more variables do a quick variable selection
-TODO: repeat for mortality and fertility <- Jo look for this data 
+TODO: write literature review and describe motivation for extension
+TODO: figure out what is happening with the propensity scores for the extension analyses
+TODO: decide whether to rescore the high vs. low restriction variable as a factor or an integer (currently coded as the latter)
+TODO: add in rural vs urban and more variables do a quick variable selection
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load packages

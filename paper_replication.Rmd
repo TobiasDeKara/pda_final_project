@@ -243,8 +243,7 @@ table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispa
        )
 ```
 
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=3, fig.width=5, fig.align='center'}
 #calculate propensity scores
 propensitywts <- glm(inanalysis ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008, data=countydem, family=binomial())
 # summary(propensitywts)

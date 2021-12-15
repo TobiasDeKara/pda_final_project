@@ -197,11 +197,12 @@ to_adjust_kable_table_numbers <- kable(table_1)
 ```
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# names(countydem)
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+##### Table 2 ####
+
 countydem <- countydem %>% mutate(Total = White + Black + Native.American + Asian + Hispanic, White.pct = White/Total, Black.pct = Black/Total, Native.American.pct = Native.American/Total, Asian.pct = Asian/Total, Hispanic.pct = Hispanic/Total, College.Grad.pct = College.Grad/Total)
 
-countydem$inanalysislabel <- factor(countydem$inanalysis, levels = c(1, 0), labels = c("Counties in States With Abortion Data", "Counties in States Without Abortion Data"))
+countydem$inanalysislabel <- factor(countydem$inanalysis, levels = c(1, 0), labels = c("In Analysis", "Not in Analysis"))
 
 label(countydem$Women) = "Women"
 label(countydem$White.pct) = "White"
@@ -211,7 +212,7 @@ label(countydem$Asian.pct) = "Asian"
 label(countydem$Hispanic.pct) = "Hispanic"
 label(countydem$Median.Income) = "Median Income"
 label(countydem$College.Grad.pct) = "College Graduates"
-label(countydem$percentdem2008) = "Voting for the Democratic candidate in the most recent presidential election"
+label(countydem$percentdem2008) = "Vote Democratic"
 
 units(countydem$Women) = "No."
 units(countydem$White.pct) = "%"
@@ -230,14 +231,16 @@ units(countydem$percentdem2008) = "%"
 p_value_t_test <- function(x, ...){
     y <- unlist(x[1:2])
     g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
-    p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
-    p_value <- ifelse(p_value == '0', '< 0.001', p_value)
+    p <- t.test(y ~ g)$p.value  %>% round(3) 
+    c("", sub("<", "<", format.pval(p, digits=3, eps=0.001)))
 }
 
-
+## Table 2 ###
 table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | inanalysislabel, 
        data = countydem,
+       overall = FALSE,
        extra.col = list(`P-value` = p_value_t_test),
+       extra.col.pos = 3,
        footnote = 'P-values are derived by two sample t-tests.',
        caption = "County Data for States Included and Not Included in Analysis"
        )

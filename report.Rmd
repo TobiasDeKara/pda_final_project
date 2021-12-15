@@ -6,22 +6,37 @@ output: pdf_document
 
 ## Introduction
 
-In this paper we replicate an analysis published in JAMA Network Open by Benjamin P. Brown, MD, MS; Luciana E. Hebert, PhD; Melissa Gilliam, MD, MPH;  and Robert Kaestner, PhD, entitled "Association of Highly Restrictive State Abortion Policies With Abortion Rates, 2000-2014."  We then extend this analysis by considering . . . 
+In this paper we replicate an analysis published in JAMA Network Open by Benjamin P. Brown, MD, MS; Luciana E. Hebert, PhD; Melissa Gilliam, MD, MPH;  and Robert Kaestner, PhD, entitled "Association of Highly Restrictive State Abortion Policies With Abortion Rates, 2000-2014."  Brown et al. use a binary classification of states legislative climates on abortion as either "highly restrictive" or not, and they assess the association with abortion rates using propensity weighted linear difference in differences models, based on data from 18 states.
 
 The data set from the Brown et al. article was not made public, and due to limitations of publicly available data, we have narrowed the scope of our replication to analyzing a single year. Specifically we analyzed data from 2010, primarily because this was the year within the original paper's time range for which we had the most detailed information on state legislation restricting abortions.
+
+We first reproduce the analysis of Brown et al. using data from the same 18 states.  We then expand the analysis by using data from all 50 states and using an integer variable for the extent of abortion restriction legislation. Finally we extend the analysis to include associations of restrictive abortion legislation on  maternity mortality data, infant mortality data, and birth rate.
 
 
 ## Study Design
 
-We used a propensity weighted linear model to assess the association of restrictive abortion legislation and abortion rates.  We used data from the same set of 18 states as Brown et al., and used propensity weighting to account for differences between those states and the other 32 states.  The propensity weights were calculated using the same set of county level covariates as Brown et al.: number of women, percentages of population by race, median household income, and percentage of voters who voted for the Democratic presidential candidate in 2008. 
+We used propensity weighted linear models to assess the association of restrictive abortion legislation and abortion rates.  We used data from the same set of 18 states as Brown et al. (see Table 1), and used propensity weighting to account for differences between those states and the other 32 states.  The propensity weights were calculated using the same set of county level covariates as Brown et al.: number of women, percentages of population by race, median household income, and percentage of voters who voted for the Democratic presidential candidate in 2008. We fit linear models with and without including distances to abortion providers and an interaction term between those distances and restrictive legislation.
 
 ## Participants, Variables and Data Sources
 
-We used abortion count data compiled by Wm. Robert Johnston and available at www.johnstonsarchive.net/policy/abortion.  At least partial data was available for all 18 of the states included in the analysis by Brown et al., and for most of those states we had data for more than 80% of the counties (see Table 1).  The percentages of counties reporting were similar to the percentages reporting in Brown et al.
+We used abortion count data compiled by Wm. Robert Johnston and available at www.johnstonsarchive.net/policy/abortion.  Abortion rates were calculated as number of abortions per female population. At least partial data was available for all 18 of the states included in the analysis by Brown et al., and for most of those states there was data for more than 80% of the counties (see Table 1).  The percentages of counties reporting were similar to the percentages reporting in Brown et al. (see their Table 1).
 
 For assessment of state legislation restricting abortion, we used data from the Guttmacher Institute which identified states with laws of the same four types used by Brown et al.: gestational age restrictions, targeted restrictions on abortion providers (TRAP) laws, requirements for patients to make at least two trips to a clinic, and mandated parental involvement for patients who are minors. Following Brown et al.'s methodology, we classified states as "highly restrictive" if they had 3/4 types of laws. 
 
-The covariates for the propensity score model were taken from the US Census Bureau
+We estimated distances to providers as the straight-line distance from the population centroids of counties of residence (courtesy of the United States Census Bureau) to the location of the nearest abortion clinic (courtesy of Safe Place Project).
+
+## Results
+
+The distribution of propensity scores for counties in states included in the analysis was similar to that for counties in states not included (see Figure 1).  This suggest that the 18 states included in the analysis are not exceptionally different from those not included regarding the demographic covariates, and accordingly we expect the propensity weights to accurately adjust for the differences.
+
+Tables 3 and 4 show the main results from our replication.  Without adjusting for distances to providers, we found that highly restrictive legislation was associated with a  reduction in abortions of 0.922 per 1,000 women, and that effect was reduced to 0.828 when adjusting for distances to providers.  These effects were roughly twice as large as the effects calculated by Brown et al., nevertheless our estimates were within their reported 95% confidence intervals (see Brown et al. Table 3).
+
+## Limitations
+
+The original analysis and our replication are limited by the use of data from only 18 states.  We address this shortcoming in our extension below.  The original analysis and our own are limited by the calculating abortion rates using total number of women, rather than number of women of reproductive age.
+
+
+
 
 
 

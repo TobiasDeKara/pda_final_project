@@ -289,8 +289,28 @@ ggplot(df, aes(x = ps, group = inanalysislabel)) + geom_density(aes(fill = inana
 #run models
 countydemanalysis <- df %>% filter(inanalysis == 1)
 
-model <- lm(AbortionRate2010 ~ restrictionlevel + distancetoprovider + restrictionlevel*distancetoprovider, data = countydemanalysis, weights = ps)
-summary(model)
+model_no_dist <- lm(AbortionRate2010 ~ restrictionlevel, data = countydemanalysis, weights = ps)
+summ_no_dist <- summary(model_no_dist)
+
+model_dist <- lm(AbortionRate2010 ~ restrictionlevel + distancetoprovider + restrictionlevel*distancetoprovider, data = countydemanalysis, weights = ps)
+summ_dist <- summary(model_dist)
+
+
+# Model Summaries (Note coefficients are per 1000 women)
+table_3 <- tibble(Characteristic = "Highly Restrictive Legislation",
+                  Beta = model_no_dist$coefficients[2]*1000,
+                  "p-value" = c('< 0.001')) %>% 
+  kbl(caption = "Table 3: Change in Abortions per 1000 Women in Model without Distances", 
+          digits = 3)
+
+p <- summ_dist$coefficients[4,4] %>% round(3)
+table_4 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(model_dist$coefficients[2]*1000, model_dist$coefficients[3]*1000,
+                           model_dist$coefficients[4]*1000),
+                  "p-value" = c('< 0.001', '< 0.001', p)) %>%
+  kbl(caption = "Table 4: Change in Abortions per 1000 Women in Model with Distances")
+print(table_4)
 
 ```
 

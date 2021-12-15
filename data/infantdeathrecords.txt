@@ -1,0 +1,373 @@
+"Notes"	"State"	"State Code"	"County"	"County Code"	Deaths	Births	Death Rate
+	"Alabama"	"01"	"Jefferson County, AL"	"01073"	102	8894	11.47
+	"Alabama"	"01"	"Madison County, AL"	"01089"	28	4195	6.67
+	"Alabama"	"01"	"Mobile County, AL"	"01097"	42	5707	7.36
+	"Alabama"	"01"	"Unidentified Counties, AL"	"01999"	352	41254	8.53
+	"Alaska"	"02"	"Anchorage Borough, AK"	"02020"	19	4575	4.15 (Unreliable)
+	"Alaska"	"02"	"Unidentified Counties, AK"	"02999"	22	6896	3.19
+	"Arizona"	"04"	"Maricopa County, AZ"	"04013"	318	54348	5.85
+	"Arizona"	"04"	"Pima County, AZ"	"04019"	74	12184	6.07
+	"Arizona"	"04"	"Pinal County, AZ"	"04021"	Missing County	Missing County	Missing County
+	"Arizona"	"04"	"Unidentified Counties, AZ"	"04999"	127	20945	6.06
+	"Arkansas"	"05"	"Pulaski County, AR"	"05119"	33	5763	5.73
+	"Arkansas"	"05"	"Unidentified Counties, AR"	"05999"	246	32777	7.51
+	"California"	"06"	"Alameda County, CA"	"06001"	96	19306	4.97
+	"California"	"06"	"Contra Costa County, CA"	"06013"	54	12358	4.37
+	"California"	"06"	"Fresno County, CA"	"06019"	113	16283	6.94
+	"California"	"06"	"Kern County, CA"	"06029"	65	14419	4.51
+	"California"	"06"	"Los Angeles County, CA"	"06037"	609	133252	4.57
+	"California"	"06"	"Marin County, CA"	"06041"	Missing County	Missing County	Missing County
+	"California"	"06"	"Merced County, CA"	"06047"	Missing County	Missing County	Missing County
+	"California"	"06"	"Monterey County, CA"	"06053"	29	6765	4.29
+	"California"	"06"	"Orange County, CA"	"06059"	142	38250	3.71
+	"California"	"06"	"Placer County, CA"	"06061"	Missing County	Missing County	Missing County
+	"California"	"06"	"Riverside County, CA"	"06065"	158	30670	5.15
+	"California"	"06"	"Sacramento County, CA"	"06067"	107	20056	5.34
+	"California"	"06"	"San Bernardino County, CA"	"06071"	180	31368	5.74
+	"California"	"06"	"San Diego County, CA"	"06073"	194	44867	4.32
+	"California"	"06"	"San Francisco County, CA"	"06075"	29	8806	3.29
+	"California"	"06"	"San Joaquin County, CA"	"06077"	64	10596	6.04
+	"California"	"06"	"San Luis Obispo County, CA"	"06079"	Missing County	Missing County	Missing County
+	"California"	"06"	"San Mateo County, CA"	"06081"	29	9194	3.15
+	"California"	"06"	"Santa Barbara County, CA"	"06083"	27	5821	4.64
+	"California"	"06"	"Santa Clara County, CA"	"06085"	68	23940	2.84
+	"California"	"06"	"Santa Cruz County, CA"	"06087"	Suppressed	3192	Suppressed
+	"California"	"06"	"Solano County, CA"	"06095"	28	5050	5.54
+	"California"	"06"	"Sonoma County, CA"	"06097"	40	5393	7.42
+	"California"	"06"	"Stanislaus County, CA"	"06099"	42	7806	5.38
+	"California"	"06"	"Tulare County, CA"	"06107"	43	8155	5.27
+	"California"	"06"	"Ventura County, CA"	"06111"	60	11150	5.38
+	"California"	"06"	"Unidentified Counties, CA"	"06999"	231	43501	5.31
+	"Colorado"	"08"	"Adams County, CO"	"08001"	34	6786	5.01
+	"Colorado"	"08"	"Arapahoe County, CO"	"08005"	51	7512	6.79
+	"Colorado"	"08"	"Boulder County, CO"	"08013"	21	3059	6.86
+	"Colorado"	"08"	"Denver County, CO"	"08031"	66	10375	6.36
+	"Colorado"	"08"	"Douglas County, CO"	"08035"	Missing County	Missing County	Missing County
+	"Colorado"	"08"	"El Paso County, CO"	"08041"	62	9159	6.77
+	"Colorado"	"08"	"Jefferson County, CO"	"08059"	29	5637	5.14
+	"Colorado"	"08"	"Larimer County, CO"	"08069"	17	3351	5.07 (Unreliable)
+	"Colorado"	"08"	"Weld County, CO"	"08123"	Missing County	Missing County	Missing County
+	"Colorado"	"08"	"Unidentified Counties, CO"	"08999"	111	20476	5.42
+	"Connecticut"	"09"	"Fairfield County, CT"	"09001"	53	10540	5.03
+	"Connecticut"	"09"	"Hartford County, CT"	"09003"	54	9736	5.55
+	"Connecticut"	"09"	"New Haven County, CT"	"09009"	56	9223	6.07
+	"Connecticut"	"09"	"New London County, CT"	"09011"	11	2757	3.99 (Unreliable)
+	"Connecticut"	"09"	"Unidentified Counties, CT"	"09999"	25	5452	4.59
+	"Delaware"	"10"	"New Castle County, DE"	"10003"	57	6867	8.30
+	"Delaware"	"10"	"Unidentified Counties, DE"	"10999"	28	4497	6.23
+	"District of Columbia"	"11"	"District of Columbia, DC"	"11001"	70	9165	7.64
+	"Florida"	"12"	"Brevard County, FL"	"12009"	31	4967	6.24
+	"Florida"	"12"	"Broward County, FL"	"12011"	133	21349	6.23
+	"Florida"	"12"	"Collier County, FL"	"12021"	19	3339	5.69 (Unreliable)
+	"Florida"	"12"	"Duval County, FL"	"12031"	99	12618	7.85
+	"Florida"	"12"	"Escambia County, FL"	"12033"	41	3925	10.45
+	"Florida"	"12"	"Hillsborough County, FL"	"12057"	121	16412	7.37
+	"Florida"	"12"	"Lake County, FL"	"12069"	Missing County	Missing County	Missing County
+	"Florida"	"12"	"Lee County, FL"	"12071"	31	6321	4.90
+	"Florida"	"12"	"Leon County, FL"	"12073"	Missing County	Missing County	Missing County
+	"Florida"	"12"	"Manatee County, FL"	"12081"	22	3348	6.57
+	"Florida"	"12"	"Marion County, FL"	"12083"	32	3402	9.41
+	"Florida"	"12"	"Miami-Dade County, FL"	"12086"	138	31353	4.40
+	"Florida"	"12"	"Orange County, FL"	"12095"	119	15191	7.83
+	"Florida"	"12"	"Osceola County, FL"	"12097"	Missing County	Missing County	Missing County
+	"Florida"	"12"	"Palm Beach County, FL"	"12099"	76	13834	5.49
+	"Florida"	"12"	"Pasco County, FL"	"12101"	32	4801	6.67
+	"Florida"	"12"	"Pinellas County, FL"	"12103"	75	8468	8.86
+	"Florida"	"12"	"Polk County, FL"	"12105"	56	7420	7.55
+	"Florida"	"12"	"St. Lucie County, FL"	"12111"	Missing County	Missing County	Missing County
+	"Florida"	"12"	"Sarasota County, FL"	"12115"	16	2818	5.68 (Unreliable)
+	"Florida"	"12"	"Seminole County, FL"	"12117"	29	4381	6.62
+	"Florida"	"12"	"Volusia County, FL"	"12127"	28	4709	5.95
+	"Florida"	"12"	"Unidentified Counties, FL"	"12999"	296	45934	6.44
+	"Georgia"	"13"	"Chatham County, GA"	"13051"	Missing County	Missing County	Missing County
+	"Georgia"	"13"	"Clayton County, GA"	"13063"	Missing County	Missing County	Missing County
+	"Georgia"	"13"	"Cobb County, GA"	"13067"	53	9441	5.61
+	"Georgia"	"13"	"DeKalb County, GA"	"13089"	61	10857	5.62
+	"Georgia"	"13"	"Fulton County, GA"	"13121"	66	13988	4.72
+	"Georgia"	"13"	"Gwinnett County, GA"	"13135"	58	11344	5.11
+	"Georgia"	"13"	"Unidentified Counties, GA"	"13999"	611	88317	6.92
+	"Hawaii"	"15"	"Honolulu County, HI"	"15003"	97	13732	7.06
+	"Hawaii"	"15"	"Unidentified Counties, HI"	"15999"	21	5256	4.00
+	"Idaho"	"16"	"Ada County, ID"	"16001"	18	5045	3.57 (Unreliable)
+	"Idaho"	"16"	"Unidentified Counties, ID"	"16999"	93	18153	5.12
+	"Illinois"	"17"	"Cook County, IL"	"17031"	529	73079	7.24
+	"Illinois"	"17"	"DuPage County, IL"	"17043"	66	10768	6.13
+	"Illinois"	"17"	"Kane County, IL"	"17089"	46	7230	6.36
+	"Illinois"	"17"	"Lake County, IL"	"17097"	46	8444	5.45
+	"Illinois"	"17"	"McHenry County, IL"	"17111"	12	3432	3.50 (Unreliable)
+	"Illinois"	"17"	"Madison County, IL"	"17119"	22	3234	6.80
+	"Illinois"	"17"	"St. Clair County, IL"	"17163"	24	3498	6.86
+	"Illinois"	"17"	"Will County, IL"	"17197"	64	8561	7.48
+	"Illinois"	"17"	"Winnebago County, IL"	"17201"	30	3783	7.93
+	"Illinois"	"17"	"Unidentified Counties, IL"	"17999"	291	43171	6.74
+	"Indiana"	"18"	"Allen County, IN"	"18003"	38	5309	7.16
+	"Indiana"	"18"	"Hamilton County, IN"	"18057"	Missing County	Missing County	Missing County
+	"Indiana"	"18"	"Lake County, IN"	"18089"	50	6492	7.70
+	"Indiana"	"18"	"Marion County, IN"	"18097"	146	14598	10.00
+	"Indiana"	"18"	"St. Joseph County, IN"	"18141"	28	3505	7.99
+	"Indiana"	"18"	"Unidentified Counties, IN"	"18999"	378	54036	7.00
+	"Iowa"	"19"	"Polk County, IA"	"19153"	38	6528	5.82
+	"Iowa"	"19"	"Unidentified Counties, IA"	"19999"	150	32191	4.66
+	"Kansas"	"20"	"Johnson County, KS"	"20091"	30	7399	4.05
+	"Kansas"	"20"	"Sedgwick County, KS"	"20173"	58	8083	7.18
+	"Kansas"	"20"	"Unidentified Counties, KS"	"20999"	164	25167	6.52
+	"Kentucky"	"21"	"Fayette County, KY"	"21067"	32	3924	8.15
+	"Kentucky"	"21"	"Jefferson County, KY"	"21111"	73	10204	7.15
+	"Kentucky"	"21"	"Unidentified Counties, KY"	"21999"	275	41656	6.60
+	"Louisiana"	"22"	"Caddo Parish, LA"	"22017"	48	3892	12.33
+	"Louisiana"	"22"	"East Baton Rouge Parish, LA"	"22033"	70	6084	11.51
+	"Louisiana"	"22"	"Jefferson Parish, LA"	"22051"	24	5858	4.10
+	"Louisiana"	"22"	"Orleans Parish, LA"	"22071"	34	4598	7.39
+	"Louisiana"	"22"	"Unidentified Counties, LA"	"22999"	296	41947	7.06
+	"Maine"	"23"	"Cumberland County, ME"	"23005"	16	2777	5.76 (Unreliable)
+	"Maine"	"23"	"Unidentified Counties, ME"	"23999"	54	10193	5.30
+	"Maryland"	"24"	"Anne Arundel County, MD"	"24003"	31	7063	4.39
+	"Maryland"	"24"	"Baltimore County, MD"	"24005"	61	9889	6.17
+	"Maryland"	"24"	"Howard County, MD"	"24027"	Missing County	Missing County	Missing County
+	"Maryland"	"24"	"Montgomery County, MD"	"24031"	56	13304	4.21
+	"Maryland"	"24"	"Prince George's County, MD"	"24033"	117	12185	9.60
+	"Maryland"	"24"	"Baltimore city, MD"	"24510"	102	8956	11.39
+	"Maryland"	"24"	"Unidentified Counties, MD"	"24999"	137	22404	6.11
+	"Massachusetts"	"25"	"Bristol County, MA"	"25005"	17	5872	2.90 (Unreliable)
+	"Massachusetts"	"25"	"Essex County, MA"	"25009"	30	8317	3.61
+	"Massachusetts"	"25"	"Hampden County, MA"	"25013"	32	5416	5.91
+	"Massachusetts"	"25"	"Middlesex County, MA"	"25017"	70	17749	3.94
+	"Massachusetts"	"25"	"Norfolk County, MA"	"25021"	26	7122	3.65
+	"Massachusetts"	"25"	"Plymouth County, MA"	"25023"	26	5166	5.03
+	"Massachusetts"	"25"	"Suffolk County, MA"	"25025"	36	9428	3.82
+	"Massachusetts"	"25"	"Worcester County, MA"	"25027"	54	8790	6.14
+	"Massachusetts"	"25"	"Unidentified Counties, MA"	"25999"	27	5005	5.39
+	"Michigan"	"26"	"Genesee County, MI"	"26049"	31	5240	5.92
+	"Michigan"	"26"	"Ingham County, MI"	"26065"	14	3352	4.18 (Unreliable)
+	"Michigan"	"26"	"Kalamazoo County, MI"	"26077"	Missing County	Missing County	Missing County
+	"Michigan"	"26"	"Kent County, MI"	"26081"	54	8596	6.28
+	"Michigan"	"26"	"Macomb County, MI"	"26099"	45	9108	4.94
+	"Michigan"	"26"	"Oakland County, MI"	"26125"	84	13091	6.42
+	"Michigan"	"26"	"Ottawa County, MI"	"26139"	Missing County	Missing County	Missing County
+	"Michigan"	"26"	"Washtenaw County, MI"	"26161"	22	3819	5.76
+	"Michigan"	"26"	"Wayne County, MI"	"26163"	235	24209	9.71
+	"Michigan"	"26"	"Unidentified Counties, MI"	"26999"	330	47116	7.00
+	"Minnesota"	"27"	"Anoka County, MN"	"27003"	15	4191	3.58 (Unreliable)
+	"Minnesota"	"27"	"Dakota County, MN"	"27037"	15	5176	2.90 (Unreliable)
+	"Minnesota"	"27"	"Hennepin County, MN"	"27053"	81	15974	5.07
+	"Minnesota"	"27"	"Ramsey County, MN"	"27123"	32	7281	4.40
+	"Minnesota"	"27"	"Unidentified Counties, MN"	"27999"	168	35988	4.67
+	"Mississippi"	"28"	"Hinds County, MS"	"28049"	28	3536	7.92
+	"Mississippi"	"28"	"Unidentified Counties, MS"	"28999"	357	36500	9.78
+	"Missouri"	"29"	"Greene County, MO"	"29077"	Missing County	Missing County	Missing County
+	"Missouri"	"29"	"Jackson County, MO"	"29095"	67	9781	6.85
+	"Missouri"	"29"	"St. Charles County, MO"	"29183"	27	4593	5.88
+	"Missouri"	"29"	"St. Louis County, MO"	"29189"	74	11682	6.33
+	"Missouri"	"29"	"St. Louis city, MO"	"29510"	48	4812	9.98
+	"Missouri"	"29"	"Unidentified Counties, MO"	"29999"	288	45891	6.28
+	"Montana"	"30"	"Unidentified Counties, MT"	"30999"	72	12060	5.97
+	"Nebraska"	"31"	"Douglas County, NE"	"31055"	50	8205	6.09
+	"Nebraska"	"31"	"Lancaster County, NE"	"31109"	22	4152	5.30
+	"Nebraska"	"31"	"Unidentified Counties, NE"	"31999"	63	13561	4.65
+	"Nevada"	"32"	"Clark County, NV"	"32003"	140	26752	5.23
+	"Nevada"	"32"	"Washoe County, NV"	"32031"	36	5445	6.61
+	"Nevada"	"32"	"Unidentified Counties, NV"	"32999"	22	3737	5.89
+	"New Hampshire"	"33"	"Hillsborough County, NH"	"33011"	12	4488	2.67 (Unreliable)
+	"New Hampshire"	"33"	"Rockingham County, NH"	"33015"	13	2549	5.10 (Unreliable)
+	"New Hampshire"	"33"	"Unidentified Counties, NH"	"33999"	25	5837	4.28
+	"New Jersey"	"34"	"Atlantic County, NJ"	"34001"	25	3285	7.61
+	"New Jersey"	"34"	"Bergen County, NJ"	"34003"	18	9360	1.92 (Unreliable)
+	"New Jersey"	"34"	"Burlington County, NJ"	"34005"	33	4765	6.93
+	"New Jersey"	"34"	"Camden County, NJ"	"34007"	54	6742	8.01
+	"New Jersey"	"34"	"Essex County, NJ"	"34013"	73	10465	6.98
+	"New Jersey"	"34"	"Gloucester County, NJ"	"34015"	17	3234	5.26 (Unreliable)
+	"New Jersey"	"34"	"Hudson County, NJ"	"34017"	31	10064	3.08
+	"New Jersey"	"34"	"Mercer County, NJ"	"34021"	38	4442	8.55
+	"New Jersey"	"34"	"Middlesex County, NJ"	"34023"	46	10067	4.57
+	"New Jersey"	"34"	"Monmouth County, NJ"	"34025"	25	6392	3.91
+	"New Jersey"	"34"	"Morris County, NJ"	"34027"	17	4852	3.50 (Unreliable)
+	"New Jersey"	"34"	"Ocean County, NJ"	"34029"	14	7945	1.76 (Unreliable)
+	"New Jersey"	"34"	"Passaic County, NJ"	"34031"	28	7187	3.90
+	"New Jersey"	"34"	"Somerset County, NJ"	"34035"	Suppressed	3533	Suppressed
+	"New Jersey"	"34"	"Union County, NJ"	"34039"	40	7068	5.66
+	"New Jersey"	"34"	"Unidentified Counties, NJ"	"34999"	47	7521	6.25
+	"New Mexico"	"35"	"Bernalillo County, NM"	"35001"	46	8607	5.34
+	"New Mexico"	"35"	"Unidentified Counties, NM"	"35999"	110	19243	5.72
+	"New York"	"36"	"Albany County, NY"	"36001"	25	3032	8.25
+	"New York"	"36"	"Bronx County, NY"	"36005"	132	22490	5.87
+	"New York"	"36"	"Dutchess County, NY"	"36027"	21	2874	7.31
+	"New York"	"36"	"Erie County, NY"	"36029"	81	9773	8.29
+	"New York"	"36"	"Kings County, NY"	"36047"	190	41964	4.53
+	"New York"	"36"	"Monroe County, NY"	"36055"	57	8545	6.67
+	"New York"	"36"	"Nassau County, NY"	"36059"	66	14242	4.63
+	"New York"	"36"	"New York County, NY"	"36061"	63	20005	3.15
+	"New York"	"36"	"Onondaga County, NY"	"36067"	25	5352	4.67
+	"New York"	"36"	"Orange County, NY"	"36071"	42	5171	8.12
+	"New York"	"36"	"Queens County, NY"	"36081"	126	30573	4.12
+	"New York"	"36"	"Richmond County, NY"	"36085"	37	5665	6.53
+	"New York"	"36"	"Rockland County, NY"	"36087"	21	4896	4.29
+	"New York"	"36"	"Suffolk County, NY"	"36103"	75	16807	4.46
+	"New York"	"36"	"Westchester County, NY"	"36119"	44	11141	3.95
+	"New York"	"36"	"Unidentified Counties, NY"	"36999"	235	41845	5.62
+	"North Carolina"	"37"	"Cumberland County, NC"	"37051"	51	5839	8.73
+	"North Carolina"	"37"	"Durham County, NC"	"37063"	Missing County	Missing County	Missing County
+	"North Carolina"	"37"	"Forsyth County, NC"	"37067"	34	4688	7.25
+	"North Carolina"	"37"	"Guilford County, NC"	"37081"	57	6005	9.49
+	"North Carolina"	"37"	"Mecklenburg County, NC"	"37119"	79	13898	5.68
+	"North Carolina"	"37"	"Wake County, NC"	"37183"	69	12704	5.43
+	"North Carolina"	"37"	"Unidentified Counties, NC"	"37999"	576	79216	7.27
+	"North Dakota"	"38"	"Unidentified Counties, ND"	"38999"	62	9104	6.81
+	"Ohio"	"39"	"Butler County, OH"	"39017"	26	4605	5.65
+	"Ohio"	"39"	"Cuyahoga County, OH"	"39035"	137	15112	9.07
+	"Ohio"	"39"	"Franklin County, OH"	"39049"	140	17824	7.85
+	"Ohio"	"39"	"Hamilton County, OH"	"39061"	116	10850	10.69
+	"Ohio"	"39"	"Lorain County, OH"	"39093"	27	3329	8.11
+	"Ohio"	"39"	"Lucas County, OH"	"39095"	40	5846	6.84
+	"Ohio"	"39"	"Mahoning County, OH"	"39099"	28	2417	11.58
+	"Ohio"	"39"	"Montgomery County, OH"	"39113"	48	6728	7.13
+	"Ohio"	"39"	"Stark County, OH"	"39151"	37	4087	9.05
+	"Ohio"	"39"	"Summit County, OH"	"39153"	48	6071	7.91
+	"Ohio"	"39"	"Unidentified Counties, OH"	"39999"	423	62259	6.79
+	"Oklahoma"	"40"	"Cleveland County, OK"	"40027"	Missing County	Missing County	Missing County
+	"Oklahoma"	"40"	"Oklahoma County, OK"	"40109"	94	12190	7.71
+	"Oklahoma"	"40"	"Tulsa County, OK"	"40143"	61	9280	6.57
+	"Oklahoma"	"40"	"Unidentified Counties, OK"	"40999"	244	31768	7.68
+	"Oregon"	"41"	"Clackamas County, OR"	"41005"	11	3856	2.85 (Unreliable)
+	"Oregon"	"41"	"Lane County, OR"	"41039"	10	3491	2.86 (Unreliable)
+	"Oregon"	"41"	"Marion County, OR"	"41047"	34	4663	7.29
+	"Oregon"	"41"	"Multnomah County, OR"	"41051"	63	9654	6.53
+	"Oregon"	"41"	"Washington County, OR"	"41067"	38	7047	5.39
+	"Oregon"	"41"	"Unidentified Counties, OR"	"41999"	69	16829	4.10
+	"Pennsylvania"	"42"	"Allegheny County, PA"	"42003"	103	12904	7.98
+	"Pennsylvania"	"42"	"Berks County, PA"	"42011"	49	4801	10.21
+	"Pennsylvania"	"42"	"Bucks County, PA"	"42017"	38	6118	6.21
+	"Pennsylvania"	"42"	"Chester County, PA"	"42029"	26	5536	4.70
+	"Pennsylvania"	"42"	"Dauphin County, PA"	"42043"	18	3408	5.28 (Unreliable)
+	"Pennsylvania"	"42"	"Delaware County, PA"	"42045"	58	6838	8.48
+	"Pennsylvania"	"42"	"Erie County, PA"	"42049"	21	3276	6.41
+	"Pennsylvania"	"42"	"Lancaster County, PA"	"42071"	54	6945	7.78
+	"Pennsylvania"	"42"	"Lehigh County, PA"	"42077"	22	4162	5.29
+	"Pennsylvania"	"42"	"Luzerne County, PA"	"42079"	23	3184	7.22
+	"Pennsylvania"	"42"	"Montgomery County, PA"	"42091"	38	9129	4.16
+	"Pennsylvania"	"42"	"Northampton County, PA"	"42095"	20	3027	6.61
+	"Pennsylvania"	"42"	"Philadelphia County, PA"	"42101"	239	23203	10.30
+	"Pennsylvania"	"42"	"Westmoreland County, PA"	"42129"	22	3196	6.88
+	"Pennsylvania"	"42"	"York County, PA"	"42133"	31	5064	6.12
+	"Pennsylvania"	"42"	"Unidentified Counties, PA"	"42999"	272	42530	6.40
+	"Rhode Island"	"44"	"Providence County, RI"	"44007"	57	7460	7.64
+	"Rhode Island"	"44"	"Unidentified Counties, RI"	"44999"	23	3717	6.19
+	"South Carolina"	"45"	"Charleston County, SC"	"45019"	30	4847	6.19
+	"South Carolina"	"45"	"Greenville County, SC"	"45045"	36	6109	5.89
+	"South Carolina"	"45"	"Horry County, SC"	"45051"	Missing County	Missing County	Missing County
+	"South Carolina"	"45"	"Lexington County, SC"	"45063"	Missing County	Missing County	Missing County
+	"South Carolina"	"45"	"Richland County, SC"	"45079"	29	4870	5.95
+	"South Carolina"	"45"	"Spartanburg County, SC"	"45083"	23	3682	6.25
+	"South Carolina"	"45"	"Unidentified Counties, SC"	"45999"	310	38834	7.98
+	"South Dakota"	"46"	"Unidentified Counties, SD"	"46999"	84	11811	7.11
+	"Tennessee"	"47"	"Davidson County, TN"	"47037"	72	9564	7.53
+	"Tennessee"	"47"	"Hamilton County, TN"	"47065"	42	4121	10.19
+	"Tennessee"	"47"	"Knox County, TN"	"47093"	39	5098	7.65
+	"Tennessee"	"47"	"Rutherford County, TN"	"47149"	Missing County	Missing County	Missing County
+	"Tennessee"	"47"	"Shelby County, TN"	"47157"	141	13813	10.21
+	"Tennessee"	"47"	"Unidentified Counties, TN"	"47999"	332	46899	7.08
+	"Texas"	"48"	"Bell County, TX"	"48027"	Missing County	Missing County	Missing County
+	"Texas"	"48"	"Bexar County, TX"	"48029"	171	26078	6.56
+	"Texas"	"48"	"Brazoria County, TX"	"48039"	Missing County	Missing County	Missing County
+	"Texas"	"48"	"Cameron County, TX"	"48061"	53	7853	6.75
+	"Texas"	"48"	"Collin County, TX"	"48085"	49	10591	4.63
+	"Texas"	"48"	"Dallas County, TX"	"48113"	294	39729	7.40
+	"Texas"	"48"	"Denton County, TX"	"48121"	45	8999	5.00
+	"Texas"	"48"	"El Paso County, TX"	"48141"	55	13825	3.98
+	"Texas"	"48"	"Fort Bend County, TX"	"48157"	27	7843	3.44
+	"Texas"	"48"	"Galveston County, TX"	"48167"	17	3947	4.31 (Unreliable)
+	"Texas"	"48"	"Harris County, TX"	"48201"	432	68219	6.33
+	"Texas"	"48"	"Hidalgo County, TX"	"48215"	85	16401	5.18
+	"Texas"	"48"	"Jefferson County, TX"	"48245"	23	3558	6.46
+	"Texas"	"48"	"Lubbock County, TX"	"48303"	Missing County	Missing County	Missing County
+	"Texas"	"48"	"Montgomery County, TX"	"48339"	37	6402	5.78
+	"Texas"	"48"	"Nueces County, TX"	"48355"	33	4716	7.00
+	"Texas"	"48"	"Tarrant County, TX"	"48439"	204	27893	7.31
+	"Texas"	"48"	"Travis County, TX"	"48453"	91	15801	5.76
+	"Texas"	"48"	"Webb County, TX"	"48479"	Missing County	Missing County	Missing County
+	"Texas"	"48"	"Williamson County, TX"	"48491"	Missing County	Missing County	Missing County
+	"Texas"	"48"	"Unidentified Counties, TX"	"48999"	757	124263	6.09
+	"Utah"	"49"	"Davis County, UT"	"49011"	Missing County	Missing County	Missing County
+	"Utah"	"49"	"Salt Lake County, UT"	"49035"	89	18250	4.88
+	"Utah"	"49"	"Utah County, UT"	"49049"	61	12020	5.07
+	"Utah"	"49"	"Unidentified Counties, UT"	"49999"	103	21988	4.68
+	"Vermont"	"50"	"Unidentified Counties, VT"	"50999"	26	6223	4.18
+	"Virginia"	"51"	"Chesterfield County, VA"	"51041"	21	3682	5.70
+	"Virginia"	"51"	"Fairfax County, VA"	"51059"	70	15180	4.61
+	"Virginia"	"51"	"Henrico County, VA"	"51087"	21	3888	5.40
+	"Virginia"	"51"	"Loudoun County, VA"	"51107"	Missing County	Missing County	Missing County
+	"Virginia"	"51"	"Prince William County, VA"	"51153"	46	6651	6.92
+	"Virginia"	"51"	"Virginia Beach city, VA"	"51810"	43	6153	6.99
+	"Virginia"	"51"	"Unidentified Counties, VA"	"51999"	501	67448	7.43
+	"Washington"	"53"	"Clark County, WA"	"53011"	35	5485	6.38
+	"Washington"	"53"	"King County, WA"	"53033"	104	24534	4.24
+	"Washington"	"53"	"Kitsap County, WA"	"53035"	Missing County	Missing County	Missing County
+	"Washington"	"53"	"Pierce County, WA"	"53053"	49	10697	4.58
+	"Washington"	"53"	"Snohomish County, WA"	"53061"	37	9001	4.11
+	"Washington"	"53"	"Spokane County, WA"	"53063"	28	5790	4.84
+	"Washington"	"53"	"Thurston County, WA"	"53067"	Missing County	Missing County	Missing County
+	"Washington"	"53"	"Unidentified Counties, WA"	"53999"	135	31032	4.35
+	"West Virginia"	"54"	"Unidentified Counties, WV"	"54999"	150	20470	7.33
+	"Wisconsin"	"55"	"Dane County, WI"	"55025"	31	6059	5.12
+	"Wisconsin"	"55"	"Milwaukee County, WI"	"55079"	119	14325	8.31
+	"Wisconsin"	"55"	"Waukesha County, WI"	"55133"	17	3891	4.37 (Unreliable)
+	"Wisconsin"	"55"	"Unidentified Counties, WI"	"55999"	233	44212	5.27
+	"Wyoming"	"56"	"Unidentified Counties, WY"	"56999"	52	7556	6.88
+"---"
+"Dataset: Linked Birth / Infant Death Records, 2007-2018"
+"Query Parameters:"
+"Year of Death: 2010"
+"Group By: State; County"
+"Show Totals: Disabled"
+"Show Zero Values: True"
+"Show Suppressed: True"
+"Calculate Rates Per: 1,000"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/lbd.html for more information."
+"---"
+"Query Date: Dec 14, 2021 10:21:18 PM"
+"---"
+"Suggested Citation: United States Department of Health and Human Services (US DHHS), Centers of Disease Control and Prevention"
+"(CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics (DVS). Linked Birth / Infant Death Records"
+"2007-2018, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative"
+"Program, on CDC WONDER On-line Database. Accessed at http://wonder.cdc.gov/lbd-current.html on Dec 14, 2021 10:21:18 PM"
+"---"
+Messages:
+"1. Totals are not available for these results due to suppression constraints. More Information:"
+"http://wonder.cdc.gov/wonder/help/faq.html#Privacy."
+"---"
+Caveats:
+"1. 'Suppressed' appears instead of death, birth, and rate values when the death value represents 0-9 sub-national events. This"
+"is because the data do not meet the criteria for confidentiality constraints. More information:"
+"http://wonder.cdc.gov/wonder/help/lbd.html#Assurance of Confidentiality."
+"2. 'Unreliable' appears for rates when there are fewer than 20 deaths in the numerator. This is because the figure does not meet"
+"the NCHS standard of reliability or precision. More information: http://wonder.cdc.gov/wonder/help/lbd.html#Unreliable."
+"3. 'Missing County' appears when county data is not available for a certain year. This occurs because the county did not meet"
+"minimum population standards and thus the data for the county was recoded to the ""Unidentified Counties"" category for the"
+"state of the county. More information: http://wonder.cdc.gov/wonder/help/lbd.html#Missing."
+"4. Infant deaths are weighted so numbers may not exactly add to totals due to rounding. More information:"
+"http://wonder.cdc.gov/wonder/help/lbd.html#WeightFactors-Totals."
+"5. Note that there may be slight differences in the number of infant deaths when comparing the Linked Birth / Death Records to"
+"the other vital statistics. More information: http://wonder.cdc.gov/wonder/help/lbd.html#Weight Factors."
+"6. County-level data are shown only for counties with populations of 250,000 persons or more. Data for all counties with fewer"
+"than 250,000 persons within a state are combined together under the label ""Unidentified Counties."""
+"7. Dade county, Florida (FIPS code 12025) was renamed Miami-Dade County (FIPS code 12086) effective November 13, 1997. The area"
+"is coded to Miami-Dade (12086) after 2002 and Dade (12025) for earlier years in other linked-birth datasets."
+"8. The independent city of Baltimore, Maryland (FIPS code 24510) is reported separately from Baltimore county (FIPS code 24005)."
+"9. The independent city of St. Louis, Missouri (FIPS code 29510) is reported separately from St. Louis county (FIPS code 29189)."
+"10. Bronx, New York (FIPS code 36005) represents Bronx Borough, New York City."
+"11. Kings county, New York (FIPS code 36047) represents Brooklyn Borough, New York City."
+"12. New York county, New York (FIPS code 36061) represents Manhattan Borough, New York City."
+"13. Queens, New York (FIPS code 36081) represents Queens Borough, New York City."
+"14. Richmond county, New York (FIPS code 36085) represents Staten Island Borough, New York City."
+"15. As a result of population changes the following counties do not have data available for all years.<br/> Before 2014 the data"
+"for the following counties was recoded to the ""Unidentified Counties"" category within the state of the county because they did"
+"not meet minimum population standards. Pinal County, AZ (04021); Marin County, CA (06041); Merced County, CA (06047); Placer"
+"County, CA (06061); San Luis Obispo County, CA (06079); Douglas County, CO (08035); Weld County, CO (08123); Lake County, FL"
+"(12069); Leon County, FL (12073); Osceola County, FL (12097); St. Lucie County, FL (12111); Chatham County, GA (13051); Clayton"
+"County, GA (13063); Hamilton County, IN (18057); Howard County, MD (24027); Kalamazoo County, MI (26077); Ottawa County, MI"
+"(26139); Greene County, MO (29077); Durham County, NC (37063); Cleveland County, OK (40027); Horry County, SC (45051); Lexington"
+"County, SC (45063); Rutherford County, TN (47149); Bell County, TX (48027); Brazoria County, TX (48039); Lubbock County, TX"
+"(48303); Webb County, TX (48479); Williamson County, TX (48491); Davis County, UT (49011); Loudoun County, VA (51107); Kitsap"
+"County, WA (53035); Thurston County, WA (53067). <br/> After 2013 the data for the following counties was recoded to the"
+"""Unidentified Counties"" category within the state of the county because they did not meet minimum population standards. Hinds"
+"County, MS (28049); Mahoning County, OH (39099)."

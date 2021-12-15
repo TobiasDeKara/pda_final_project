@@ -8,9 +8,9 @@ output: pdf_document
 
 In this paper we replicate and extend an analysis published in JAMA Network Open by Benjamin P. Brown, MD, MS; Luciana E. Hebert, PhD; Melissa Gilliam, MD, MPH;  and Robert Kaestner, PhD, entitled "Association of Highly Restrictive State Abortion Policies With Abortion Rates, 2000-2014."  Brown et al. use a binary classification of state legislative climates on abortion as either "highly restrictive" or not, and they assess the association with abortion rates using propensity weighted linear difference in differences models, based on longitudinal data from 18 states.
 
-We first reproduce the analysis of Brown et al. using data from the same 18 states.  The data set from the Brown et al. article was not made public, and due to limitations of publicly available data, we have narrowed the scope of our replication to analyzing a single year. Specifically we analyzed data from 2010, primarily because this was the year within the original paper's time range for which we had the most detailed information on state legislation restricting abortions.
+We first reproduce the analysis of Brown et al. using data from the same 18 states.  The data set from the Brown et al. article was not made public, and due to limitations of publicly available data, we have narrowed the scope of our replication to analyzing a single year. Specifically we analyzed data from 2010, primarily because this was the year within the original paper's time range for which we had the most detailed information on state legislation restricting abortions.  We then expand the analysis by using data from all 50 states, and by using an integer variable for the extent of abortion restriction legislation.
 
-We then expand the analysis by using data from all 50 states, and by using an integer variable for the extent of abortion restriction legislation. Finally we extend the analysis to include associations of restrictive abortion legislation with fetal mortality, infant mortality, birth rate and fertility rate.
+The original study addresses the immediate, intended consequences of the restrictive abortion legislation.  In our paper, we extend the analysis to include associations of restrictive abortion legislation with fetal mortality, infant mortality, birth rate and fertility rate.  Restricted access to abortion has been linked to adverse outcomes for mothers and children, including pre-term birth and low birth weight (Redd et al., 2021), infant mortality rates (Edwards, 2019), and maternal mortality (Stevenson, 2021).   However, the effects of abortion legislation on these health outcomes are less well understood.  The key findings of a meta-analysis (Austin and Harper, 2017) were that "Certain TRAP laws may be associated with a decrease in state-level abortion rates.  Additional research is required to better understand the impact of these laws on women’s health outcomes."
 
 
 ## Study Design
@@ -38,7 +38,12 @@ The original analysis and our replication are limited by the use of data from on
 
 
 
+## Sources
+Austin N, Harper S. "Assessing the impact of TRAP laws on abortion and women’s health in the USA: a systematic review" BMJ Sex Reprod Health, 2018; 44:128–134.
 
+Edwards, E. "States pushing abortion bans have higher infant mortality rates". NBC News Website, 2019. Available at https://www.nbcnews.com/health/womens-health/states-pushing-abortion-bans-have-higher-infant-mortality-rates-n1008481. Accessed 12/10/21.
 
+Redd, Sara K.; Stidham Hall, Kelli; Aswani, Monica S.; Sen, Bisakha; Wingate, Martha; Rice, Whitney S.  "Variation in Restrictive Abortion Policies and Adverse Birth Outcomes in the United States from 2005 to 2015" Women's Health Issues, 2021 1-11.
 
-
+Stevenson, A. J. "The Pregnancy-Related Mortality Impact of a Total Abortion Ban in the United States: A Research Note on Increased
+Deaths Due to Remaining Pregnant" Demography (2021) 58(6):2019–2028.

@@ -250,38 +250,38 @@ df$ps <- p.score
 
 ggplot(df, aes(x = ps, group = inanalysislabel)) + geom_density(aes(fill = inanalysislabel), alpha = 0.2) +
   xlab('Probability of Being in the Analysis') +
-  ggtitle('Propensity Score Distribution by Group') +
+  ggtitle('Figure 1: Propensity Score Distribution by Group') +
   scale_fill_discrete('') +
   theme(legend.position = 'bottom', legend.direction = 'vertical') +
   ylab("Density")
 
 
-ggplot(df, aes(x = ps, fill = inanalysislabel, color = inanalysislabel)) +
-  geom_histogram(alpha = 0.3, position = 'identity', bins=15) +
-  facet_grid(as.factor(inanalysis) ~ .) +
-  xlab('Probability of Being in the Analysis') +
-  ggtitle('Propensity Score Distribution by Group') +
-  scale_fill_discrete('') +
-  scale_color_discrete('') +
-  theme(legend.position = 'bottom', legend.direction = 'vertical')
-
-df %>%
-  mutate(ps.grp = round(ps/0.05) * 0.05) %>%
-  group_by(inanalysis, ps.grp) %>%
-  summarize(n = n()) %>%
-  ungroup() %>%
-  mutate(n2 = ifelse(inanalysis == 0, yes = n, no =  -1*n)) %>%
-  ggplot(aes(x = ps.grp, y = n2, fill = as.factor(inanalysis))) +
-  geom_bar(stat = 'identity', position = 'identity') +
-  geom_text(aes(label = n, x = ps.grp, y = n2 + ifelse(inanalysis == 0, 8, -8))) +
-  xlab('Probability of Being in the Analysis') +
-  ylab('N') +
-  ggtitle('Propensity Score Distribution by Group') +
-  scale_fill_discrete(name = "", labels = c("Counties in States With Abortion Data", "Counties in States Without Abortion Data")) +
-  scale_x_continuous(breaks = seq(0, 1, 0.05)) +
-  theme(legend.position = 'bottom', legend.direction = 'vertical',
-        axis.ticks.y = element_blank(),
-        axis.text.y = element_blank())
+# ggplot(df, aes(x = ps, fill = inanalysislabel, color = inanalysislabel)) +
+#   geom_histogram(alpha = 0.3, position = 'identity', bins=15) +
+#   facet_grid(as.factor(inanalysis) ~ .) +
+#   xlab('Probability of Being in the Analysis') +
+#   ggtitle('Propensity Score Distribution by Group') +
+#   scale_fill_discrete('') +
+#   scale_color_discrete('') +
+#   theme(legend.position = 'bottom', legend.direction = 'vertical')
+# 
+# df %>%
+#   mutate(ps.grp = round(ps/0.05) * 0.05) %>%
+#   group_by(inanalysis, ps.grp) %>%
+#   summarize(n = n()) %>%
+#   ungroup() %>%
+#   mutate(n2 = ifelse(inanalysis == 0, yes = n, no =  -1*n)) %>%
+#   ggplot(aes(x = ps.grp, y = n2, fill = as.factor(inanalysis))) +
+#   geom_bar(stat = 'identity', position = 'identity') +
+#   geom_text(aes(label = n, x = ps.grp, y = n2 + ifelse(inanalysis == 0, 8, -8))) +
+#   xlab('Probability of Being in the Analysis') +
+#   ylab('N') +
+#   ggtitle('Propensity Score Distribution by Group') +
+#   scale_fill_discrete(name = "", labels = c("Counties in States With Abortion Data", "Counties in States Without Abortion Data")) +
+#   scale_x_continuous(breaks = seq(0, 1, 0.05)) +
+#   theme(legend.position = 'bottom', legend.direction = 'vertical',
+#         axis.ticks.y = element_blank(),
+#         axis.text.y = element_blank())
 
 ```
 

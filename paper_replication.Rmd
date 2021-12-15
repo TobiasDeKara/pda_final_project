@@ -3,7 +3,6 @@ title: "paper_replication"
 output: pdf_document
 ---
 REPLICATION:
-TODO: t tests for the demographic info for table 2 <- Toby
 TODO: averages of averages vs. averages for table 2 
 TODO: possibly email Alice asking about this county vs. state table 2 issue <- Jo 
 TODO: write up <- Toby
@@ -287,6 +286,68 @@ countydemanalysis <- countydem %>% filter(inanalysis == 1)
 
 model <- lm(AbortionRate2010 ~ restrictionlevel + distancetoprovider + restrictionlevel*distancetoprovider, data = countydemanalysis, weights = ps)
 summary(model)
+
+```
+
+```{r}
+natality <- read.delim("natalitydata.txt")
+maternalmortality <- read.delim("maternalmortality.txt")
+infantdeath <- read.delim("infantdeathrecords.txt")
+
+infantdeath$County <- gsub(infantdeath$County, pattern = ", [[:print:]]*$", replacement = "")
+infantdeath$County <- gsub(infantdeath$County, pattern = " County", replacement = "")
+infantdeath$County <- str_to_title(infantdeath$County)
+infantdeath$County <- na_if(infantdeath$County, "")
+infantdeath <- infantdeath %>% filter(County != "Unidentified Counties")
+infantdeath$County <- gsub(infantdeath$County, pattern = " Parish", replacement = "")
+infantdeath$County <- gsub(infantdeath$County, pattern = "Borough", replacement = "Municipality")
+infantdeath$County <- gsub(infantdeath$County, pattern = " City", replacement = "")
+infantdeath$County[!(infantdeath$County %in% countydem$county)]
+infantdeath <- infantdeath %>% rename(state = State, county = County, infantdeathrate = Death.Rate)
+infantdeath <- infantdeath %>% dplyr::select(state, county, infantdeathrate)
+
+maternalmortality$County <- gsub(maternalmortality$County, pattern = ", [[:print:]]*$", replacement = "")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = " County", replacement = "")
+maternalmortality$County <- str_to_title(maternalmortality$County)
+maternalmortality$County <- na_if(maternalmortality$County, "")
+maternalmortality <- maternalmortality %>% filter(County != "Unidentified Counties")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = " Parish", replacement = "")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = "Borough", replacement = "Municipality")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = " City", replacement = "")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = "La Porte", replacement = "Laporte")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = "De Kalb", replacement = "Dekalb")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = "Mc Kean", replacement = "Mckean")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = "Municipality", replacement = "Borough")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = "Borough", replacement = "And Borough")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = "/", replacement = " ")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = " Census Area", replacement = "")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = " And", replacement = "")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)]
+
+maternalmortality <- maternalmortality %>% rename(state = State, county = County, maternaldeaths = Deaths, maternaldeathrate = Crude.Rate)
+maternalmortality <- maternalmortality %>% dplyr::select(state, county, maternaldeathrate)
+
+natality$County <- gsub(natality$County, pattern = ", [[:print:]]*$", replacement = "")
+natality$County <- gsub(natality$County, pattern = " County", replacement = "")
+natality$County <- str_to_title(natality$County)
+natality$County <- na_if(natality$County, "")
+natality <- natality %>% filter(County != "Unidentified Counties")
+natality$County <- gsub(natality$County, pattern = " Parish", replacement = "")
+natality$County <- gsub(natality$County, pattern = "Borough", replacement = "Municipality")
+natality$County <- gsub(natality$County, pattern = " City", replacement = "")
+natality$County <- gsub(natality$County, pattern = "La Porte", replacement = "Laporte")
+natality$County[!(natality$County %in% countydem$county)]
+natality <- natality %>% rename(state = State, county = County)
+natality <- natality %>% dplyr::select(state, county, Birth.Rate, Fertility.Rate)
+
+countydem <- left_join(countydem, infantdeath, by = c("state", "county"))
+countydem <- left_join(countydem, maternalmortality, by = c("state", "county"))
+countydem <- left_join(countydem, natality, by = c("state", "county"))
+
+sum(is.na(countydem$infantdeathrate)/nrow(countydem))
+countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Suppressed")
+sum(is.na(countydem$maternaldeathrate)/nrow(countydem))
+sum(is.na(countydem$Birth.Rate)/nrow(countydem))
 
 ```
 

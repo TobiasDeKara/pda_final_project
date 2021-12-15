@@ -282,7 +282,7 @@ df %>%
 
 ```{r}
 #run models
-countydemanalysis <- countydem %>% filter(inanalysis == 1)
+countydemanalysis <- df %>% filter(inanalysis == 1)
 
 model <- lm(AbortionRate2010 ~ restrictionlevel + distancetoprovider + restrictionlevel*distancetoprovider, data = countydemanalysis, weights = ps)
 summary(model)

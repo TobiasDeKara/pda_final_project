@@ -3,11 +3,9 @@ title: "paper_replication"
 output: pdf_document
 ---
 REPLICATION:
-TODO: make sure all the counties match/are represented <- Jo
 TODO: t tests for the demographic info for table 2 <- Toby
 TODO: averages of averages vs. averages for table 2 
 TODO: possibly email Alice asking about this county vs. state table 2 issue <- Jo 
-TODO: change variable name bc it's awful <- Jo
 TODO: write up <- Toby
 TODO: find abortion data used by Brown et al. to compare in discussion <- Toby
 
@@ -42,12 +40,7 @@ countypres <- read.csv("countypres.csv")
 
 
 ```{r}
-########### calculate abortion rates in 2010 ###########
-
-#filter abortion rate data to only 2010
-abortions2010 <- abortions %>% dplyr::select(state, county, X2010)
-
-# clean countydem data to make counties and states match those in abortion count data 
+########### clean county dem data ###########
 countydem <- read.csv("county_demographics.csv")
 
 for (i in 1:nrow(countydem)) {
@@ -63,9 +56,24 @@ for (i in 1:nrow(countydem)) {
   countydem$state.abb[i] <- state.abb[which(state.name == countydem$state[i])]
 }
 
-abortions2010$county <- str_to_title(abortions2010$county)
 countydem$county <- str_to_title(countydem$county)
 
+```
+
+
+```{r}
+########### calculate abortion rates in 2010 ###########
+
+#filter abortion rate data to only 2010
+abortions2010 <- abortions %>% dplyr::select(state, county, X2010)
+
+length(unique(abortions2010$state)) #only 42 states in abortion data
+
+#look at percent missing abortion counts by state
+aggregate(X2010 ~ state, data = abortions2010, function(x) {sum(!(is.na(x)))/length(x)}, na.action = NULL)
+
+# clean abortion data to make counties and states match county dem data
+abortions2010$county <- str_to_title(abortions2010$county)
 abortions2010$county <- gsub(abortions2010$county, pattern = "[()]", replacement = "")
 abortions2010$county <- gsub(abortions2010$county, pattern = "Ind. City", replacement = "City")
 abortions2010$county <- gsub(abortions2010$county, pattern = "Saint", replacement = "St.")
@@ -75,17 +83,7 @@ abortions2010$county <- gsub(abortions2010$county, pattern = "Kaua'i", replaceme
 abortions2010$county <- gsub(abortions2010$county, pattern = "St.e Genevieve", replacement = "Ste. Genevieve")
 abortions2010$county <- gsub(abortions2010$county, pattern = "Shannon/Oglala Lakota", replacement = "Oglala Lakota")
 
-#Add number of women to abortion count data
-for (i in 1:nrow(abortions2010)) {
-  if (length(countydem$Women[countydem$state.abb == abortions2010$state[i] & countydem$county == abortions2010$county[i]]) == 0) {
-    abortions2010$Women[i] <- NA
-  }
-  else {
-    abortions2010$Women[i] <- countydem$Women[countydem$state.abb == abortions2010$state[i] & countydem$county == abortions2010$county[i]]
-  }
-}
-
-#fix NA values
+#fix NA values and make abortion counts numeric
 abortions2010$X2010 <- na_if(abortions2010$X2010, "?")
 abortions2010$X2010 <- na_if(abortions2010$X2010, "")
 abortions2010$X2010 <- as.numeric(abortions2010$X2010)
@@ -93,22 +91,29 @@ abortions2010$X2010 <- as.numeric(abortions2010$X2010)
 #remove non-counties
 abortions2010 <- abortions2010 %>% filter(!(county %in% c("Nonresidents", "Protected", "Other States", "Other Countries", "Non-Residents", "Other", "Nevada Protected", "Nevada Unspecified", "Nebraska Protected", "County", "Maryland")))
 
-#look at counties missing women pop data
-abortions2010missingwomen <- abortions2010[is.na(abortions2010$Women), ]
-#DeWitt, Bedford city, Clifton Forge city in abortion rate data  but not county dem data
+#look at counties in abortion data but not countydem data
+abortions2010$county[!(abortions2010$county %in% countydem$county)]
+#"St. Louis County", "Bedford City", "Clifton Forge City"
 
-#calculate abortion rates
-abortions2010 <- abortions2010 %>% mutate(rate = X2010/Women)
+#look at counties in countydem data but not abortion data
+countydem$county[!(countydem$county %in% abortions2010$county)] #many 
+unique(countydem$state.abb[!(countydem$state.abb %in% abortions2010$state)]) #"AK" "CT" "IA" "LA" "MA" "NH" "NM" "WY"
 
 #Add abortion counts to county data
 for (i in 1:nrow(countydem)) {
-  if (length(abortions2010$rate[abortions2010$state == countydem$state.abb[i] & abortions2010$county == countydem$county[i]]) == 0) {
-    countydem$AbortionRate2010[i] <- NA
+  if (length(abortions2010$X2010[abortions2010$state == countydem$state.abb[i] & abortions2010$county == countydem$county[i]]) == 0) {
+    countydem$AbortionCount2010[i] <- NA
   }
   else {
-    countydem$AbortionRate2010[i] <- abortions2010$rate[abortions2010$state == countydem$state.abb[i] & abortions2010$county == countydem$county[i]]
+    countydem$AbortionCount2010[i] <- abortions2010$X2010[abortions2010$state == countydem$state.abb[i] & abortions2010$county == countydem$county[i]]
   }
 }
+
+#calculate abortion rates
+countydem <- countydem %>% mutate(AbortionRate2010 = AbortionCount2010/Women)
+
+#look at percent missing abortion rates by state
+aggregate(AbortionRate2010 ~ state, data = countydem, function(x) {sum(!(is.na(x)))/length(x)}, na.action = NULL)
 
 ```
 
@@ -123,13 +128,16 @@ countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "
 countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = "Saint", replacement = "St.")
 countypresdem2008$county_name <- gsub(countypresdem2008$county_name, pattern = " County", replacement = "")
 
-missingcounties <- countypresdem2008[!(countypresdem2008$county_name %in% countydem$county), ]
-
+missingcounties <- countypresdem2008[!(countypresdem2008$county_name %in% countydem$county), ] #all of AK and a few others (DC, Dona Ana New Mexico, Kansas City Missouri, Maine Uocava Maine, Federal Precinct Rhode Island)
 
 countypresdem2008 <- countypresdem2008 %>% mutate(percentdem2008 = candidatevotes/totalvotes) 
 countypresdem2008 <- countypresdem2008 %>% rename(state.abb = state_po, county = county_name) %>% dplyr::select(state.abb, county, percentdem2008)
 
 countydem <- left_join(countydem, countypresdem2008, by = c("state.abb", "county"))
+
+#look at percent missing dem vote by state
+aggregate(percentdem2008 ~ state, data = countydem, function(x) {sum(!(is.na(x)))/length(x)}, na.action = NULL)
+
 ```
 
 ```{r}
@@ -142,13 +150,30 @@ for (i in 1:nrow(countycentroids)) {
   countycentroids$distancetoprovider[i] <- min(dists)
 }
 
+countycentroids <- countycentroids %>% rename(county = COUNAME, state = STNAME)
+countycentroids$county <- str_to_title(countycentroids$county)
+countycentroids <- countycentroids %>% select(county, state, distancetoprovider)
+countycentroids <- countycentroids %>% filter(state != "Puerto Rico")
+countycentroids$county <- gsub(countycentroids$county, pattern = " City", replacement = "")
+
+missingcounties <- countycentroids[!(countycentroids$county %in% countydem$county), ] #Alaska and DC
+
+countydem <- left_join(countydem, countycentroids, by = c("state", "county"))
+
+#look at percent missing distance by state
+aggregate(distancetoprovider ~ state, data = countydem, function(x) {sum(!(is.na(x)))/length(x)}, na.action = NULL)
+
 ```
 
 ```{r}
 #make new variable for high vs. low restrictions
 restrictions <- restrictions %>% mutate(totalrestrict = parental_involvement + two_trips + trap + unconstitutional_ban, 
-                                        highorlow = case_when(totalrestrict >= 3 ~ "high", 
+                                        restrictionlevel = case_when(totalrestrict >= 3 ~ "high", 
                                                               totalrestrict < 3 ~ "low"))
+restrictions$state[!(restrictions$state %in% countydem$state)] #none
+countydem <- left_join(countydem, restrictions, by = "state")
+countydem$restrictionlevel <- factor(countydem$restrictionlevel, levels = c("low", "high"))
+
 ```
 
 ```{r}
@@ -207,6 +232,7 @@ table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispa
 
 
 ```{r}
+#calculate propensity scores
 propensitywts <- glm(inanalysis ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008, data=countydem, family=binomial())
 summary(propensitywts)
 
@@ -255,19 +281,12 @@ df %>%
 
 ```
 
-
 ```{r}
-countydemanalysis <- df %>% filter(inanalysis == 1)
-countydemanalysis <- left_join(countydemanalysis, restrictions, by = "state")
-countycentroids <- countycentroids %>% rename(county = COUNAME, state = STNAME)
-countycentroids$county <- str_to_title(countycentroids$county)
-countycentroids <- countycentroids %>% select(county, state, distancetoprovider)
-countydemanalysis <- left_join(countydemanalysis, countycentroids, by = c("state", "county"))
+#run models
+countydemanalysis <- countydem %>% filter(inanalysis == 1)
 
-countydemanalysis$highorlow <- factor(countydemanalysis$highorlow, levels = c("low", "high"))
-model <- lm(AbortionRate2010 ~ highorlow + distancetoprovider + highorlow*distancetoprovider, data = countydemanalysis, weights = ps)
+model <- lm(AbortionRate2010 ~ restrictionlevel + distancetoprovider + restrictionlevel*distancetoprovider, data = countydemanalysis, weights = ps)
 summary(model)
-
 
 ```
 

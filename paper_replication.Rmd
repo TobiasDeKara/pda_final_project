@@ -151,7 +151,7 @@ for (i in 1:nrow(countycentroids)) {
 
 countycentroids <- countycentroids %>% rename(county = COUNAME, state = STNAME)
 countycentroids$county <- str_to_title(countycentroids$county)
-countycentroids <- countycentroids %>% select(county, state, distancetoprovider)
+countycentroids <- countycentroids %>% dplyr::select(county, state, distancetoprovider)
 countycentroids <- countycentroids %>% filter(state != "Puerto Rico")
 countycentroids$county <- gsub(countycentroids$county, pattern = " City", replacement = "")
 

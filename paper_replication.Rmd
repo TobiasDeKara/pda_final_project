@@ -302,6 +302,7 @@ table_3 <- tibble(Characteristic = "Highly Restrictive Legislation",
                   "p-value" = c('< 0.001')) %>% 
   kbl(caption = "Table 3: Change in Abortions per 1000 Women in Model without Distances", 
           digits = 3)
+print(table_3)
 
 p <- summ_dist$coefficients[4,4] %>% round(3)
 table_4 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",

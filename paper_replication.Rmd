@@ -3,17 +3,23 @@ title: "paper_replication"
 output: pdf_document
 ---
 REPLICATION:
-TODO: t tests for the demographic info for table 2 <- Toby
-TODO: averages of averages vs. averages for table 2 
-TODO: possibly email Alice asking about this county vs. state table 2 issue <- Jo 
-TODO: write up <- Toby
+TODO: averages of averages vs. averages for table 2
+
+TODO: the paper says "all models included state and year fixed effects and standard errors adjusted for state-level clustering" -> does this mean we need to include states as a variable in our model?
+-- No, they did that because they were doing the longitudinal analysis, so like abortion rates in a given state for one year are not independent of the next, so they're accounting for that.
+
+TODO: the paper says "We addressed data gaps in demographic variables by using the estimate from the nearest year for which an estimate was available", so we need to include this methodology
+TODO: bias analysis as done in the paper, comparing Guttmacher Census State Data to our State Data
+TODO: run the models without the distance variable as well as with the distance variable as the outcome, as done in the paper
+TODO: write up everything: we need to follow the format of the original paper <- Toby
 TODO: find abortion data used by Brown et al. to compare in discussion <- Toby
 
 EXTENSION:
-TODO: use all counties we have data on instead of just those 18 states
-TODO: rescore the high vs. low restriction variable to make it make more sense
-TODO: add in rural vs urban, % college grad, more variables do a quick variable selection
-TODO: repeat for mortality and fertility <- Jo look for this data 
+TODO: write literature review and describe motivation for extension
+TODO: figure out what is happening with the propensity scores for the extension analyses
+TODO: decide whether to rescore the high vs. low restriction variable as a factor or an integer (currently coded as the latter)
+TODO: add in rural vs urban variable
+TODO: look at Hawkins et al paper linked in the original paper to see what mortality data they used. consider using mortality data by state.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load packages
@@ -152,7 +158,7 @@ for (i in 1:nrow(countycentroids)) {
 
 countycentroids <- countycentroids %>% rename(county = COUNAME, state = STNAME)
 countycentroids$county <- str_to_title(countycentroids$county)
-countycentroids <- countycentroids %>% select(county, state, distancetoprovider)
+countycentroids <- countycentroids %>% dplyr::select(county, state, distancetoprovider)
 countycentroids <- countycentroids %>% filter(state != "Puerto Rico")
 countycentroids$county <- gsub(countycentroids$county, pattern = " City", replacement = "")
 
@@ -277,15 +283,535 @@ df %>%
         axis.ticks.y = element_blank(),
         axis.text.y = element_blank())
 
-  
-
 ```
 
 ```{r}
 #run models
-countydemanalysis <- countydem %>% filter(inanalysis == 1)
+countydemanalysis <- df %>% filter(inanalysis == 1)
 
 model <- lm(AbortionRate2010 ~ restrictionlevel + distancetoprovider + restrictionlevel*distancetoprovider, data = countydemanalysis, weights = ps)
+summary(model)
+
+```
+
+```{r}
+####### add in natality, maternalmortality, and infantdeath data #######
+natality <- read.delim("natalitydata.txt")
+maternalmortality <- read.delim("maternalmortality.txt")
+infantdeath <- read.delim("infantdeathrecords.txt")
+
+infantdeath$County <- gsub(infantdeath$County, pattern = ", [[:print:]]*$", replacement = "")
+infantdeath$County <- gsub(infantdeath$County, pattern = " County", replacement = "")
+infantdeath$County <- str_to_title(infantdeath$County)
+infantdeath$County <- na_if(infantdeath$County, "")
+infantdeath <- infantdeath %>% filter(County != "Unidentified Counties")
+infantdeath$County <- gsub(infantdeath$County, pattern = " Parish", replacement = "")
+infantdeath$County <- gsub(infantdeath$County, pattern = "Borough", replacement = "Municipality")
+infantdeath$County <- gsub(infantdeath$County, pattern = " City", replacement = "")
+infantdeath$County[!(infantdeath$County %in% countydem$county)]
+infantdeath <- infantdeath %>% rename(state = State, county = County, infantdeathrate = Death.Rate)
+infantdeath <- infantdeath %>% dplyr::select(state, county, infantdeathrate)
+
+maternalmortality$County <- gsub(maternalmortality$County, pattern = ", [[:print:]]*$", replacement = "")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = " County", replacement = "")
+maternalmortality$County <- str_to_title(maternalmortality$County)
+maternalmortality$County <- na_if(maternalmortality$County, "")
+maternalmortality <- maternalmortality %>% filter(County != "Unidentified Counties")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = " Parish", replacement = "")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = "Borough", replacement = "Municipality")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = " City", replacement = "")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = "La Porte", replacement = "Laporte")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = "De Kalb", replacement = "Dekalb")
+maternalmortality$County <- gsub(maternalmortality$County, pattern = "Mc Kean", replacement = "Mckean")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = "Municipality", replacement = "Borough")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = "Borough", replacement = "And Borough")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = "/", replacement = " ")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = " Census Area", replacement = "")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = " And", replacement = "")
+maternalmortality$County[!(maternalmortality$County %in% countydem$county)]
+
+maternalmortality <- maternalmortality %>% rename(state = State, county = County, maternaldeaths = Deaths, maternaldeathrate = Crude.Rate)
+maternalmortality <- maternalmortality %>% dplyr::select(state, county, maternaldeathrate)
+
+natality$County <- gsub(natality$County, pattern = ", [[:print:]]*$", replacement = "")
+natality$County <- gsub(natality$County, pattern = " County", replacement = "")
+natality$County <- str_to_title(natality$County)
+natality$County <- na_if(natality$County, "")
+natality <- natality %>% filter(County != "Unidentified Counties")
+natality$County <- gsub(natality$County, pattern = " Parish", replacement = "")
+natality$County <- gsub(natality$County, pattern = "Borough", replacement = "Municipality")
+natality$County <- gsub(natality$County, pattern = " City", replacement = "")
+natality$County <- gsub(natality$County, pattern = "La Porte", replacement = "Laporte")
+natality$County[!(natality$County %in% countydem$county)]
+natality <- natality %>% rename(state = State, county = County)
+natality <- natality %>% dplyr::select(state, county, Birth.Rate, Fertility.Rate)
+
+countydem <- left_join(countydem, infantdeath, by = c("state", "county"))
+countydem <- left_join(countydem, maternalmortality, by = c("state", "county"))
+countydem <- left_join(countydem, natality, by = c("state", "county"))
+
+sum(is.na(countydem$infantdeathrate)/nrow(countydem))
+countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Suppressed")
+countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Missing")
+
+sum(is.na(countydem$maternaldeathrate)/nrow(countydem))
+sum(is.na(countydem$Birth.Rate)/nrow(countydem))
+
+```
+
+```{r}
+#### recode restriction level and include all counties with abortion data in analysis ####
+
+countydem <- countydem %>% mutate(hasabortiondata = case_when(is.na(AbortionRate2010) ~ 0, 
+                                                              !(is.na(AbortionRate2010)) ~ 1))
+
+countydemanalysis <- countydem %>% filter(hasabortiondata == 1)
+
+summarytable <- countydem %>% group_by(state) %>% summarize(totalcounties = n())
+usedcounties <- aggregate(AbortionRate2010 ~ state, data = countydem, function(x) {sum(!(is.na(x)))}, na.action = NULL)
+summarytable <- left_join(summarytable, usedcounties, by = "state")
+summarytable
+summarytable %>% mutate(percent = AbortionRate2010/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Abortion Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Abortion Data Included in Analysis by State") %>% kable_styling()
+names(countydem)
+countydem <- countydem %>% mutate(Total = White + Black + Native.American + Asian + Hispanic, White.pct = White/Total, Black.pct = Black/Total, Native.American.pct = Native.American/Total, Asian.pct = Asian/Total, Hispanic.pct = Hispanic/Total, College.Grad.pct = College.Grad/Total)
+
+countydem$hasabortiondatalabel <- factor(countydem$hasabortiondata, levels = c(1, 0), labels = c("Counties in States With Abortion Data", "Counties in States Without Abortion Data"))
+
+label(countydem$Women) = "Women"
+label(countydem$White.pct) = "White"
+label(countydem$Black.pct) = "Black"
+label(countydem$Native.American.pct) = "Native American"
+label(countydem$Asian.pct) = "Asian"
+label(countydem$Hispanic.pct) = "Hispanic"
+label(countydem$Median.Income) = "Median Income"
+label(countydem$College.Grad.pct) = "College Graduates"
+label(countydem$percentdem2008) = "Voting for the Democratic candidate in the most recent presidential election"
+
+units(countydem$Women) = "No."
+units(countydem$White.pct) = "%"
+units(countydem$Black.pct) = "%"
+units(countydem$Native.American.pct) = "%"
+units(countydem$Asian.pct) = "%"
+units(countydem$Hispanic.pct) = "%"
+units(countydem$Median.Income) = "$"
+units(countydem$College.Grad.pct) = "%"
+units(countydem$percentdem2008) = "%"
+
+# The following function is based on 
+# "Using the table1 Package to Create HTML Tables of Descriptive Statistics"
+# by Benjamin Rich.  Available at:
+# https://cran.r-project.org/web/packages/table1/vignettes/table1-examples.html#example-a-column-of-p-values
+p_value_t_test <- function(x, ...){
+    y <- unlist(x[1:2])
+    g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
+    p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
+    p_value <- ifelse(p_value == '0', '< 0.001', p_value)
+}
+
+table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasabortiondatalabel, 
+       data = countydem,
+       extra.col = list(`P-value` = p_value_t_test),
+       footnote = 'P-values are derived by two sample t-tests.'
+       )
+
+
+#calculate propensity scores
+#include education this time
+propensitywts <- glm(hasabortiondata ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008 + College.Grad.pct, data=countydem, family=binomial())
+summary(propensitywts)
+
+p.score <- predict(propensitywts, countydem, type = "response")
+df <- countydem
+df$ps <- p.score
+
+#3 plots of distribution of propensity scores 
+
+ggplot(df, aes(x = ps, group = hasabortiondatalabel)) + geom_density(aes(fill = hasabortiondatalabel), alpha = 0.2) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  ylab("Density")
+
+
+ggplot(df, aes(x = ps, fill = hasabortiondatalabel, color = hasabortiondatalabel)) +
+  geom_histogram(alpha = 0.3, position = 'identity', bins=15) +
+  facet_grid(as.factor(hasabortiondata) ~ .) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  scale_color_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical')
+
+df %>%
+  mutate(ps.grp = round(ps/0.05) * 0.05) %>%
+  group_by(hasabortiondata, ps.grp) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  mutate(n2 = ifelse(hasabortiondata == 0, yes = n, no =  -1*n)) %>%
+  ggplot(aes(x = ps.grp, y = n2, fill = as.factor(hasabortiondata))) +
+  geom_bar(stat = 'identity', position = 'identity') +
+  geom_text(aes(label = n, x = ps.grp, y = n2 + ifelse(hasabortiondata == 0, 8, -8))) +
+  xlab('Probability of Being in the Analysis') +
+  ylab('N') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete(name = "", labels = c("Counties in States With Abortion Data", "Counties in States Without Abortion Data")) +
+  scale_x_continuous(breaks = seq(0, 1, 0.05)) +
+  theme(legend.position = 'bottom', legend.direction = 'vertical',
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+
+#run model
+countydemanalysis <- df %>% filter(hasabortiondata == 1)
+
+model <- lm(AbortionRate2010 ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = countydemanalysis, weights = ps)
+summary(model)
+
+```
+
+```{r}
+###further clean up maternaldeathrate, infantdeathrate, birthrate, and fertilityrate data ####
+countydem$maternaldeathrate <- gsub(countydem$maternaldeathrate, pattern = "[()]", replacement = "")
+countydem$maternaldeathrate <- gsub(countydem$maternaldeathrate, pattern = "Unreliable", replacement = "")
+countydem$maternaldeathrate <- as.numeric(countydem$maternaldeathrate)
+hist(countydem$maternaldeathrate)
+
+countydem$infantdeathrate <- na_if(countydem$infantdeathrate, "Missing County")
+countydem$infantdeathrate <- gsub(countydem$infantdeathrate, pattern = "[()]", replacement = "")
+countydem$infantdeathrate <- gsub(countydem$infantdeathrate, pattern = "Unreliable", replacement = "")
+countydem$infantdeathrate <- as.numeric(countydem$infantdeathrate)
+hist(countydem$infantdeathrate)
+
+countydem$Birth.Rate <- na_if(countydem$Birth.Rate, "Missing County")
+countydem$Birth.Rate <- as.numeric(countydem$Birth.Rate)
+hist(countydem$Birth.Rate)
+
+countydem$Fertility.Rate <- na_if(countydem$Fertility.Rate, "Missing County")
+countydem$Fertility.Rate <- as.numeric(countydem$Fertility.Rate)
+hist(countydem$Fertility.Rate)
+
+```
+```{r}
+### repeat analysis for infant death rate ###
+countydem <- countydem %>% mutate(hasinfantdeathdata = case_when(is.na(countydem$infantdeathrate) ~ 0, 
+                                                              !(is.na(countydem$infantdeathrate)) ~ 1))
+
+countydeminfantdeathanalysis <- countydem %>% filter(hasinfantdeathdata == 1)
+
+summarytable <- countydem %>% group_by(state) %>% summarize(totalcounties = n())
+usedcounties <- aggregate(infantdeathrate ~ state, data = countydem, function(x) {sum(!(is.na(x)))}, na.action = NULL)
+summarytable <- left_join(summarytable, usedcounties, by = "state")
+summarytable %>% mutate(percent = infantdeathrate/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Data Included in Analysis by State") %>% kable_styling()
+names(countydem)
+countydem <- countydem %>% mutate(Total = White + Black + Native.American + Asian + Hispanic, White.pct = White/Total, Black.pct = Black/Total, Native.American.pct = Native.American/Total, Asian.pct = Asian/Total, Hispanic.pct = Hispanic/Total, College.Grad.pct = College.Grad/Total)
+
+countydem$hasinfantdeathdatalabel <- factor(countydem$hasinfantdeathdata, levels = c(1, 0), labels = c("Counties in States With Data", "Counties in States Without Data"))
+
+label(countydem$Women) = "Women"
+label(countydem$White.pct) = "White"
+label(countydem$Black.pct) = "Black"
+label(countydem$Native.American.pct) = "Native American"
+label(countydem$Asian.pct) = "Asian"
+label(countydem$Hispanic.pct) = "Hispanic"
+label(countydem$Median.Income) = "Median Income"
+label(countydem$College.Grad.pct) = "College Graduates"
+label(countydem$percentdem2008) = "Voting for the Democratic candidate in the most recent presidential election"
+
+units(countydem$Women) = "No."
+units(countydem$White.pct) = "%"
+units(countydem$Black.pct) = "%"
+units(countydem$Native.American.pct) = "%"
+units(countydem$Asian.pct) = "%"
+units(countydem$Hispanic.pct) = "%"
+units(countydem$Median.Income) = "$"
+units(countydem$College.Grad.pct) = "%"
+units(countydem$percentdem2008) = "%"
+
+p_value_t_test <- function(x, ...){
+    y <- unlist(x[1:2])
+    g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
+    p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
+    p_value <- ifelse(p_value == '0', '< 0.001', p_value)
+}
+
+print(table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasinfantdeathdatalabel, 
+       data = countydem,
+       extra.col = list(`P-value` = p_value_t_test),
+       footnote = 'P-values are derived by two sample t-tests.'
+       ))
+
+
+#calculate propensity scores
+#include education this time
+propensitywts <- glm(hasinfantdeathdata ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008 + College.Grad.pct, data=countydem, family=binomial())
+
+p.score <- predict(propensitywts, countydem, type = "response")
+df <- countydem
+df$ps <- p.score
+
+#3 plots of distribution of propensity scores 
+
+plot1 <- ggplot(df, aes(x = ps, group = hasinfantdeathdatalabel)) + geom_density(aes(fill = hasinfantdeathdatalabel), alpha = 0.2) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  ylab("Density")
+print(plot1)
+
+plot2 <- ggplot(df, aes(x = ps, fill = hasinfantdeathdatalabel, color = hasinfantdeathdatalabel)) +
+  geom_histogram(alpha = 0.3, position = 'identity', bins=15) +
+  facet_grid(as.factor(hasinfantdeathdata) ~ .) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  scale_color_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical')
+print(plot2)
+
+plot3 <- df %>%
+  mutate(ps.grp = round(ps/0.05) * 0.05) %>%
+  group_by(hasinfantdeathdata, ps.grp) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  mutate(n2 = ifelse(hasinfantdeathdata == 0, yes = n, no =  -1*n)) %>%
+  ggplot(aes(x = ps.grp, y = n2, fill = as.factor(hasinfantdeathdata))) +
+  geom_bar(stat = 'identity', position = 'identity') +
+  geom_text(aes(label = n, x = ps.grp, y = n2 + ifelse(hasinfantdeathdata == 0, 8, -8))) +
+  xlab('Probability of Being in the Analysis') +
+  ylab('N') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete(name = "", labels = c("Counties in States With Data", "Counties in States Without Data")) +
+  scale_x_continuous(breaks = seq(0, 1, 0.05)) +
+  theme(legend.position = 'bottom', legend.direction = 'vertical',
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+print(plot3)
+
+#run model
+countydeminfantdeathanalysis <- df %>% filter(hasinfantdeathdata == 1)
+
+model <- lm(infantdeathrate ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = countydeminfantdeathanalysis, weights = ps)
+summary(model)
+
+
+```
+
+
+```{r}
+### repeat analysis for birth rate ###
+
+countydem <- countydem %>% mutate(hasbirthratedata = case_when(is.na(countydem$Birth.Rate) ~ 0, 
+                                                              !(is.na(countydem$Birth.Rate)) ~ 1))
+
+countydembirthrateanalysis <- countydem %>% filter(hasbirthratedata == 1)
+
+summarytable <- countydem %>% group_by(state) %>% summarize(totalcounties = n())
+usedcounties <- aggregate(Birth.Rate ~ state, data = countydem, function(x) {sum(!(is.na(x)))}, na.action = NULL)
+usedcounties
+summarytable <- left_join(summarytable, usedcounties, by = "state")
+summarytable
+summarytable %>% mutate(percent = Birth.Rate/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Data Included in Analysis by State") %>% kable_styling()
+names(countydem)
+countydem <- countydem %>% mutate(Total = White + Black + Native.American + Asian + Hispanic, White.pct = White/Total, Black.pct = Black/Total, Native.American.pct = Native.American/Total, Asian.pct = Asian/Total, Hispanic.pct = Hispanic/Total, College.Grad.pct = College.Grad/Total)
+
+countydem$hasbirthratedatalabel <- factor(countydem$hasbirthratedata, levels = c(1, 0), labels = c("Counties in States With Data", "Counties in States Without Data"))
+
+label(countydem$Women) = "Women"
+label(countydem$White.pct) = "White"
+label(countydem$Black.pct) = "Black"
+label(countydem$Native.American.pct) = "Native American"
+label(countydem$Asian.pct) = "Asian"
+label(countydem$Hispanic.pct) = "Hispanic"
+label(countydem$Median.Income) = "Median Income"
+label(countydem$College.Grad.pct) = "College Graduates"
+label(countydem$percentdem2008) = "Voting for the Democratic candidate in the most recent presidential election"
+
+units(countydem$Women) = "No."
+units(countydem$White.pct) = "%"
+units(countydem$Black.pct) = "%"
+units(countydem$Native.American.pct) = "%"
+units(countydem$Asian.pct) = "%"
+units(countydem$Hispanic.pct) = "%"
+units(countydem$Median.Income) = "$"
+units(countydem$College.Grad.pct) = "%"
+units(countydem$percentdem2008) = "%"
+
+p_value_t_test <- function(x, ...){
+    y <- unlist(x[1:2])
+    g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
+    p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
+    p_value <- ifelse(p_value == '0', '< 0.001', p_value)
+}
+
+print(table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasbirthratedatalabel, 
+       data = countydem,
+       extra.col = list(`P-value` = p_value_t_test),
+       footnote = 'P-values are derived by two sample t-tests.'
+       ))
+
+
+#calculate propensity scores
+#include education this time
+propensitywts <- glm(hasbirthratedata ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008 + College.Grad.pct, data=countydem, family=binomial())
+summary(propensitywts)
+
+p.score <- predict(propensitywts, countydem, type = "response")
+df <- countydem
+df$ps <- p.score
+#3 plots of distribution of propensity scores 
+
+plot1 <- ggplot(df, aes(x = ps, group = hasbirthratedatalabel)) + geom_density(aes(fill = hasbirthratedatalabel), alpha = 0.2) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  ylab("Density")
+print(plot1)
+
+plot2 <- ggplot(df, aes(x = ps, fill = hasbirthratedatalabel, color = hasbirthratedatalabel)) +
+  geom_histogram(alpha = 0.3, position = 'identity', bins=15) +
+  facet_grid(as.factor(hasbirthratedata) ~ .) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  scale_color_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical')
+print(plot2)
+
+plot3 <- df %>%
+  mutate(ps.grp = round(ps/0.05) * 0.05) %>%
+  group_by(hasbirthratedata, ps.grp) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  mutate(n2 = ifelse(hasbirthratedata == 0, yes = n, no =  -1*n)) %>%
+  ggplot(aes(x = ps.grp, y = n2, fill = as.factor(hasbirthratedata))) +
+  geom_bar(stat = 'identity', position = 'identity') +
+  geom_text(aes(label = n, x = ps.grp, y = n2 + ifelse(hasbirthratedata == 0, 8, -8))) +
+  xlab('Probability of Being in the Analysis') +
+  ylab('N') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete(name = "", labels = c("Counties in States With Data", "Counties in States Without Data")) +
+  scale_x_continuous(breaks = seq(0, 1, 0.05)) +
+  theme(legend.position = 'bottom', legend.direction = 'vertical',
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+print(plot3)
+
+#run model
+countydembirthrateanalysis <- df %>% filter(hasbirthratedata == 1)
+
+model <- lm(Birth.Rate ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = countydembirthrateanalysis, weights = ps)
+summary(model)
+
+
+test <- countydembirthrateanalysis %>% filter(ps > 0.9999999)
+```
+
+```{r}
+### repeat analysis for fertility rate ###
+
+countydem <- countydem %>% mutate(hasfertilityratedata = case_when(is.na(countydem$Fertility.Rate) ~ 0, 
+                                                              !(is.na(countydem$Fertility.Rate)) ~ 1))
+
+countydemfertilityrateanalysis <- countydem %>% filter(hasfertilityratedata == 1)
+
+summarytable <- countydem %>% group_by(state) %>% summarize(totalcounties = n())
+usedcounties <- aggregate(Fertility.Rate ~ state, data = countydem, function(x) {sum(!(is.na(x)))}, na.action = NULL)
+usedcounties
+summarytable <- left_join(summarytable, usedcounties, by = "state")
+summarytable
+summarytable %>% mutate(percent = Fertility.Rate/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Data Included in Analysis by State") %>% kable_styling()
+names(countydem)
+countydem <- countydem %>% mutate(Total = White + Black + Native.American + Asian + Hispanic, White.pct = White/Total, Black.pct = Black/Total, Native.American.pct = Native.American/Total, Asian.pct = Asian/Total, Hispanic.pct = Hispanic/Total, College.Grad.pct = College.Grad/Total)
+
+countydem$hasfertilityratedatalabel <- factor(countydem$hasfertilityratedata, levels = c(1, 0), labels = c("Counties in States With Data", "Counties in States Without Data"))
+
+label(countydem$Women) = "Women"
+label(countydem$White.pct) = "White"
+label(countydem$Black.pct) = "Black"
+label(countydem$Native.American.pct) = "Native American"
+label(countydem$Asian.pct) = "Asian"
+label(countydem$Hispanic.pct) = "Hispanic"
+label(countydem$Median.Income) = "Median Income"
+label(countydem$College.Grad.pct) = "College Graduates"
+label(countydem$percentdem2008) = "Voting for the Democratic candidate in the most recent presidential election"
+
+units(countydem$Women) = "No."
+units(countydem$White.pct) = "%"
+units(countydem$Black.pct) = "%"
+units(countydem$Native.American.pct) = "%"
+units(countydem$Asian.pct) = "%"
+units(countydem$Hispanic.pct) = "%"
+units(countydem$Median.Income) = "$"
+units(countydem$College.Grad.pct) = "%"
+units(countydem$percentdem2008) = "%"
+
+p_value_t_test <- function(x, ...){
+    y <- unlist(x[1:2])
+    g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
+    p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
+    p_value <- ifelse(p_value == '0', '< 0.001', p_value)
+}
+
+print(table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasfertilityratedatalabel, 
+       data = countydem,
+       extra.col = list(`P-value` = p_value_t_test),
+       footnote = 'P-values are derived by two sample t-tests.'
+       ))
+
+
+#calculate propensity scores
+#include education this time
+propensitywts <- glm(hasfertilityratedata ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008 + College.Grad.pct, data=countydem, family=binomial())
+summary(propensitywts)
+
+p.score <- predict(propensitywts, countydem, type = "response")
+df <- countydem
+df$ps <- p.score
+#3 plots of distribution of propensity scores 
+
+plot1 <- ggplot(df, aes(x = ps, group = hasfertilityratedatalabel)) + geom_density(aes(fill = hasfertilityratedatalabel), alpha = 0.2) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  ylab("Density")
+print(plot1)
+
+plot2 <- ggplot(df, aes(x = ps, fill = hasfertilityratedatalabel, color = hasfertilityratedatalabel)) +
+  geom_histogram(alpha = 0.3, position = 'identity', bins=15) +
+  facet_grid(as.factor(hasfertilityratedata) ~ .) +
+  xlab('Probability of Being in the Analysis') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete('') +
+  scale_color_discrete('') +
+  theme(legend.position = 'bottom', legend.direction = 'vertical')
+print(plot2)
+
+plot3 <- df %>%
+  mutate(ps.grp = round(ps/0.05) * 0.05) %>%
+  group_by(hasfertilityratedata, ps.grp) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  mutate(n2 = ifelse(hasfertilityratedata == 0, yes = n, no =  -1*n)) %>%
+  ggplot(aes(x = ps.grp, y = n2, fill = as.factor(hasfertilityratedata))) +
+  geom_bar(stat = 'identity', position = 'identity') +
+  geom_text(aes(label = n, x = ps.grp, y = n2 + ifelse(hasfertilityratedata == 0, 8, -8))) +
+  xlab('Probability of Being in the Analysis') +
+  ylab('N') +
+  ggtitle('Propensity Score Distribution by Group') +
+  scale_fill_discrete(name = "", labels = c("Counties in States With Data", "Counties in States Without Data")) +
+  scale_x_continuous(breaks = seq(0, 1, 0.05)) +
+  theme(legend.position = 'bottom', legend.direction = 'vertical',
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+print(plot3)
+
+#run model
+countydemfertilityrateanalysis <- df %>% filter(hasfertilityratedata == 1)
+
+model <- lm(Fertility.Rate ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = countydemfertilityrateanalysis, weights = ps)
 summary(model)
 
 ```

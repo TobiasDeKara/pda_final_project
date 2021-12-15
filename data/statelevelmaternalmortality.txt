@@ -1,0 +1,86 @@
+"Notes"	"State"	"State Code"	Deaths	Population	Crude Rate	% of Total Deaths
+	"Alabama"	"01"	Suppressed	4779736	Suppressed	Suppressed
+	"Alaska"	"02"	Suppressed	710231	Suppressed	Suppressed
+	"Arizona"	"04"	17	6392017	0.0 (Unreliable)	2.1%
+	"Arkansas"	"05"	13	2915918	0.0 (Unreliable)	1.6%
+	"California"	"06"	82	37253956	0.0	9.9%
+	"Colorado"	"08"	Suppressed	5029196	Suppressed	Suppressed
+	"Connecticut"	"09"	Suppressed	3574097	Suppressed	Suppressed
+	"Delaware"	"10"	Suppressed	897934	Suppressed	Suppressed
+	"District of Columbia"	"11"	Suppressed	601723	Suppressed	Suppressed
+	"Florida"	"12"	47	18801310	0.0	5.7%
+	"Georgia"	"13"	38	9687653	0.0	4.6%
+	"Hawaii"	"15"	Suppressed	1360301	Suppressed	Suppressed
+	"Idaho"	"16"	10	1567582	0.0 (Unreliable)	1.2%
+	"Illinois"	"17"	29	12830632	0.0	3.5%
+	"Indiana"	"18"	14	6483802	0.0 (Unreliable)	1.7%
+	"Iowa"	"19"	Suppressed	3046355	Suppressed	Suppressed
+	"Kansas"	"20"	11	2853118	0.0 (Unreliable)	1.3%
+	"Kentucky"	"21"	17	4339367	0.0 (Unreliable)	2.1%
+	"Louisiana"	"22"	Suppressed	4533372	Suppressed	Suppressed
+	"Maine"	"23"	Suppressed	1328361	Suppressed	Suppressed
+	"Maryland"	"24"	26	5773552	0.0	3.2%
+	"Massachusetts"	"25"	Suppressed	6547629	Suppressed	Suppressed
+	"Michigan"	"26"	47	9883640	0.0	5.7%
+	"Minnesota"	"27"	Suppressed	5303925	Suppressed	Suppressed
+	"Mississippi"	"28"	12	2967297	0.0 (Unreliable)	1.5%
+	"Missouri"	"29"	12	5988927	0.0 (Unreliable)	1.5%
+	"Montana"	"30"	Suppressed	989415	Suppressed	Suppressed
+	"Nebraska"	"31"	Suppressed	1826341	Suppressed	Suppressed
+	"Nevada"	"32"	Suppressed	2700551	Suppressed	Suppressed
+	"New Hampshire"	"33"	Suppressed	1316470	Suppressed	Suppressed
+	"New Jersey"	"34"	30	8791894	0.0	3.6%
+	"New Mexico"	"35"	Suppressed	2059179	Suppressed	Suppressed
+	"New York"	"36"	67	19378102	0.0	8.1%
+	"North Carolina"	"37"	10	9535483	0.0 (Unreliable)	1.2%
+	"North Dakota"	"38"	Suppressed	672591	Suppressed	Suppressed
+	"Ohio"	"39"	40	11536504	0.0	4.8%
+	"Oklahoma"	"40"	20	3751351	0.0	2.4%
+	"Oregon"	"41"	Suppressed	3831074	Suppressed	Suppressed
+	"Pennsylvania"	"42"	34	12702379	0.0	4.1%
+	"Rhode Island"	"44"	Suppressed	1052567	Suppressed	Suppressed
+	"South Carolina"	"45"	18	4625364	0.0 (Unreliable)	2.2%
+	"South Dakota"	"46"	Suppressed	814180	Suppressed	Suppressed
+	"Tennessee"	"47"	Suppressed	6346105	Suppressed	Suppressed
+	"Texas"	"48"	101	25145561	0.0	12.2%
+	"Utah"	"49"	Suppressed	2763885	Suppressed	Suppressed
+	"Vermont"	"50"	Suppressed	625741	Suppressed	Suppressed
+	"Virginia"	"51"	Suppressed	8001024	Suppressed	Suppressed
+	"Washington"	"53"	11	6724540	0.0 (Unreliable)	1.3%
+	"West Virginia"	"54"	Suppressed	1852994	Suppressed	Suppressed
+	"Wisconsin"	"55"	12	5686986	0.0 (Unreliable)	1.5%
+	"Wyoming"	"56"	Suppressed	563626	Suppressed	Suppressed
+"Total"			825	308745538	0.0	100.0%
+"---"
+"Dataset: Compressed Mortality, 1999-2016"
+"Query Parameters:"
+"ICD-10 Codes: O00-O99 (Pregnancy, childbirth and the puerperium)"
+"Year: 2010"
+"Group By: State"
+"Show Totals: True"
+"Show Zero Values: True"
+"Show Suppressed: True"
+"Calculate Rates Per: 1,000"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/cmf.html for more information."
+"---"
+"Query Date: Dec 15, 2021 3:19:23 PM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. Compressed Mortality File"
+"1999-2016 on CDC WONDER Online Database, released June 2017. Data are from the Compressed Mortality File 1999-2016 Series 20 No."
+"2U, 2016, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative"
+"Program. Accessed at http://wonder.cdc.gov/cmf-icd10.html on Dec 15, 2021 3:19:23 PM"
+"---"
+Caveats:
+"1. Due to confidentiality constraints, sub-national death counts and rates are suppressed when the number of deaths is less than"
+"10. Figures representing infant deaths and births have additional constraints for national and local data. More information:"
+"http://wonder.cdc.gov/wonder/help/cmf.html#Assurance of Confidentiality."
+"2. Death rates are flagged as Unreliable when the rate is calculated with a numerator of 20 or less. More information:"
+"http://wonder.cdc.gov/wonder/help/cmf.html#Unreliable."
+"3. About sub-national population figures for regions, divisions, states and counties: population figures for 1999 are from the"
+"1990-1999 series of bridged-race intercensal estimates of the July 1 resident population; population figures for 2000 and 2010"
+"are bridged-race April 1 census counts; population figures for 2001-2009 are from the revised 2000-2009 series of bridged-race"
+"intercensal estimates of the July 1 resident population; and population figures for 2011-2015 are bridged-race postcensal"
+"estimates of the July 1 resident population, from the Vintage 2015 series released by NCHS on June 28, 2016."
+"4. The population figures used in the calculation of death rates for the age group 'under 1 year' are the estimates of the"
+"resident population that is under one year of age. More information: http://wonder.cdc.gov/wonder/help/cmf.html#Age Group."

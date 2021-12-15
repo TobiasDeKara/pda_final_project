@@ -1,0 +1,80 @@
+"Notes"	"Standard Residence States"	"Standard Residence States Code"	Fetal Deaths	Percent of Total Deaths
+	"Alabama"	"01"	550	2.27
+	"Alaska"	"02"	50	0.21
+	"Arizona"	"04"	463	1.91
+	"Arkansas"	"05"	276	1.14
+	"California"	"06"	2576	10.62
+	"Colorado"	"08"	355	1.46
+	"Connecticut"	"09"	197	0.81
+	"Delaware"	"10"	68	0.28
+	"District of Columbia"	"11"	99	0.41
+	"Florida"	"12"	1512	6.23
+	"Georgia"	"13"	1091	4.50
+	"Hawaii"	"15"	134	0.55
+	"Idaho"	"16"	125	0.52
+	"Illinois"	"17"	915	3.77
+	"Indiana"	"18"	472	1.95
+	"Iowa"	"19"	199	0.82
+	"Kansas"	"20"	166	0.68
+	"Kentucky"	"21"	340	1.40
+	"Louisiana"	"22"	339	1.40
+	"Maine"	"23"	61	0.25
+	"Maryland"	"24"	539	2.22
+	"Massachusetts"	"25"	340	1.40
+	"Michigan"	"26"	620	2.56
+	"Minnesota"	"27"	350	1.44
+	"Mississippi"	"28"	414	1.71
+	"Missouri"	"29"	400	1.65
+	"Montana"	"30"	52	0.21
+	"Nebraska"	"31"	133	0.55
+	"Nevada"	"32"	226	0.93
+	"New Hampshire"	"33"	60	0.25
+	"New Jersey"	"34"	722	2.98
+	"New Mexico"	"35"	87	0.36
+	"New York"	"36"	2036	8.39
+	"North Carolina"	"37"	801	3.30
+	"North Dakota"	"38"	55	0.23
+	"Ohio"	"39"	826	3.41
+	"Oklahoma"	"40"	278	1.15
+	"Oregon"	"41"	228	0.94
+	"Pennsylvania"	"42"	993	4.09
+	"Rhode Island"	"44"	64	0.26
+	"South Carolina"	"45"	520	2.14
+	"South Dakota"	"46"	79	0.33
+	"Tennessee"	"47"	453	1.87
+	"Texas"	"48"	1924	7.93
+	"Utah"	"49"	290	1.20
+	"Vermont"	"50"	26	0.11
+	"Virginia"	"51"	749	3.09
+	"Washington"	"53"	497	2.05
+	"West Virginia"	"54"	112	0.46
+	"Wisconsin"	"55"	361	1.49
+	"Wyoming"	"56"	35	0.14
+"Total"			24258	100.00
+"---"
+"Dataset: Fetal Deaths, 2005-2019"
+"Query Parameters:"
+"Year: 2010"
+"Group By: Standard Residence States"
+"Show Totals: True"
+"Show Zero Values: True"
+"Show Suppressed: False"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/fetal-deaths.html for more information."
+"---"
+"Query Date: Dec 15, 2021 2:05:59 PM"
+"---"
+"Suggested Citation: United States Department of Health and Human Services (US DHHS), Centers for Disease Control and Prevention"
+"(CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics (DVS). Fetal Deaths 2005-2019, as compiled"
+"from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program, on CDC WONDER"
+"Online Database. Accessed at http://wonder.cdc.gov/fetal-deaths-current.html on Dec 15, 2021 2:05:59 PM"
+"---"
+Caveats:
+"1. Please note that the Percent of Total presented here may not be consistent with percentages published by NCHS. NCHS excludes"
+"fetal deaths categorized as ""Unknown"", ""Not Stated"", ""Not on Certificate"", ""Excluded"", and ""Not Reported"" from the"
+"denominator when calculating percentages."
+"2. Beginning in 2014, NCHS changed the standard for gestational period from the Last Menstrual Period (LMP) based gestational"
+"age to the Obstetric/clinical Estimate (OE) based gestational age. This change has resulted in a discontinuity in identifying"
+"fetal deaths at 20 weeks or greater for inclusion in this dataset. Refer to the User Guide to the Fetal Death Public Use File:"
+"https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm. and the Measuring Gestational Age in Vital Statistics Data:"
+"Transitioning to the Obstetric Estimate: https://www.cdc.gov/nchs/data/nvsr/nvsr64/nvsr64_05.pdf. report for more information."

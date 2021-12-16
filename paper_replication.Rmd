@@ -133,7 +133,7 @@ countydem <- left_join(countydem, countypresdem2008, by = c("state.abb", "county
 for (i in 1:nrow(countycentroids)) {
   lat <- countycentroids$LATITUDE[i]
   long <- countycentroids$LONGITUDE[i]
-  dists <- distHaversine(cbind(long, lat), cbind(providers$Lon, providers$Lat))
+  dists <- distHaversine(cbind(long, lat), cbind(providers$Lon, providers$Lat))*3,958.8
   countycentroids$distancetoprovider[i] <- min(dists)
 }
 

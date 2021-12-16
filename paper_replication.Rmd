@@ -430,7 +430,7 @@ all_state_model_no_dist <- returns[[1]]
 all_state_model_dist <- returns[[2]]
 
 # Model Summaries (Note coefficients are per 1000 women)
-table_5 <- tibble(Characteristic = "Highly Restrictive Legislation",
+table_5 <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = all_state_model_no_dist$coefficients[2]*1000,
                   "p-value" = c('< 0.001')) %>% 
   kbl(caption = "All States Data: Change in Abortions per 1000 Women in Model without Distances", 
@@ -439,7 +439,7 @@ table_5 <- tibble(Characteristic = "Highly Restrictive Legislation",
 table_5
 
 p <- all_state_model_dist$coefficients[4,4] %>% round(3)
-table_6 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+table_6 <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
                                      "Distance/Restriction Interaction"),
                   Beta = c(all_state_model_dist$coefficients[2]*1000, 
                            all_state_model_dist$coefficients[3]*1000,
@@ -551,7 +551,7 @@ large_county_no_dist <- returns[[1]]
 large_county_dist <- returns[[2]]
 
 # Model Summaries
-table_7 <- tibble(Characteristic = "Highly Restrictive Legislation",
+table_7 <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = large_county_no_dist$coefficients[2],
                   "p-value" = c('< 0.001')) %>% 
   kbl(caption = "Large County Data: Change in Infant Death Rate per 1000 **** in Model without Distances", 
@@ -562,7 +562,7 @@ table_7
 p_2 <- large_county_dist$coefficients[3,4] %>% round(3)
 p_3 <- large_county_dist$coefficients[4,4] %>% round(3)
 
-table_8 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+table_8 <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
                                      "Distance/Restriction Interaction"),
                   Beta = c(large_county_dist$coefficients[2], 
                            large_county_dist$coefficients[3],
@@ -695,7 +695,7 @@ model_dist <- returns[[2]]
 
 p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
-table_9 <- tibble(Characteristic = "Highly Restrictive Legislation",
+table_9 <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
   kbl(caption = "State Data: Change in Birth Rate Rate per 1000 People in Model without Distances", 
@@ -707,7 +707,7 @@ p_1 <- model_dist$coefficients[2,4] %>% round(3)
 p_2 <- model_dist$coefficients[3,4] %>% round(3)
 p_3 <- model_dist$coefficients[4,4] %>% round(3)
 
-table_10 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+table_10 <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
                                      "Distance/Restriction Interaction"),
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
@@ -727,7 +727,7 @@ model_dist <- returns[[2]]
 
 p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
-table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
+table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
   kbl(caption = "State Data: Change in Fertility Rate Rate per 1000 Women in Model without Distances", 
@@ -739,7 +739,7 @@ p_1 <- model_dist$coefficients[2,4] %>% round(3)
 p_2 <- model_dist$coefficients[3,4] %>% round(3)
 p_3 <- model_dist$coefficients[4,4] %>% round(3)
 
-table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
                                      "Distance/Restriction Interaction"),
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
@@ -758,7 +758,7 @@ model_dist <- returns[[2]]
 
 # p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
-table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
+table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = '< 0.001') %>% 
   kbl(caption = "State Data: Change in Infant Death Rate Rate per 1000 **** in Model without Distances", 
@@ -770,7 +770,7 @@ table_no_dist
 p_2 <- model_dist$coefficients[3,4] %>% round(3)
 p_3 <- model_dist$coefficients[4,4] %>% round(3)
 
-table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
                                      "Distance/Restriction Interaction"),
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
@@ -790,7 +790,7 @@ model_dist <- returns[[2]]
 
 p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
-table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
+table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = p) %>% 
   kbl(caption = "State Data: Change in Percent Fetal Deaths in Model without Distances", 
@@ -802,7 +802,7 @@ p_1 <- model_dist$coefficients[2,4] %>% round(3)
 p_2 <- model_dist$coefficients[3,4] %>% round(3)
 p_3 <- model_dist$coefficients[4,4] %>% round(3)
 
-table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
                                      "Distance/Restriction Interaction"),
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
@@ -821,7 +821,7 @@ model_dist <- returns[[2]]
 
 p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
-table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
+table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = p) %>% 
   kbl(caption = "State Data: Change in Maternal Deaths per ***** in Model without Distances", 
@@ -833,7 +833,7 @@ p_1 <- model_dist$coefficients[2,4] %>% round(3)
 p_2 <- model_dist$coefficients[3,4] %>% round(3)
 p_3 <- model_dist$coefficients[4,4] %>% round(3)
 
-table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
                                      "Distance/Restriction Interaction"),
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],

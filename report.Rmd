@@ -19,7 +19,7 @@ In the replication, the exposure is a highly restrictive abortion legislation as
 In the replication and extension, county level abortion rates defined as abortions per 1,000 women per year.  In the extension, state level fetal mortality rates ****, infant mortality rates ****, maternal mortality rates ****, birth rates defined as number of live births per 1,000 people, and fertility rates defined as number of live births per 1,000 women per year.
 
 ### Results
-
+Our replication confirms the primary result of Brown et al. We found that highly restrictive legislation is associated with -0.814 per 1,000 women without adjusting for distance to providers, and -0.649 when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, −0.92 to −0.04) and -0.44 (95% CI, −0.85 to −0.03), but our estimates were well within their reported 95% confidence intervals. 
 
 ### Conclusions and Relevance
 
@@ -48,10 +48,17 @@ We estimated distances to providers as the straight-line distances from the popu
 
 ## Results
 
+### Replication using data from 18 states
 The distribution of propensity scores for counties in states included in the analysis was similar to that for counties in states not included (see Figure 1).  This suggests that the 18 states included in the analysis are not exceptionally different from those not included (in terms the demographic covariates listed above), and accordingly we expect the propensity weights to accurately adjust for the differences.
 
 Tables 3 and 4 show the main results from our replication.  Without adjusting for distances to providers, we found that highly restrictive legislation was associated with a fewer abortions at a rate of -0.814 per 1,000 women without adjusting for distance to providers, and -0.649 when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, −0.92 to −0.04) and -0.44 (95% CI, −0.85 to −0.03), but our estimates were well within their reported 95% confidence intervals (see Brown et al. Table 3).  This corroborates the main result of Brown et al. despite the use of completely different data sources.
 
+We did observe a decrease in abortion rates based on estimated distances to abortion providers.  This decrease was statistically significant, but not practically significant at -3.4 x 10^-6 abortions per 1,000 women (see Table 4), compared to -0.02 in the analysis by Brown et al.
+
+### Expansion to data from all states
+When we repeated the analysis using all data available in all 50 states, we measured smaller but still significant reduction in the abortion rate, with associations of -0.216 and -0.361 without and with adjustment for distance to providers.  These again fall well within the 95% confidence interval of the estimates of Brown et al., further confirming their primary result, and suggesting that the propensity score weighting from the 18 states in their analysis to the entire country may be leading to an over-estimate of the effects.
+
+### Extension to Mortality and Natality Rates
 
 
 ## Limitations

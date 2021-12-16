@@ -238,6 +238,11 @@ countydem <- countydem %>% mutate(Total = White + Black + Native.American + Asia
 
 countydem$inanalysislabel <- factor(countydem$inanalysis, levels = c(1, 0), labels = c("In Analysis", "Not in Analysis"))
 
+countydem$countyinanalysis <- ifelse(countydem$inanalysis == 1 & !is.na(countydem$AbortionRate2010), 1, 0) 
+countydem$countyinanalysislabel <- factor(countydem$countyinanalysis, levels = c(1, 0), labels = c("In Analysis", "Not in Analysis"))
+
+countydem$csinanalysis <- ifelse(sum(countydem$inanalysis + countydem$countyinanalysis) == 2, 1, 0)
+
 label(countydem$Women) = "Women"
 label(countydem$White.pct) = "White"
 label(countydem$Black.pct) = "Black"
@@ -269,9 +274,14 @@ p_value_t_test <- function(x, ...){
     c("", sub("<", "<", format.pval(p, digits=3, eps=0.001)))
 }
 
+statesummarydata <- countydem %>% filter(csinanalysis != 2) %>% group_by(state) %>% summarize(Women = mean(Women, na.rm = TRUE), White.pct = mean(White.pct, na.rm = TRUE), Black.pct = mean(Black.pct, na.rm = TRUE), Native.American.pct = mean(Native.American.pct, na.rm = TRUE), Asian.pct = mean(Asian.pct, na.rm = TRUE), Hispanic.pct = mean(Hispanic.pct, na.rm = TRUE), College.Grad.pct = mean(College.Grad.pct, na.rm = TRUE), Median.Income = mean(Median.Income, na.rm = TRUE), percentdem2008 = mean(percentdem2008, na.rm = TRUE), AvgDistancetoProvider = mean(distancetoprovider, na.rm = TRUE), inanalysis = mean(inanalysis, na.rm = TRUE))
+
+statesummarydata$inanalysislabel <- factor(statesummarydata$inanalysis, levels = c(1, 0), labels = c("In Analysis", "Not in Analysis"))
+
+
 ## Table 2 ###
 table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | inanalysislabel, 
-       data = countydem,
+       data = statesummarydata,
        overall = FALSE,
        extra.col = list(`P-value` = p_value_t_test),
        extra.col.pos = 3,

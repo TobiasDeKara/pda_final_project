@@ -2,23 +2,6 @@
 title: "paper_replication"
 output: pdf_document
 ---
-REPLICATION:
-TODO: averages of averages for table 2
-TODO: reload countydem file with correct college grad pct.
-TODO: the paper says "all models included state and year fixed effects and standard errors adjusted for state-level clustering" -> does this mean we need to include states as a variable in our model?
--- No, they did that because they were doing the longitudinal analysis, so like abortion rates in a given state for one year are not independent of the next, so they're accounting for that.
-TODO: the paper says "We addressed data gaps in demographic variables by using the estimate from the nearest year for which an estimate was available", so we need to include this methodology
-TODO: bias analysis as done in the paper, comparing Guttmacher Census State Data to our State Data
-TODO: run the models without the distance variable as well as with the distance variable as the outcome, as done in the paper
-TODO: write up everything: we need to follow the format of the original paper <- Toby
-TODO: find abortion data used by Brown et al. to compare in discussion <- Toby
-
-EXTENSION:
-TODO: write literature review and describe motivation for extension
-TODO: rerun extension on state level
-TODO: decide whether to rescore the high vs. low restriction variable as a factor or an integer (currently coded as the latter)
-TODO: add in rural vs urban variable
-TODO: look at Hawkins et al paper linked in the original paper to see what mortality data they used. consider using mortality data by state.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load packages
@@ -32,7 +15,6 @@ library(kableExtra)
 library(table1)
 ```
 
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load in relevant data
 providers <- read.csv("data/provider_list_geo.csv")
@@ -42,7 +24,6 @@ abortions <- read.csv("data/cleanedabortiondata.csv")
 restrictions <- read.csv("data/state_restrictions2010.csv")
 countypres <- read.csv("data/countypres.csv")
 ```
-
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ########### clean county dem data ###########

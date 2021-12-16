@@ -423,7 +423,7 @@ countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Missing")
 ```
 ### Expansion to Data from All States
 
-When we repeated the analysis using all data available in all 50 states, we measured a significant reduction in the abortion rate, with associations per type of restriction in place of -0.216 and -0.361 without and with adjustment for distance to providers (see Tables 5 and 6).  These results align with the results of Brown et al. and the results of our replication, and suggest that the propensity score weighting from the 18 states in their analysis to the entire country is accurately accounting for differences between those 18 states and the others.  We repeated the analysis of abortion rate using state level data from all states(see Tables 7 and 8), and found stronger but comparable associations, further confirming the primary resutls of Brown et al.
+When we repeated the analysis using all data available in all 50 states, we measured a significant reduction in the abortion rate, with associations per type of restriction in place of -0.216 and -0.361 without and with adjustment for distance to providers (see Tables 5 and 6).  These results align with the results of Brown et al. and the results of our replication, and suggest that the propensity score weighting from the 18 states in their analysis to the entire country is accurately accounting for differences between those 18 states and the others.  We repeated the analysis of abortion rate using state level data from all states(see Tables 7 and 8), and found stronger but comparable associations, further confirming the primary results of Brown et al.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #### recode restriction level and include all counties with abortion data in analysis ####
@@ -859,9 +859,11 @@ table_dist
 ```
 
 \newpage
+
+
 ## Limitations
 
-The original analysis and our replication are limited by the use of data from only 18 states.  We address this shortcoming in our extension below.  The original analysis and our own are limited by the calculating abortion rates using total number of women, rather than number of women of reproductive age.
+The original analysis and our replication of this analysis are limited by the use of data from only 18 states.  We addressed this shortcoming in our extension, though our extension still does not have data for all states and/or all counties. Further, our replication of the original analysis as well as our extensions and expansions of said analysis are limited by the fact that state-level legislative data is only available for the years 2000, 2010, and 2020. More detailed legislative information is available for more recent years (roughly 2018 to the present), but abortion count data for these years is not yet released. Further analyses with more recent, detailed legislative data and abortion counts from more recent years would greatly add to the present analyses and could also allow for a longitudinal approach. The original analysis and our own are limited by the calculating abortion rates using total number of women, rather than number of women of reproductive age.
 
 
 

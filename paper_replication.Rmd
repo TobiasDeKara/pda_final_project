@@ -194,7 +194,6 @@ usedcounties <- aggregate(AbortionRate2010 ~ state, data = countydemanalysis, fu
 table_1 <- left_join(table_1, usedcounties, by = "state")
 table_1 %>% mutate(percent = AbortionRate2010/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Abortion Data in 2010", "Percent"), caption = "Number of Counties with Abortion Data Included in Analyses by State", digits = 3) %>% kable_styling()
 
-to_adjust_kable_table_numbers <- kable(table_1)
 ```
 
 
@@ -299,9 +298,11 @@ table_4 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance
   kbl(caption = "Change in Abortions per 1000 Women in Model with Distances")
 table_4
 
+###### End of Replication ######
 ```
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#### Begin Extension #####
 ####### add in natality, maternalmortality, and infantdeath data #######
 natality <- read.delim("natalitydata.txt")
 maternalmortality <- read.delim("maternalmortality.txt")
@@ -315,7 +316,7 @@ infantdeath <- infantdeath %>% filter(County != "Unidentified Counties")
 infantdeath$County <- gsub(infantdeath$County, pattern = " Parish", replacement = "")
 infantdeath$County <- gsub(infantdeath$County, pattern = "Borough", replacement = "Municipality")
 infantdeath$County <- gsub(infantdeath$County, pattern = " City", replacement = "")
-infantdeath$County[!(infantdeath$County %in% countydem$county)]
+# infantdeath$County[!(infantdeath$County %in% countydem$county)]
 infantdeath <- infantdeath %>% rename(state = State, county = County, infantdeathrate = Death.Rate)
 infantdeath <- infantdeath %>% dplyr::select(state, county, infantdeathrate)
 
@@ -335,7 +336,7 @@ maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- g
 maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = "/", replacement = " ")
 maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = " Census Area", replacement = "")
 maternalmortality$County[!(maternalmortality$County %in% countydem$county)] <- gsub(maternalmortality$County[!(maternalmortality$County %in% countydem$county)], pattern = " And", replacement = "")
-maternalmortality$County[!(maternalmortality$County %in% countydem$county)]
+# maternalmortality$County[!(maternalmortality$County %in% countydem$county)]
 
 maternalmortality <- maternalmortality %>% rename(state = State, county = County, maternaldeaths = Deaths, maternaldeathrate = Crude.Rate)
 maternalmortality <- maternalmortality %>% dplyr::select(state, county, maternaldeathrate)
@@ -349,7 +350,7 @@ natality$County <- gsub(natality$County, pattern = " Parish", replacement = "")
 natality$County <- gsub(natality$County, pattern = "Borough", replacement = "Municipality")
 natality$County <- gsub(natality$County, pattern = " City", replacement = "")
 natality$County <- gsub(natality$County, pattern = "La Porte", replacement = "Laporte")
-natality$County[!(natality$County %in% countydem$county)]
+# natality$County[!(natality$County %in% countydem$county)]
 natality <- natality %>% rename(state = State, county = County)
 natality <- natality %>% dplyr::select(state, county, Birth.Rate, Fertility.Rate)
 
@@ -357,16 +358,16 @@ countydem <- left_join(countydem, infantdeath, by = c("state", "county"))
 countydem <- left_join(countydem, maternalmortality, by = c("state", "county"))
 countydem <- left_join(countydem, natality, by = c("state", "county"))
 
-sum(is.na(countydem$infantdeathrate)/nrow(countydem))
+# sum(is.na(countydem$infantdeathrate)/nrow(countydem))
 countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Suppressed")
 countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Missing")
 
-sum(is.na(countydem$maternaldeathrate)/nrow(countydem))
-sum(is.na(countydem$Birth.Rate)/nrow(countydem))
+# sum(is.na(countydem$maternaldeathrate)/nrow(countydem))
+# sum(is.na(countydem$Birth.Rate)/nrow(countydem))
 
 ```
-
-```{r}
+## Expansion to Data from All States
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #### recode restriction level and include all counties with abortion data in analysis ####
 countyanalysis <- function(varname) {
   countydem <- countydem %>% mutate(hasdata = case_when(is.na(countydem[[varname]]) ~ 0, 
@@ -375,7 +376,10 @@ countyanalysis <- function(varname) {
   summarytable <- countydem %>% group_by(state) %>% summarize(totalcounties = n())
   usedcounties <- aggregate(countydem[[varname]] ~ state, data = countydem, function(x) {sum(!(is.na(x)))}, na.action = NULL)
   summarytable <- left_join(summarytable, usedcounties, by = "state")
-  print(summarytable %>% mutate(percent = summarytable[, 3]/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Data Included in Analysis by State") %>% kable_styling())
+  summarytable <- summarytable %>% mutate(percent = summarytable[, 3]/totalcounties) %>% 
+    kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), 
+        caption = "Number of Counties with Data Included in Analysis by State") %>% 
+    kable_styling()
   
   countydem$hasdatalabel <- factor(countydem$hasdata, levels = c(1, 0), labels = c("Counties in States With Data", "Counties in States Without Data"))
 
@@ -399,18 +403,18 @@ countyanalysis <- function(varname) {
   units(countydem$College.Grad.pct) = "%"
   units(countydem$percentdem2008) = "%"
   
-  p_value_t_test <- function(x, ...){
-    y <- unlist(x[1:2])
-    g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
-    p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
-    p_value <- ifelse(p_value == '0', '< 0.001', p_value)
-  }
-
-  print(table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasdatalabel, 
-       data = countydem,
-       extra.col = list(`P-value` = p_value_t_test),
-       footnote = 'P-values are derived by two sample t-tests.'
-       ))
+  # p_value_t_test <- function(x, ...){
+  #   y <- unlist(x[1:2])
+  #   g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
+  #   p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
+  #   p_value <- ifelse(p_value == '0', '< 0.001', p_value)
+  # }
+  # 
+  # in_analysis_comp_table <- table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasdatalabel, 
+  #      data = countydem,
+  #      extra.col = list(`P-value` = p_value_t_test),
+  #      footnote = 'P-values are derived by two sample t-tests.'
+  #      )
   
   #calculate propensity scores
   #include education this time
@@ -421,49 +425,76 @@ countyanalysis <- function(varname) {
   df$ps <- p.score
   
   #plot of distribution of propensity scores 
-  p1 <- ggplot(df, aes(x = ps, group = hasdatalabel)) + geom_density(aes(fill = hasdatalabel), alpha = 0.2) +
-  xlab('Probability of Being in the Analysis') +
-  ggtitle('Propensity Score Distribution by Group') +
-  scale_fill_discrete('') +
-  theme(legend.position = 'bottom', legend.direction = 'vertical') +
-  ylab("Density")
-  print(p1)
+  # p1 <- ggplot(df, aes(x = ps, group = hasdatalabel)) + geom_density(aes(fill = hasdatalabel), alpha = 0.2) +
+  # xlab('Probability of Being in the Analysis') +
+  # ggtitle('Propensity Score Distribution by Group') +
+  # scale_fill_discrete('') +
+  # theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  # ylab("Density")
+  # print(p1)
   
   #run model
   countydemanalysis <- df %>% filter(hasdata == 1)
-
-  model <- lm(countydemanalysis[[varname]] ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = countydemanalysis, weights = ps)
-  return(summary(model))
+  model_no_dist <- lm(countydemanalysis[[varname]] ~ totalrestrict, data = countydemanalysis, weights = ps)
+  
+  model_dist <- lm(countydemanalysis[[varname]] ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = countydemanalysis, weights = ps)
+  return(list(summary(model_no_dist), summary(model_dist), summarytable))
 }
 
 
-countyanalysis("AbortionRate2010")
+returns <- countyanalysis("AbortionRate2010")
+all_state_model_no_dist <- returns[[1]]
+all_state_model_dist <- returns[[2]]
+
+# Model Summaries (Note coefficients are per 1000 women)
+table_5 <- tibble(Characteristic = "Highly Restrictive Legislation",
+                  Beta = all_state_model_no_dist$coefficients[2]*1000,
+                  "p-value" = c('< 0.001')) %>% 
+  kbl(caption = "All States Data: Change in Abortions per 1000 Women in Model without Distances", 
+          digits = 3)
+table_5
+
+p <- all_state_model_dist$coefficients[4,4] %>% round(3)
+table_6 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(all_state_model_dist$coefficients[2]*1000, 
+                           all_state_model_dist$coefficients[3]*1000,
+                           all_state_model_dist$coefficients[4]*1000),
+                  "p-value" = c('< 0.001', '< 0.001', p)) %>%
+  kbl(caption = "All States Data: Change in Abortions per 1000 Women in Model with Distances")
+table_6
+
+all_state_table <- returns[[3]]
+# all_state_table # move to appendix?
 ```
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ###further clean up maternaldeathrate, infantdeathrate, birthrate, and fertilityrate data ####
 countydem$maternaldeathrate <- gsub(countydem$maternaldeathrate, pattern = "[()]", replacement = "")
 countydem$maternaldeathrate <- gsub(countydem$maternaldeathrate, pattern = "Unreliable", replacement = "")
 countydem$maternaldeathrate <- as.numeric(countydem$maternaldeathrate)
-hist(countydem$maternaldeathrate)
+# hist(countydem$maternaldeathrate)
 
 countydem$infantdeathrate <- na_if(countydem$infantdeathrate, "Missing County")
 countydem$infantdeathrate <- gsub(countydem$infantdeathrate, pattern = "[()]", replacement = "")
 countydem$infantdeathrate <- gsub(countydem$infantdeathrate, pattern = "Unreliable", replacement = "")
 countydem$infantdeathrate <- as.numeric(countydem$infantdeathrate)
-hist(countydem$infantdeathrate)
+# hist(countydem$infantdeathrate)
 
 countydem$Birth.Rate <- na_if(countydem$Birth.Rate, "Missing County")
 countydem$Birth.Rate <- as.numeric(countydem$Birth.Rate)
-hist(countydem$Birth.Rate)
+# hist(countydem$Birth.Rate)
 
 countydem$Fertility.Rate <- na_if(countydem$Fertility.Rate, "Missing County")
 countydem$Fertility.Rate <- as.numeric(countydem$Fertility.Rate)
-hist(countydem$Fertility.Rate)
+# hist(countydem$Fertility.Rate)
 
 ```
 
-```{r}
+## Extesion to Infant Death Rate, Birth Rate, and Fertility Rate
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#### Large County Function
 
 largecountyanalysis <- function(varname) {
   largecountydem <- countydem %>% filter(Total >= 250000)
@@ -473,7 +504,7 @@ largecountyanalysis <- function(varname) {
   summarytable <- countydem %>% group_by(state) %>% summarize(totalcounties = n())
   usedcounties <- aggregate(largecountydem[[varname]] ~ state, data = largecountydem, function(x) {sum(!(is.na(x)))}, na.action = NULL)
   summarytable <- left_join(summarytable, usedcounties, by = "state")
-  print(summarytable %>% mutate(percent = summarytable[, 3]/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Data Included in Analysis by State") %>% kable_styling())
+  # print(summarytable %>% mutate(percent = summarytable[, 3]/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Data Included in Analysis by State") %>% kable_styling())
   
   largecountydem$hasdatalabel <- factor(largecountydem$hasdata, levels = c(1, 0), labels = c("Counties in States With Data", "Counties in States Without Data"))
 
@@ -498,9 +529,9 @@ largecountyanalysis <- function(varname) {
   units(largecountydem$percentdem2008) = "%"
   
 
-  print(table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasdatalabel, 
-       data = largecountydem,
-       ))
+  # print(table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasdatalabel, 
+  #      data = largecountydem,
+  #     ))
   
   #calculate propensity scores
   #include education this time
@@ -517,35 +548,57 @@ largecountyanalysis <- function(varname) {
   scale_fill_discrete('') +
   theme(legend.position = 'bottom', legend.direction = 'vertical') +
   ylab("Density")
-  print(p1)
+  # print(p1)
   
   #run model
   largecountydemanalysis <- df %>% filter(hasdata == 1)
 
-  model <- lm(largecountydemanalysis[[varname]] ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = largecountydemanalysis, weights = ps)
-  return(summary(model))
+  model_no_dist <- lm(largecountydemanalysis[[varname]] ~ totalrestrict, data = largecountydemanalysis, weights = ps)
+  
+  model_dist <- lm(largecountydemanalysis[[varname]] ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = largecountydemanalysis, weights = ps)
+
+  return(list(summary(model_no_dist), summary(model_dist)))
 }
 
+returns <- largecountyanalysis("infantdeathrate")
+large_county_no_dist <- returns[[1]]
+large_county_dist <- returns[[2]]
 
-largecountyanalysis("infantdeathrate")
+# Model Summaries
+table_7 <- tibble(Characteristic = "Highly Restrictive Legislation",
+                  Beta = large_county_no_dist$coefficients[2],
+                  "p-value" = c('< 0.001')) %>% 
+  kbl(caption = "Large County Data: Change in Infant Death Rate per 1000 **** in Model without Distances", 
+          digits = 4)
+table_7
+
+p_2 <- large_county_dist$coefficients[3,4] %>% round(3)
+p_3 <- large_county_dist$coefficients[4,4] %>% round(3)
+
+table_8 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(large_county_dist$coefficients[2], 
+                           large_county_dist$coefficients[3],
+                           large_county_dist$coefficients[4]),
+                  "p-value" = c('< 0.001', p_2, p_3)) %>%
+  kbl(caption = "Large County Data: Change in Infant Death Rate per 1000 **** in Model with Distances")
+table_8
+
 
 ```
 
-```{r}
-largecountyanalysis("infantdeathrate")
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# largecountyanalysis("Birth.Rate")
 ```
 
-```{r}
-largecountyanalysis("Birth.Rate")
-```
-
-```{r}
-largecountyanalysis("Fertility.Rate")
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# largecountyanalysis("Fertility.Rate")
 ```
 
 
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #add in state level maternaldeathrate, infantdeathrate, birthrate, and fertilityrate data ####
 
 statelevelnatality <- read.delim("statelevelnatality.txt")
@@ -576,7 +629,7 @@ statedem$Pct.Maternal.Deaths <- as.numeric(statedem$Pct.Maternal.Deaths)
 ```
 
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ###make function for extended analysis###
 stateanalysis <- function(varname) {
   statedem <- statedem %>% mutate(hasdata = case_when(is.na(statedem[[varname]]) ~ 0, 
@@ -592,7 +645,7 @@ stateanalysis <- function(varname) {
   label(statedem$AvgHispanic.pct) = "Average Hispanic"
   label(statedem$AvgMedian.Income) = "Average Median Income"
   label(statedem$AvgCollege.Grad.pct) = "Average College Graduates"
-  label(statedem$AvgDem2008.pct) = "Average Voting for the Democratic candidate in the most recent presidential election"
+  label(statedem$AvgDem2008.pct) = "Democratic Vote"
 
   units(statedem$AvgWomen) = "No."
   units(statedem$AvgWhite.pct) = "%"
@@ -604,18 +657,11 @@ stateanalysis <- function(varname) {
   units(statedem$AvgCollege.Grad.pct) = "%"
   units(statedem$AvgDem2008.pct) = "%"
 
-  p_value_t_test <- function(x, ...){
-    y <- unlist(x[1:2])
-    g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
-    p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
-    p_value <- ifelse(p_value == '0', '< 0.001', p_value)
-  }
-
-  print(table1(~ AvgWomen + AvgWhite.pct + AvgBlack.pct + AvgNative.American.pct + AvgAsian.pct + AvgHispanic.pct + AvgMedian.Income + AvgCollege.Grad.pct + AvgDem2008.pct | hasdatalabel, 
-       data = statedem,
-       extra.col = list(`P-value` = p_value_t_test),
-       footnote = 'P-values are derived by two sample t-tests.'
-       ))
+  # print(table1(~ AvgWomen + AvgWhite.pct + AvgBlack.pct + AvgNative.American.pct + AvgAsian.pct + AvgHispanic.pct + AvgMedian.Income + AvgCollege.Grad.pct + AvgDem2008.pct | hasdatalabel, 
+  #      data = statedem,
+  #      extra.col = list(`P-value` = p_value_t_test),
+  #      footnote = 'P-values are derived by two sample t-tests.'
+  #      ))
   
   #calculate propensity scores
   #include education this time
@@ -627,46 +673,177 @@ stateanalysis <- function(varname) {
   
   #plot of distribution of propensity scores 
 
-  plot1 <- ggplot(df, aes(x = ps, group = hasdatalabel)) + geom_density(aes(fill = hasdatalabel), alpha = 0.2) +
-    xlab('Probability of Being in the Analysis') +
-    ggtitle('Propensity Score Distribution by Group') +
-    scale_fill_discrete('') +
-    theme(legend.position = 'bottom', legend.direction = 'vertical') +
-    ylab("Density")
-  print(plot1)
+  # plot1 <- ggplot(df, aes(x = ps, group = hasdatalabel)) + geom_density(aes(fill = hasdatalabel), alpha = 0.2) +
+  #   xlab('Probability of Being in the Analysis') +
+  #   ggtitle('Propensity Score Distribution by Group') +
+  #   scale_fill_discrete('') +
+  #   theme(legend.position = 'bottom', legend.direction = 'vertical') +
+  #   ylab("Density")
+  # print(plot1)
 
   #run model
   statedemanalysis <- df %>% filter(hasdata == 1)
 
-  model <- lm(statedemanalysis[[varname]] ~ TotalRestrictions + AvgDistancetoProvider, data = statedemanalysis, weights = ps)
-  summary(model)
+  model_no_dist <- lm(statedemanalysis[[varname]] ~ TotalRestrictions, weights = ps, data = statedemanalysis)
+  
+  model_dist <- lm(statedemanalysis[[varname]] ~ TotalRestrictions + AvgDistancetoProvider + TotalRestrictions*AvgDistancetoProvider, data = statedemanalysis, weights = ps)
+  
+  return(list(summary(model_no_dist), summary(model_dist)))
 }
 
 ```
 
 
-```{r}
-stateanalysis("AvgAbortionRate2010")
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# returns <- stateanalysis("AvgAbortionRate2010")
 ```
 
-```{r}
-stateanalysis("Birth.Rate")
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+### State Birth Rate
+returns <- stateanalysis("Birth.Rate")
+model_no_dist <- returns[[1]]
+model_dist <- returns[[2]]
+
+p <- model_no_dist$coefficients[2,4] %>% round(3)
+# Model Summaries
+table_9 <- tibble(Characteristic = "Highly Restrictive Legislation",
+                  Beta = model_no_dist$coefficients[2],
+                  "p-value" = c(p)) %>% 
+  kbl(caption = "State Data: Change in Birth Rate Rate per 1000 People in Model without Distances", 
+          digits = 4)
+table_9
+
+p_1 <- model_dist$coefficients[2,4] %>% round(3)
+p_2 <- model_dist$coefficients[3,4] %>% round(3)
+p_3 <- model_dist$coefficients[4,4] %>% round(3)
+
+table_10 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(model_dist$coefficients[2], 
+                           model_dist$coefficients[3],
+                           model_dist$coefficients[4]),
+                  "p-value" = c(p_1, p_2, p_3)) %>%
+  kbl(caption = "State Data: Change in Birth Rate per 1000 People in Model with Distances")
+table_10
 ```
 
-```{r}
-stateanalysis("Fertility.Rate")
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+### State Fertility Rate
+returns <- stateanalysis("Fertility.Rate")
+model_no_dist <- returns[[1]]
+model_dist <- returns[[2]]
+
+p <- model_no_dist$coefficients[2,4] %>% round(3)
+# Model Summaries
+table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
+                  Beta = model_no_dist$coefficients[2],
+                  "p-value" = c(p)) %>% 
+  kbl(caption = "State Data: Change in Fertility Rate Rate per 1000 Women in Model without Distances", 
+          digits = 4)
+table_no_dist
+
+p_1 <- model_dist$coefficients[2,4] %>% round(3)
+p_2 <- model_dist$coefficients[3,4] %>% round(3)
+p_3 <- model_dist$coefficients[4,4] %>% round(3)
+
+table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(model_dist$coefficients[2], 
+                           model_dist$coefficients[3],
+                           model_dist$coefficients[4]),
+                  "p-value" = c(p_1, p_2, p_3)) %>%
+  kbl(caption = "State Data: Change in Fertility Rate per 1000 Women in Model with Distances")
+table_dist
 ```
 
-```{r}
-stateanalysis("Death.Rate")
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+### State  Infant Death Rate
+returns <- stateanalysis("Death.Rate")
+model_no_dist <- returns[[1]]
+model_dist <- returns[[2]]
+
+# p <- model_no_dist$coefficients[2,4] %>% round(3)
+# Model Summaries
+table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
+                  Beta = model_no_dist$coefficients[2],
+                  "p-value" = '< 0.001') %>% 
+  kbl(caption = "State Data: Change in Infant Death Rate Rate per 1000 **** in Model without Distances", 
+          digits = 4)
+table_no_dist
+
+# p_1 <- model_dist$coefficients[2,4] %>% round(3)
+p_2 <- model_dist$coefficients[3,4] %>% round(3)
+p_3 <- model_dist$coefficients[4,4] %>% round(3)
+
+table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(model_dist$coefficients[2], 
+                           model_dist$coefficients[3],
+                           model_dist$coefficients[4]),
+                  "p-value" = c('< 0.001', p_2, p_3)) %>%
+  kbl(caption = "State Data: Change in Infant Death Rate per 1000 **** in Model with Distances")
+table_dist
 ```
 
-```{r}
-stateanalysis("Pct.Fetal.Deaths")
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+### State Fetal Death Percent
+returns <- stateanalysis("Pct.Fetal.Deaths")
+model_no_dist <- returns[[1]]
+model_dist <- returns[[2]]
+
+p <- model_no_dist$coefficients[2,4] %>% round(3)
+# Model Summaries
+table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
+                  Beta = model_no_dist$coefficients[2],
+                  "p-value" = p) %>% 
+  kbl(caption = "State Data: Change in Percent Fetal Deaths in Model without Distances", 
+          digits = 4)
+table_no_dist
+
+p_1 <- model_dist$coefficients[2,4] %>% round(3)
+p_2 <- model_dist$coefficients[3,4] %>% round(3)
+p_3 <- model_dist$coefficients[4,4] %>% round(3)
+
+table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(model_dist$coefficients[2], 
+                           model_dist$coefficients[3],
+                           model_dist$coefficients[4]),
+                  "p-value" = c(p_1, p_2, p_3)) %>%
+  kbl(caption = "State Data: Change in Percent Fetal Deaths in Model with Distances")
+table_dist
 ```
 
-```{r}
-stateanalysis("Pct.Maternal.Deaths")
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+### State Maternal Deaths
+returns <- stateanalysis("Pct.Maternal.Deaths")
+model_no_dist <- returns[[1]]
+model_dist <- returns[[2]]
+
+p <- model_no_dist$coefficients[2,4] %>% round(3)
+# Model Summaries
+table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
+                  Beta = model_no_dist$coefficients[2],
+                  "p-value" = p) %>% 
+  kbl(caption = "State Data: Change in Maternal Deaths per ***** in Model without Distances", 
+          digits = 4)
+table_no_dist
+
+p_1 <- model_dist$coefficients[2,4] %>% round(3)
+p_2 <- model_dist$coefficients[3,4] %>% round(3)
+p_3 <- model_dist$coefficients[4,4] %>% round(3)
+
+table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(model_dist$coefficients[2], 
+                           model_dist$coefficients[3],
+                           model_dist$coefficients[4]),
+                  "p-value" = c(p_1, p_2, p_3)) %>%
+  kbl(caption = "State Data: Change in Percent Maternal Deaths per **** in Model with Distances")
+table_dist
 ```
 
 \newpage

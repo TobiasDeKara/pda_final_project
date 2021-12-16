@@ -232,6 +232,7 @@ table_1 %>% mutate(percent = AbortionRate2010/totalcounties) %>% kbl(col.names =
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ##### Table 2 ####
 
 countydem <- countydem %>% mutate(Total = White + Black + Native.American + Asian + Hispanic, White.pct = White/Total, Black.pct = Black/Total, Native.American.pct = Native.American/Total, Asian.pct = Asian/Total, Hispanic.pct = Hispanic/Total, College.Grad.pct = College.Grad/Total)
@@ -242,26 +243,6 @@ countydem$countyinanalysis <- ifelse(countydem$inanalysis == 1 & !is.na(countyde
 countydem$countyinanalysislabel <- factor(countydem$countyinanalysis, levels = c(1, 0), labels = c("In Analysis", "Not in Analysis"))
 
 countydem$csinanalysis <- ifelse(sum(countydem$inanalysis + countydem$countyinanalysis) == 2, 1, 0)
-
-label(countydem$Women) = "Women"
-label(countydem$White.pct) = "White"
-label(countydem$Black.pct) = "Black"
-label(countydem$Native.American.pct) = "Native American"
-label(countydem$Asian.pct) = "Asian"
-label(countydem$Hispanic.pct) = "Hispanic"
-label(countydem$Median.Income) = "Median Income"
-label(countydem$College.Grad.pct) = "College Graduates"
-label(countydem$percentdem2008) = "Vote Democratic"
-
-units(countydem$Women) = "No."
-units(countydem$White.pct) = "%"
-units(countydem$Black.pct) = "%"
-units(countydem$Native.American.pct) = "%"
-units(countydem$Asian.pct) = "%"
-units(countydem$Hispanic.pct) = "%"
-units(countydem$Median.Income) = "$"
-units(countydem$College.Grad.pct) = "%"
-units(countydem$percentdem2008) = "%"
 
 # The following function is based on 
 # "Using the table1 Package to Create HTML Tables of Descriptive Statistics"
@@ -278,6 +259,25 @@ statesummarydata <- countydem %>% filter(csinanalysis != 2) %>% group_by(state) 
 
 statesummarydata$inanalysislabel <- factor(statesummarydata$inanalysis, levels = c(1, 0), labels = c("In Analysis", "Not in Analysis"))
 
+label(statesummarydata$Women) = "Women"
+label(statesummarydata$White.pct) = "White"
+label(statesummarydata$Black.pct) = "Black"
+label(statesummarydata$Native.American.pct) = "Native American"
+label(statesummarydata$Asian.pct) = "Asian"
+label(statesummarydata$Hispanic.pct) = "Hispanic"
+label(statesummarydata$Median.Income) = "Median Income"
+label(statesummarydata$College.Grad.pct) = "College Graduates"
+label(statesummarydata$percentdem2008) = "Vote Democratic"
+
+units(statesummarydata$Women) = "No."
+units(statesummarydata$White.pct) = "%"
+units(statesummarydata$Black.pct) = "%"
+units(statesummarydata$Native.American.pct) = "%"
+units(statesummarydata$Asian.pct) = "%"
+units(statesummarydata$Hispanic.pct) = "%"
+units(statesummarydata$Median.Income) = "$"
+units(statesummarydata$College.Grad.pct) = "%"
+units(statesummarydata$percentdem2008) = "%"
 
 ## Table 2 ###
 table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | inanalysislabel, 

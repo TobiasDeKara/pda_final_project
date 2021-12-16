@@ -421,7 +421,7 @@ countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Missing")
 # sum(is.na(countydem$Birth.Rate)/nrow(countydem))
 
 ```
-## Expansion to Data from All States
+### Expansion to Data from All States
 
 When we repeated the analysis using all data available in all 50 states, we measured smaller but still significant reduction in the abortion rate, with associations of -0.216 and -0.361 without and with adjustment for distance to providers.  These again fall well within the 95% confidence interval of the estimates of Brown et al., further confirming their primary result, and suggesting that the propensity score weighting from the 18 states in their analysis to the entire country may be leading to an over-estimate of the effects.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -695,7 +695,7 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
   kable_styling(latex_options = 'hold_position')
 table_dist
 ```
-## Extension to Infant Death Rate, Birth Rate, and Fertility Rate
+### Extension to Infant Death Rate, Birth Rate, and Fertility Rate
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ### State Birth Rate

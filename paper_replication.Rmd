@@ -1,5 +1,5 @@
 ---
-title: "paper_replication"
+title: "Replication and Extension of Analyses Regarding Effects of Highly Restrictive Abortion Policies"
 output: pdf_document
 ---
 ## Abstract
@@ -13,16 +13,16 @@ To replicate the analysis of the association of abortion restrictions on abortio
 This study examined all publicly available county-level abortion rates in addition to state-level maternal, fetal and infant mortality rates as well as birth and fertility rates from the year 2010. The association between these rates, abortion legislation, and distance to nearest provider were evaluated using propensity score adjusted linear regression.
 
 ### Exposures
-In the replication, the exposures are a state-level highly restrictive abortion legislation as defined by 3 or more out of 4 common types of abortion restrictions and county-level distance to facilities performing abortions (in miles).  For the extension, the exposures are the number of types of abortion legislation and the distance to facilities performing abortion (in miles). 
+In the replication, the exposures are state-level highly restrictive abortion legislation as defined by 3 or more out of 4 common types of abortion restrictions and county-level distance to facilities performing abortions (in miles).  For the extension, the exposures are the number of types of abortion legislation and the state-level average distance to facilities performing abortion (in miles). 
 
 ### Main Outcomes and Measures
 In the replication and extension, the main outcomes and measures were county level abortion rates defined as abortions per 1,000 women per year.  In the extension, the main outcomes and measures were state level fetal mortality rates defined as fetal deaths per 1,000 total deaths, infant mortality rates defined as infant deaths within the first year of life per 1,000 births, maternal mortality rates defined as deaths due to maternal diseases per 1,000 total deaths, birth rates defined as number of live births per 1,000 people, and fertility rates defined as number of live births per 1,000 women per year.
 
 ### Results
-Our replication confirms the primary result of Brown et al. (2020). We found that highly restrictive legislation is associated with 0.814 fewer abortions per 1,000 women without adjusting for distance to providers, and 0.649 fewer abortions per 1,000 women when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, -0.92 to -0.04) and -0.44 (95% CI, -0.85 to -0.03), but our estimates were well within their reported 95% confidence intervals. Infant mortality rates were positively associated with abortion restrictions, and these associations were statistically significant even after adjusting for distance from providers.  The maternal and fetal mortality rates were not statistically significant. 
+Our replication confirms the primary result of Brown et al. (2020). We found that highly restrictive legislation is associated with 0.814 fewer abortions per 1,000 women without adjusting for distance to providers, and 0.649 fewer abortions per 1,000 women when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, -0.92 to -0.04) and -0.44 (95% CI, -0.85 to -0.03), but our estimates were well within their reported 95% confidence intervals. Infant mortality rates were positively associated with abortion restrictions, and these associations were statistically significant even after adjusting for distance from providers. The maternal and fetal mortality rates as well as the birth rates were not statistically significant after adjusting for distance from providers. 
 
 ### Conclusions and Relevance
-Our analysis confirms the results of Brown et al. showing a negative association between restrictive abortion legislation and abortion rates based on both the 18 states they analyized and based on data from all 50 states.  We furthered the analysis to additional outcomes and found positive associations between restrictions and infant death rates, and showed that restrictions do not have a significant association with birth rates.
+Our analysis confirms the results of Brown et al. showing a negative association between restrictive abortion legislation and abortion rates based on both the 18 states they analyized and based on data from all 50 states.  We furthered the analysis to additional outcomes and found positive associations between restrictions and infant death rates, while restrictions do not have a significant association with birth rates or maternal or fetal mortality rates after adjusting for distance to providers.
 
 ## Introduction
 
@@ -43,10 +43,11 @@ We used abortion count data compiled by Wm. Robert Johnston, available at www.jo
 
 For assessment of state legislation restricting abortion, we used data from the Guttmacher Institute, which identified states with laws of the same four types used by Brown et al.: gestational age restrictions, TRAP laws, requirements for patients to make at least two trips to a clinic, and mandated parental involvement for patients who are minors. Following Brown et al.'s methodology, we classified states as "highly restrictive" if they had 3 or 4 of these types of laws. 
 
-We estimated distances to providers as the straight-line distances from the population centroids of counties of residence (courtesy of the United States Census Bureau) to the location of the nearest abortion clinic (courtesy of Safe Place Project).
+We estimated distances to providers as the straight-line distances from the population centroids of counties of residence (courtesy of the United States Census Bureau) to the location of the nearest abortion clinic (courtesy of Safe Place Project). 
+
+Data on the percentage of democratic votes by county in the most recent (2008) presidential election was retrieved from the Harvard Dataverse.
 
 For the extension, data on state-level maternal, fetal and infant mortality rates as well as birth and fertility rates from the year 2010 were retrieved from the Centers for Disease Control and Prevention (CDC) WONDER Online Database. State-level rates were used as opposed to county-level rates because more than 80% of these county-level rates were either suppressed or missing to maintain anonymity. 
-
 
 ## Results
 

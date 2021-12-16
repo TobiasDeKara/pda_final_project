@@ -423,7 +423,8 @@ countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Missing")
 ```
 ### Expansion to Data from All States
 
-When we repeated the analysis using all data available in all 50 states, we measured smaller but still significant reduction in the abortion rate, with associations of -0.216 and -0.361 without and with adjustment for distance to providers.  These again fall well within the 95% confidence interval of the estimates of Brown et al., further confirming their primary result, and suggesting that the propensity score weighting from the 18 states in their analysis to the entire country may be leading to an over-estimate of the effects.
+When we repeated the analysis using all data available in all 50 states, we measured a significant reduction in the abortion rate, with associations per type of restriction in place of -0.216 and -0.361 without and with adjustment for distance to providers (see Tables 5 and 6).  These results align with the results of Brown et al. and the results of our replication, and suggest that the propensity score weighting from the 18 states in their analysis to the entire country is accurately accounting for differences between those 18 states and the others.  We repeated the analysis of abortion rate using state level data from all states(see Tables 7 and 8), and found stronger but comparable associations, further confirming the primary resutls of Brown et al.
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #### recode restriction level and include all counties with abortion data in analysis ####
 countyanalysis <- function(varname) {
@@ -459,19 +460,6 @@ countyanalysis <- function(varname) {
   units(countydem$Median.Income) = "$"
   units(countydem$College.Grad.pct) = "%"
   units(countydem$percentdem2008) = "%"
-  
-  # p_value_t_test <- function(x, ...){
-  #   y <- unlist(x[1:2])
-  #   g <- factor(rep(1:length(x[1:2]), times=sapply(x[1:2], length)))
-  #   p_value <- t.test(y ~ g)$p.value %>% round(3) %>% as.character()
-  #   p_value <- ifelse(p_value == '0', '< 0.001', p_value)
-  # }
-  # 
-  # in_analysis_comp_table <- table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasdatalabel, 
-  #      data = countydem,
-  #      extra.col = list(`P-value` = p_value_t_test),
-  #      footnote = 'P-values are derived by two sample t-tests.'
-  #      )
   
   #calculate propensity scores
   #include education this time
@@ -611,12 +599,6 @@ stateanalysis <- function(varname) {
   units(statedem$AvgMedian.Income) = "$"
   units(statedem$AvgCollege.Grad.pct) = "%"
   units(statedem$AvgDem2008.pct) = "%"
-
-  # print(table1(~ AvgWomen + AvgWhite.pct + AvgBlack.pct + AvgNative.American.pct + AvgAsian.pct + AvgHispanic.pct + AvgMedian.Income + AvgCollege.Grad.pct + AvgDem2008.pct | hasdatalabel, 
-  #      data = statedem,
-  #      extra.col = list(`P-value` = p_value_t_test),
-  #      footnote = 'P-values are derived by two sample t-tests.'
-  #      ))
   
   #calculate propensity scores
   #include education this time
@@ -625,16 +607,6 @@ stateanalysis <- function(varname) {
   p.score <- predict(propensitywts, statedem, type = "response")
   df <- statedem
   df$ps <- p.score
-  
-  #plot of distribution of propensity scores 
-
-  # plot1 <- ggplot(df, aes(x = ps, group = hasdatalabel)) + geom_density(aes(fill = hasdatalabel), alpha = 0.2) +
-  #   xlab('Probability of Being in the Analysis') +
-  #   ggtitle('Propensity Score Distribution by Group') +
-  #   scale_fill_discrete('') +
-  #   theme(legend.position = 'bottom', legend.direction = 'vertical') +
-  #   ylab("Density")
-  # print(plot1)
 
   #run model
   statedemanalysis <- df %>% filter(hasdata == 1)
@@ -687,6 +659,7 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
 table_dist
 ```
 ### Extension to Infant Death Rate, Birth Rate, and Fertility Rate
+We found positive associations between abortion restrictions and both birth rates and fertility rates (see Tables 9-12), however these associations were not statistically significant after adjusting for distance to providers, with p-values > 0.5.  
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ### State Birth Rate

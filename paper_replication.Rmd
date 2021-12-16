@@ -35,18 +35,18 @@ library(table1)
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load in relevant data
-providers <- read.csv("provider_list_geo.csv")
-countycentroids <- read.csv("county_pop_centroids.csv")
-countydem <- read.csv("county_demographics.csv")
-abortions <- read.csv("cleanedabortiondata.csv")
-restrictions <- read.csv("state_restrictions2010.csv")
-countypres <- read.csv("countypres.csv")
+providers <- read.csv("data/provider_list_geo.csv")
+countycentroids <- read.csv("data/county_pop_centroids.csv")
+countydem <- read.csv("data/county_demographics.csv")
+abortions <- read.csv("data/cleanedabortiondata.csv")
+restrictions <- read.csv("data/state_restrictions2010.csv")
+countypres <- read.csv("data/countypres.csv")
 ```
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ########### clean county dem data ###########
-countydem <- read.csv("county_demographics.csv")
+countydem <- read.csv("data/county_demographics.csv")
 
 for (i in 1:nrow(countydem)) {
   countydem$state[i] <- unlist(strsplit(countydem$NAME[i], ", "))[length(unlist(strsplit(countydem$NAME[i], ", ")))]
@@ -192,7 +192,7 @@ countydemanalysis <- countydem %>% filter(inanalysis == 1)
 table_1 <- countydemanalysis %>% group_by(state) %>% summarize(totalcounties = n())
 usedcounties <- aggregate(AbortionRate2010 ~ state, data = countydemanalysis, function(x) {sum(!(is.na(x)))}, na.action = NULL)
 table_1 <- left_join(table_1, usedcounties, by = "state")
-table_1 %>% mutate(percent = AbortionRate2010/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Abortion Data in 2010", "Percent"), caption = "Number of Counties with Abortion Data Included in Analyses by State", digits = 3) %>% kable_styling()
+table_1 %>% mutate(percent = AbortionRate2010/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Abortion Data in 2010", "Percent"), caption = "Number of Counties with Abortion Data Included in Analyses by State", digits = 3) %>% kable_styling(latex_options = 'hold_position')
 
 ```
 
@@ -283,7 +283,8 @@ table_3 <- tibble(Characteristic = "Highly Restrictive Legislation",
                   Beta = model_no_dist$coefficients[2]*1000,
                   "p-value" = c('< 0.001')) %>% 
   kbl(caption = "Change in Abortions per 1000 Women in Model without Distances", 
-          digits = 3)
+          digits = 3) %>%
+  kable_styling(latex_options = 'hold_position')
 table_3
 ```
 
@@ -295,7 +296,8 @@ table_4 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance
                   Beta = c(model_dist$coefficients[2]*1000, model_dist$coefficients[3]*1000,
                            model_dist$coefficients[4]*1000),
                   "p-value" = c('< 0.001', '< 0.001', p)) %>%
-  kbl(caption = "Change in Abortions per 1000 Women in Model with Distances")
+  kbl(caption = "Change in Abortions per 1000 Women in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
 table_4
 
 ###### End of Replication ######
@@ -304,9 +306,9 @@ table_4
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #### Begin Extension #####
 ####### add in natality, maternalmortality, and infantdeath data #######
-natality <- read.delim("natalitydata.txt")
-maternalmortality <- read.delim("maternalmortality.txt")
-infantdeath <- read.delim("infantdeathrecords.txt")
+natality <- read.delim("data/natalitydata.txt")
+maternalmortality <- read.delim("data/maternalmortality.txt")
+infantdeath <- read.delim("data/infantdeathrecords.txt")
 
 infantdeath$County <- gsub(infantdeath$County, pattern = ", [[:print:]]*$", replacement = "")
 infantdeath$County <- gsub(infantdeath$County, pattern = " County", replacement = "")
@@ -379,7 +381,7 @@ countyanalysis <- function(varname) {
   summarytable <- summarytable %>% mutate(percent = summarytable[, 3]/totalcounties) %>% 
     kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), 
         caption = "Number of Counties with Data Included in Analysis by State") %>% 
-    kable_styling()
+    kable_styling(latex_options = 'hold_position')
   
   countydem$hasdatalabel <- factor(countydem$hasdata, levels = c(1, 0), labels = c("Counties in States With Data", "Counties in States Without Data"))
 
@@ -451,7 +453,8 @@ table_5 <- tibble(Characteristic = "Highly Restrictive Legislation",
                   Beta = all_state_model_no_dist$coefficients[2]*1000,
                   "p-value" = c('< 0.001')) %>% 
   kbl(caption = "All States Data: Change in Abortions per 1000 Women in Model without Distances", 
-          digits = 3)
+          digits = 3) %>%
+  kable_styling(latex_options = 'hold_position')
 table_5
 
 p <- all_state_model_dist$coefficients[4,4] %>% round(3)
@@ -461,13 +464,15 @@ table_6 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance
                            all_state_model_dist$coefficients[3]*1000,
                            all_state_model_dist$coefficients[4]*1000),
                   "p-value" = c('< 0.001', '< 0.001', p)) %>%
-  kbl(caption = "All States Data: Change in Abortions per 1000 Women in Model with Distances")
+  kbl(caption = "All States Data: Change in Abortions per 1000 Women in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
 table_6
 
 all_state_table <- returns[[3]]
 # all_state_table # move to appendix?
 ```
 
+## Extension to Infant Death Rate, Birth Rate, and Fertility Rate
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ###further clean up maternaldeathrate, infantdeathrate, birthrate, and fertilityrate data ####
 countydem$maternaldeathrate <- gsub(countydem$maternaldeathrate, pattern = "[()]", replacement = "")
@@ -491,7 +496,7 @@ countydem$Fertility.Rate <- as.numeric(countydem$Fertility.Rate)
 
 ```
 
-## Extesion to Infant Death Rate, Birth Rate, and Fertility Rate
+
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #### Large County Function
@@ -569,7 +574,8 @@ table_7 <- tibble(Characteristic = "Highly Restrictive Legislation",
                   Beta = large_county_no_dist$coefficients[2],
                   "p-value" = c('< 0.001')) %>% 
   kbl(caption = "Large County Data: Change in Infant Death Rate per 1000 **** in Model without Distances", 
-          digits = 4)
+          digits = 4) %>%
+  kable_styling(latex_options = 'hold_position')
 table_7
 
 p_2 <- large_county_dist$coefficients[3,4] %>% round(3)
@@ -581,7 +587,8 @@ table_8 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distance
                            large_county_dist$coefficients[3],
                            large_county_dist$coefficients[4]),
                   "p-value" = c('< 0.001', p_2, p_3)) %>%
-  kbl(caption = "Large County Data: Change in Infant Death Rate per 1000 **** in Model with Distances")
+  kbl(caption = "Large County Data: Change in Infant Death Rate per 1000 **** in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
 table_8
 
 
@@ -601,10 +608,10 @@ table_8
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #add in state level maternaldeathrate, infantdeathrate, birthrate, and fertilityrate data ####
 
-statelevelnatality <- read.delim("statelevelnatality.txt")
-statelevelinfantdeaths <- read.delim("statelevelinfantdeaths.txt")
-statelevelfetaldeaths <- read.delim("statelevelfetaldeaths.txt")
-statelevelmaternalmortality <- read.delim("statelevelmaternalmortality.txt")
+statelevelnatality <- read.delim("data/statelevelnatality.txt")
+statelevelinfantdeaths <- read.delim("data/statelevelinfantdeaths.txt")
+statelevelfetaldeaths <- read.delim("data/statelevelfetaldeaths.txt")
+statelevelmaternalmortality <- read.delim("data/statelevelmaternalmortality.txt")
 
 statelevelnatality <- statelevelnatality %>% select(State, Birth.Rate, Fertility.Rate)
 statelevelinfantdeaths <- statelevelinfantdeaths %>% select(State, Death.Rate)
@@ -711,7 +718,8 @@ table_9 <- tibble(Characteristic = "Highly Restrictive Legislation",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
   kbl(caption = "State Data: Change in Birth Rate Rate per 1000 People in Model without Distances", 
-          digits = 4)
+          digits = 4) %>%
+  kable_styling(latex_options = 'hold_position')
 table_9
 
 p_1 <- model_dist$coefficients[2,4] %>% round(3)
@@ -724,7 +732,8 @@ table_10 <- tibble(Characteristic = c("Highly Restrictive Legislation", "Distanc
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Birth Rate per 1000 People in Model with Distances")
+  kbl(caption = "State Data: Change in Birth Rate per 1000 People in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
 table_10
 ```
 
@@ -741,7 +750,8 @@ table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
   kbl(caption = "State Data: Change in Fertility Rate Rate per 1000 Women in Model without Distances", 
-          digits = 4)
+          digits = 4) %>%
+  kable_styling(latex_options = 'hold_position')
 table_no_dist
 
 p_1 <- model_dist$coefficients[2,4] %>% round(3)
@@ -754,7 +764,8 @@ table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Fertility Rate per 1000 Women in Model with Distances")
+  kbl(caption = "State Data: Change in Fertility Rate per 1000 Women in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
 table_dist
 ```
 
@@ -770,7 +781,8 @@ table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = '< 0.001') %>% 
   kbl(caption = "State Data: Change in Infant Death Rate Rate per 1000 **** in Model without Distances", 
-          digits = 4)
+          digits = 4) %>%
+  kable_styling(latex_options = 'hold_position')
 table_no_dist
 
 # p_1 <- model_dist$coefficients[2,4] %>% round(3)
@@ -783,7 +795,8 @@ table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c('< 0.001', p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Infant Death Rate per 1000 **** in Model with Distances")
+  kbl(caption = "State Data: Change in Infant Death Rate per 1000 **** in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
 table_dist
 ```
 
@@ -800,7 +813,8 @@ table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = p) %>% 
   kbl(caption = "State Data: Change in Percent Fetal Deaths in Model without Distances", 
-          digits = 4)
+          digits = 4) %>%
+  kable_styling(latex_options = 'hold_position')
 table_no_dist
 
 p_1 <- model_dist$coefficients[2,4] %>% round(3)
@@ -813,7 +827,8 @@ table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Percent Fetal Deaths in Model with Distances")
+  kbl(caption = "State Data: Change in Percent Fetal Deaths in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
 table_dist
 ```
 
@@ -829,7 +844,8 @@ table_no_dist <- tibble(Characteristic = "Highly Restrictive Legislation",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = p) %>% 
   kbl(caption = "State Data: Change in Maternal Deaths per ***** in Model without Distances", 
-          digits = 4)
+          digits = 4) %>%
+  kable_styling(latex_options = 'hold_position')
 table_no_dist
 
 p_1 <- model_dist$coefficients[2,4] %>% round(3)
@@ -842,7 +858,8 @@ table_dist <- tibble(Characteristic = c("Highly Restrictive Legislation", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Percent Maternal Deaths per **** in Model with Distances")
+  kbl(caption = "State Data: Change in Percent Maternal Deaths per **** in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
 table_dist
 ```
 

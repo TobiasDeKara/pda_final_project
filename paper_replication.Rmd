@@ -57,7 +57,7 @@ The distribution of propensity scores for counties in states included in the ana
 
 Tables 3 and 4 show the main results from our replication.  Without adjusting for distances to providers, we found that highly restrictive legislation was associated with a fewer abortions at a rate of -0.814 per 1,000 women without adjusting for distance to providers, and -0.649 when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, -0.92 to -0.04) and -0.44 (95% CI, -0.85 to -0.03), but our estimates were well within their reported 95% confidence intervals (see Brown et al. Table 3).  This corroborates the main result of Brown et al. despite the use of completely different data sources.
 
-We did observe a decrease in abortion rates based on estimated distances to abortion providers.  This decrease was statistically significant, but not practically significant at -3.4 x 10^-6 abortions per 1,000 women (see Table 4), compared to -0.02 in the analysis by Brown et al.
+We did observe a decrease in abortion rates based on estimated distances to abortion providers.  This decrease was statistically significant significant at -0.00554 abortions per 1,000 women (see Table 4), compared to -0.02 in the analysis by Brown et al.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load packages

@@ -2,6 +2,59 @@
 title: "paper_replication"
 output: pdf_document
 ---
+### Importance
+In the United States, many state legislatures have enacted a range of laws limiting access to abortions.  These laws limit access to crucial healthcare and have impacts on mortality, fertility, and birth rates across the country.
+
+### Objectives
+To replicate the analysis of the association of abortion restrictions on abortion rates conducted by Brown et al. (2020), though not from a longitudinal perspective, to expand the analysis to a wider data set, and to extend the analysis to associations with maternal, fetal and infant mortality rates, as well as birth and fertility rates.
+
+### Design, Setting, and Particpants
+This study examined all publicly available county-level abortion rates in addition to state-level maternal, fetal and infant mortality rates as well as birth and fertility rates from the year 2010. The association between these rates, abortion legislation, and distance to nearest provider were evaluated using propensity score adjusted linear regression.
+
+### Exposures
+In the replication, the exposures are a state-level highly restrictive abortion legislation as defined by 3 or more out of 4 common types of abortion restrictions and county-level distance to facilities performing abortions (in miles).  For the extension, the exposures are the number of types of abortion legislation and the distance to facilities performing abortion (in miles). 
+
+### Main Outcomes and Measures
+In the replication and extension, the main outcomes and measures were county level abortion rates defined as abortions per 1,000 women per year.  In the extension, the main outcomes and measures were state level fetal mortality rates defined as fetal deaths per 1,000 total deaths, infant mortality rates defined as infant deaths within the first year of life per 1,000 births, maternal mortality rates defined as deaths due to maternal diseases per 1,000 total deaths, birth rates defined as number of live births per 1,000 people, and fertility rates defined as number of live births per 1,000 women per year.
+
+### Results
+Our replication confirms the primary result of Brown et al. (2020). We found that highly restrictive legislation is associated with 0.814 fewer abortions per 1,000 women without adjusting for distance to providers, and 0.649 fewer abortions per 1,000 women when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, -0.92 to -0.04) and -0.44 (95% CI, -0.85 to -0.03), but our estimates were well within their reported 95% confidence intervals. 
+
+### Conclusions and Relevance
+
+## Introduction
+
+In this paper we replicate and extend an analysis published in JAMA Network Open by Benjamin P. Brown, MD, MS; Luciana E. Hebert, PhD; Melissa Gilliam, MD, MPH;  and Robert Kaestner, PhD, entitled "Association of Highly Restrictive State Abortion Policies With Abortion Rates, 2000-2014."  Brown et al. use a binary classification of state legislative climates on abortion as either "highly restrictive" or not, and they assess the association with abortion rates using propensity weighted linear difference in differences models, based on longitudinal data from 18 states.
+
+We first reproduce the analysis of Brown et al. using data from the same 18 states.  The data set from the Brown et al. article was not made public, and due to limitations of publicly available data, we have narrowed the scope of our replication to analyzing a single year. Specifically we analyzed data from 2010, primarily because this was the year within the original paper's time range for which we had the most detailed information on state legislation restricting abortions. Limitations of Brown et al.'s research included a lack of data on abortion rates in multiple states and a seemingly arbitrary classificaton of low vs. high legislative abortion restrictions. In order to improve the reliability and generalizability of their results, we chose to expand their analysis by using data from all 50 states, by using a more flexible integer variable for the extent of abortion restriction legislation in order, and by incorporating percentage of college graduates in the propensity score calculation. 
+
+The original study addresses the immediate, intended consequences of the restrictive abortion legislation.  In our paper, we extend the analysis to include associations of restrictive abortion legislation with fetal mortality, infant mortality, birth rate and fertility rate.  Restricted access to abortion has been linked to adverse outcomes for mothers and children, including pre-term birth and low birth weight (Redd et al., 2021), infant mortality rates (Edwards, 2019), and maternal mortality (Stevenson, 2021).  However, the effects of abortion legislation on these health outcomes are less well understood than the direct effect on number of abortions.  The key findings of a meta-analysis on the effects of targeted restrictions on abortion providers (TRAP) were that "Certain TRAP laws may be associated with a decrease in state-level abortion rates" and "Additional research is required to better understand the impact of these laws on women’s health outcomes." (Austin and Harper, 2017)  We attempt to address this needd in the existing literature by adapting the methodology of Brown et al. to quantify the health impacts of restrictive abortion legislation.  We also measure the association of these laws on birth rates, as restrictions on abortion have in some cases been promoted as an antedote to declining birth rates, recently in eastern Europe (Nikolova, 2020). Findings regarding whether restrictions on abortion actually increase birth rates, even if they decrease abortion rates, would therefore have important policy implications.
+
+
+## Study Design
+
+In our replication, we used propensity weighted linear models to assess the association of restrictive abortion legislation and abortion rates, using data from the same set of 18 states as Brown et al. (see Table 1).  We used propensity weighting to account for differences between those states and the other 32 states based on the same set of county level covariates as Brown et al.: number of women, percentages of population by race, median household income, and percentage of voters who voted for the Democratic presidential candidate in 2008 (the most recent presidential election in 2010). We fit linear models with and without distances to abortion providers and an interaction term between those distances and restrictive legislation as well as linear models with distance to abortion providers as the outcome to assess the relationship between restrictive legislation and acess to care.
+
+## Participants, Variables and Data Sources
+
+We used abortion count data compiled by Wm. Robert Johnston, available at www.johnstonsarchive.net/policy/abortion.  Abortion rates were calculated as number of abortions per female population. At least partial data was available for all 18 of the states included in the analysis by Brown et al., and for most of those states there was data for more than 80% of the counties (see Table 1).  The percentages of counties reporting were similar to the percentages reporting in Brown et al. (see their Table 1).
+
+For assessment of state legislation restricting abortion, we used data from the Guttmacher Institute, which identified states with laws of the same four types used by Brown et al.: gestational age restrictions, TRAP laws, requirements for patients to make at least two trips to a clinic, and mandated parental involvement for patients who are minors. Following Brown et al.'s methodology, we classified states as "highly restrictive" if they had 3 or 4 of these types of laws. 
+
+We estimated distances to providers as the straight-line distances from the population centroids of counties of residence (courtesy of the United States Census Bureau) to the location of the nearest abortion clinic (courtesy of Safe Place Project).
+
+For the extension, data on state-level maternal, fetal and infant mortality rates as well as birth and fertility rates from the year 2010 were retrieved from the Centers for Disease Control and Prevention (CDC) WONDER Online Database. State-level rates were used as opposed to county-level rates because more than 80% of these county-level rates were either suppressed or missing to maintain anonymity. 
+
+
+## Results
+
+### Replication using data from 18 states
+
+The distribution of propensity scores for counties in states included in the analysis was similar to that for counties in states not included (see Figure 1).  This suggests that the 18 states included in the analysis are not exceptionally different from those not included (in terms the demographic covariates listed above), and accordingly we expect the propensity weights to accurately adjust for the differences.
+
+Tables 3 and 4 show the main results from our replication.  Without adjusting for distances to providers, we found that highly restrictive legislation was associated with a fewer abortions at a rate of -0.814 per 1,000 women without adjusting for distance to providers, and -0.649 when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, -0.92 to -0.04) and -0.44 (95% CI, -0.85 to -0.03), but our estimates were well within their reported 95% confidence intervals (see Brown et al. Table 3).  This corroborates the main result of Brown et al. despite the use of completely different data sources.
+
+We did observe a decrease in abortion rates based on estimated distances to abortion providers.  This decrease was statistically significant, but not practically significant at -3.4 x 10^-6 abortions per 1,000 women (see Table 4), compared to -0.02 in the analysis by Brown et al.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #load packages
@@ -350,6 +403,8 @@ countydem$maternaldeathrate <- na_if(countydem$maternaldeathrate, "Missing")
 
 ```
 ## Expansion to Data from All States
+
+When we repeated the analysis using all data available in all 50 states, we measured smaller but still significant reduction in the abortion rate, with associations of -0.216 and -0.361 without and with adjustment for distance to providers.  These again fall well within the 95% confidence interval of the estimates of Brown et al., further confirming their primary result, and suggesting that the propensity score weighting from the 18 states in their analysis to the entire country may be leading to an over-estimate of the effects.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #### recode restriction level and include all counties with abortion data in analysis ####
 countyanalysis <- function(varname) {
@@ -763,8 +818,33 @@ table_dist
 ```
 
 \newpage
+## Limitations
 
-## Sources 
+The original analysis and our replication are limited by the use of data from only 18 states.  We address this shortcoming in our extension below.  The original analysis and our own are limited by the calculating abortion rates using total number of women, rather than number of women of reproductive age.
+
+
+
+
+## Sources
+
+Austin N, Harper S. "Assessing the impact of TRAP laws on abortion and women’s health in the USA: a systematic review" BMJ Sex Reprod Health, 2018; 44:128–134.
+
+Edwards, E. "States pushing abortion bans have higher infant mortality rates". NBC News Website, 2019. Available at https://www.nbcnews.com/health/womens-health/states-pushing-abortion-bans-have-higher-infant-mortality-rates-n1008481. Accessed 12/14/21.
+
+Centers for Disease Control and Prevention, National Center for Health Statistics. Compressed Mortality File 1999-2016 on CDC WONDER Online Database, released June 2017. Data are from the Compressed Mortality File 1999-2016 Series 20 No. 2U, 2016, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed at http://wonder.cdc.gov/cmf-icd10.html on Dec 15, 2021 9:43:02 PM
+
+Nikolova, M. "When will conservatives learn that banning abortion does little to address demographic decline?" Emerging Europe website, 2020.  Available at https://emerging-europe.com/after-hours/when-will-conservatives-learn-that-banning-abortion-does-little-to-address-demographic-decline/. Accessed 12/14/21.
+
+Redd, Sara K.; Stidham Hall, Kelli; Aswani, Monica S.; Sen, Bisakha; Wingate, Martha; Rice, Whitney S.  "Variation in Restrictive Abortion Policies and Adverse Birth Outcomes in the United States from 2005 to 2015" Women's Health Issues, 2021 1-11.
+
+Stevenson, A. J. "The Pregnancy-Related Mortality Impact of a Total Abortion Ban in the United States: A Research Note on Increased
+Deaths Due to Remaining Pregnant" Demography (2021) 58(6):2019–2028.
+
+United States Department of Health and Human Services (US DHHS), Centers for Disease Control and Prevention (CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics (DVS). Fetal Deaths 2005-2019, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program, on CDC WONDER Online Database. Accessed at http://wonder.cdc.gov/fetal-deaths-current.html on Dec 15, 2021 9:45:49 PM
+
+United States Department of Health and Human Services (US DHHS), Centers of Disease Control and Prevention (CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics (DVS). Linked Birth / Infant Death Records 2007-2018, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program, on CDC WONDER On-line Database. Accessed at http://wonder.cdc.gov/lbd-current.html on Dec 15, 2021 8:57:30 PM
+
+United States Department of Health and Human Services (US DHHS), Centers for Disease Control and Prevention (CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics, Natality public-use data 2007-2020, on CDC WONDER Online Database, October 2021. Accessed at http://wonder.cdc.gov/natality-current.html on Dec 15, 2021 9:45:00 PM
 
 Data on the county population centroids came from the United States Census Bureau.
 Available at https://www.census.gov/geographies/reference-files/time-series/geo/centers-population.html Accessed 12/11/21.

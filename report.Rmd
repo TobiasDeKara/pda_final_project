@@ -12,7 +12,7 @@ To replicate the analysis of the association of abortion restrictions on abortio
 This study examined all publicly available county-level abortion rates in addition to state-level maternal, fetal and infant mortality rates as well as birth and fertility rates from the year 2010. The association between these rates, abortion legislation, and distance to nearest provider were evaluated using propensity score adjusted linear regression.
 
 ### Exposures
-In the replication, the exposures are a highly restrictive abortion legislation as defined by 3 or more out of 4 common types of abortion restrictions and distance to facilities performing abortions (in miles).  For the extension, the exposures are the number of types of abortion legislation and the distance to facilities performing abortion (in miles). 
+In the replication, the exposures are a state-level highly restrictive abortion legislation as defined by 3 or more out of 4 common types of abortion restrictions and county-level distance to facilities performing abortions (in miles).  For the extension, the exposures are the number of types of abortion legislation and the distance to facilities performing abortion (in miles). 
 
 ### Main Outcomes and Measures
 In the replication and extension, the main outcomes and measures were county level abortion rates defined as abortions per 1,000 women per year.  In the extension, the main outcomes and measures were state level fetal mortality rates defined as fetal deaths per 1,000 total deaths, infant mortality rates defined as infant deaths within the first year of life per 1,000 births, maternal mortality rates defined as deaths due to maternal diseases per 1,000 total deaths, birth rates defined as number of live births per 1,000 people, and fertility rates defined as number of live births per 1,000 women per year.
@@ -45,12 +45,13 @@ For assessment of state legislation restricting abortion, we used data from the 
 
 We estimated distances to providers as the straight-line distances from the population centroids of counties of residence (courtesy of the United States Census Bureau) to the location of the nearest abortion clinic (courtesy of Safe Place Project).
 
-For the extension, data on state-level maternal, fetal and infant mortality rates as well as birth and fertility rates from the year 2010 were retrieved from the Centers for Disease Control and Prevention (CDC) WONDER Online Database.
+For the extension, data on state-level maternal, fetal and infant mortality rates as well as birth and fertility rates from the year 2010 were retrieved from the Centers for Disease Control and Prevention (CDC) WONDER Online Database. State-level rates were used as opposed to county-level rates because more than 80% of these county-level rates were either suppressed or missing to maintain anonymity. 
 
 
 ## Results
 
 ### Replication using data from 18 states
+
 The distribution of propensity scores for counties in states included in the analysis was similar to that for counties in states not included (see Figure 1).  This suggests that the 18 states included in the analysis are not exceptionally different from those not included (in terms the demographic covariates listed above), and accordingly we expect the propensity weights to accurately adjust for the differences.
 
 Tables 3 and 4 show the main results from our replication.  Without adjusting for distances to providers, we found that highly restrictive legislation was associated with a fewer abortions at a rate of -0.814 per 1,000 women without adjusting for distance to providers, and -0.649 when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, −0.92 to −0.04) and -0.44 (95% CI, −0.85 to −0.03), but our estimates were well within their reported 95% confidence intervals (see Brown et al. Table 3).  This corroborates the main result of Brown et al. despite the use of completely different data sources.
@@ -58,6 +59,7 @@ Tables 3 and 4 show the main results from our replication.  Without adjusting fo
 We did observe a decrease in abortion rates based on estimated distances to abortion providers.  This decrease was statistically significant, but not practically significant at -3.4 x 10^-6 abortions per 1,000 women (see Table 4), compared to -0.02 in the analysis by Brown et al.
 
 ### Expansion to data from all states
+
 When we repeated the analysis using all data available in all 50 states, we measured smaller but still significant reduction in the abortion rate, with associations of -0.216 and -0.361 without and with adjustment for distance to providers.  These again fall well within the 95% confidence interval of the estimates of Brown et al., further confirming their primary result, and suggesting that the propensity score weighting from the 18 states in their analysis to the entire country may be leading to an over-estimate of the effects.
 
 ### Extension to Mortality and Natality Rates
@@ -71,9 +73,12 @@ The original analysis and our replication are limited by the use of data from on
 
 
 ## Sources
+
 Austin N, Harper S. "Assessing the impact of TRAP laws on abortion and women’s health in the USA: a systematic review" BMJ Sex Reprod Health, 2018; 44:128–134.
 
 Edwards, E. "States pushing abortion bans have higher infant mortality rates". NBC News Website, 2019. Available at https://www.nbcnews.com/health/womens-health/states-pushing-abortion-bans-have-higher-infant-mortality-rates-n1008481. Accessed 12/14/21.
+
+Centers for Disease Control and Prevention, National Center for Health Statistics. Compressed Mortality File 1999-2016 on CDC WONDER Online Database, released June 2017. Data are from the Compressed Mortality File 1999-2016 Series 20 No. 2U, 2016, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed at http://wonder.cdc.gov/cmf-icd10.html on Dec 15, 2021 9:43:02 PM
 
 Nikolova, M. "When will conservatives learn that banning abortion does little to address demographic decline?" Emerging Europe website, 2020.  Available at https://emerging-europe.com/after-hours/when-will-conservatives-learn-that-banning-abortion-does-little-to-address-demographic-decline/. Accessed 12/14/21.
 
@@ -82,10 +87,9 @@ Redd, Sara K.; Stidham Hall, Kelli; Aswani, Monica S.; Sen, Bisakha; Wingate, Ma
 Stevenson, A. J. "The Pregnancy-Related Mortality Impact of a Total Abortion Ban in the United States: A Research Note on Increased
 Deaths Due to Remaining Pregnant" Demography (2021) 58(6):2019–2028.
 
-Centers for Disease Control and Prevention, National Center for Health Statistics. Compressed Mortality File 1999-2016 on CDC WONDER Online Database, released June 2017. Data are from the Compressed Mortality File 1999-2016 Series 20 No. 2U, 2016, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed at http://wonder.cdc.gov/cmf-icd10.html on Dec 15, 2021 9:43:02 PM
+United States Department of Health and Human Services (US DHHS), Centers for Disease Control and Prevention (CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics (DVS). Fetal Deaths 2005-2019, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program, on CDC WONDER Online Database. Accessed at http://wonder.cdc.gov/fetal-deaths-current.html on Dec 15, 2021 9:45:49 PM
 
 United States Department of Health and Human Services (US DHHS), Centers of Disease Control and Prevention (CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics (DVS). Linked Birth / Infant Death Records 2007-2018, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program, on CDC WONDER On-line Database. Accessed at http://wonder.cdc.gov/lbd-current.html on Dec 15, 2021 8:57:30 PM
 
 United States Department of Health and Human Services (US DHHS), Centers for Disease Control and Prevention (CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics, Natality public-use data 2007-2020, on CDC WONDER Online Database, October 2021. Accessed at http://wonder.cdc.gov/natality-current.html on Dec 15, 2021 9:45:00 PM
 
-United States Department of Health and Human Services (US DHHS), Centers for Disease Control and Prevention (CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics (DVS). Fetal Deaths 2005-2019, as compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program, on CDC WONDER Online Database. Accessed at http://wonder.cdc.gov/fetal-deaths-current.html on Dec 15, 2021 9:45:49 PM

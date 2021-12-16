@@ -50,7 +50,9 @@ We estimated distances to providers as the straight-line distances from the popu
 
 The distribution of propensity scores for counties in states included in the analysis was similar to that for counties in states not included (see Figure 1).  This suggests that the 18 states included in the analysis are not exceptionally different from those not included (in terms the demographic covariates listed above), and accordingly we expect the propensity weights to accurately adjust for the differences.
 
-Tables 3 and 4 show the main results from our replication.  Without adjusting for distances to providers, we found that highly restrictive legislation was associated with a  reduction in abortions of 0.814 per 1,000 women, and that effect was reduced to 0.649 when adjusting for distances to providers.  These effects were roughly twice as large as the effects calculated by Brown et al., nevertheless our estimates were within their reported 95% confidence intervals (see Brown et al. Table 3).
+Tables 3 and 4 show the main results from our replication.  Without adjusting for distances to providers, we found that highly restrictive legislation was associated with a fewer abortions at a rate of -0.814 per 1,000 women without adjusting for distance to providers, and -0.649 when adjusting for distances to providers.  These effects are somewhat larger in magnitude than the effects calculated by Brown et al., which were -0.48 (95% CI, −0.92 to −0.04) and -0.44 (95% CI, −0.85 to −0.03), but our estimates were well within their reported 95% confidence intervals (see Brown et al. Table 3).  This corroborates the main result of Brown et al. despite the use of completely different data sources.
+
+
 
 ## Limitations
 

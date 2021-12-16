@@ -504,9 +504,13 @@ all_state_model_no_dist <- returns[[1]]
 all_state_model_dist <- returns[[2]]
 
 # Model Summaries (Note coefficients are per 1000 women)
+# Model Summaries (Note coefficients are per 1000 women)
 table_5 <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = all_state_model_no_dist$coefficients[2]*1000,
-                  "p-value" = c('< 0.001')) %>% 
+                  "95% CI lower" = all_state_model_no_dist$coefficients[2,1]*1000-all_state_model_no_dist$coefficients[2,2]*1000*1.96,
+                  "95% CI upper" = all_state_model_no_dist$coefficients[2,1]*1000+all_state_model_no_dist$coefficients[2,2]*1000*1.96,
+                  "p-value" = c('< 0.001')
+                  ) %>% 
   kbl(caption = "All States Data: Change in Abortions per 1000 Women in Model without Distances", 
           digits = 3) %>%
   kable_styling(latex_options = 'hold_position')
@@ -518,6 +522,12 @@ table_6 <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance
                   Beta = c(all_state_model_dist$coefficients[2]*1000, 
                            all_state_model_dist$coefficients[3]*1000,
                            all_state_model_dist$coefficients[4]*1000),
+                  "95% CI lower" = c(all_state_model_dist$coefficients[2,1]*1000-all_state_model_dist$coefficients[2,2]*1000*1.96,
+                                     all_state_model_dist$coefficients[3,1]*1000-all_state_model_dist$coefficients[3,2]*1000*1.96,
+                                     all_state_model_dist$coefficients[4,1]*1000-all_state_model_dist$coefficients[4,2]*1000*1.96),
+                  "95% CI upper" = c(all_state_model_dist$coefficients[2,1]*1000+all_state_model_dist$coefficients[2,2]*1000*1.96,
+                                     all_state_model_dist$coefficients[3,1]*1000+all_state_model_dist$coefficients[3,2]*1000*1.96,
+                                     all_state_model_dist$coefficients[4,1]*1000+all_state_model_dist$coefficients[4,2]*1000*1.96),
                   "p-value" = c('< 0.001', '< 0.001', p)) %>%
   kbl(caption = "All States Data: Change in Abortions per 1000 Women in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')

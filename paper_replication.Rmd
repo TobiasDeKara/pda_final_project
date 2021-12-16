@@ -582,7 +582,7 @@ model_dist <- returns[[2]]
 p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
-                  Beta = model_no_dist$coefficients[2],
+                  Beta = model_no_dist$coefficients[2]*1000,
                   "p-value" = c(p)) %>% 
   kbl(caption = "State Data: Abortion Rate per 1,000 Women, in Model without Distances", 
           digits = 4) %>%
@@ -595,9 +595,9 @@ p_3 <- model_dist$coefficients[4,4] %>% round(3)
 
 table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
                                      "Distance/Restriction Interaction"),
-                  Beta = c(model_dist$coefficients[2], 
-                           model_dist$coefficients[3],
-                           model_dist$coefficients[4]),
+                  Beta = c(model_dist$coefficients[2]*1000, 
+                           model_dist$coefficients[3]*1000,
+                           model_dist$coefficients[4]*1000),
                   "p-value" = c(p_1, p_2, p_3)) %>%
   kbl(caption = "State Data: Change in Abortion Rate per 1,000 Women in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')

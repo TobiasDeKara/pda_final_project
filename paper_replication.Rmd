@@ -584,7 +584,7 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
-  kbl(caption = "State Data: Abortion Rate per 1000 Women in Model without Distances", 
+  kbl(caption = "State Data: Abortion Rate per 1,000 Women, in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_no_dist
@@ -599,7 +599,7 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Abortion Rate 1000 Women in Model with Distances") %>%
+  kbl(caption = "State Data: Change in Abortion Rate per 1,000 Women in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
 table_dist
 ```
@@ -616,7 +616,7 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 table_9 <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
-  kbl(caption = "State Data: Change in Birth Rate per 1000 People in Model without Distances", 
+  kbl(caption = "State Data: Change in Birth Rate per 1,000 People, in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_9
@@ -631,7 +631,7 @@ table_10 <- tibble(Characteristic = c("Count of Types of Restrictions", "Distanc
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Birth Rate per 1000 People in Model with Distances") %>%
+  kbl(caption = "State Data: Change in Birth Rate per 1,000 People, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
 table_10
 ```
@@ -648,7 +648,7 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
-  kbl(caption = "State Data: Change in Fertility Rate per 1000 Women in Model without Distances", 
+  kbl(caption = "State Data: Change in Fertility Rate per 1,000 Women, in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_no_dist
@@ -663,7 +663,7 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Fertility Rate per 1000 Women in Model with Distances") %>%
+  kbl(caption = "State Data: Change in Fertility Rate per 1,000 Women, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
 table_dist
 ```
@@ -679,7 +679,7 @@ model_dist <- returns[[2]]
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = '< 0.001') %>% 
-  kbl(caption = "State Data: Change in Infant Death Rate per 1000 **** in Model without Distances", 
+  kbl(caption = "State Data: Change in Infant Deaths per 1,000 Total Deaths, in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_no_dist
@@ -694,7 +694,7 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c('< 0.001', p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Infant Death Rate per 1000 **** in Model with Distances") %>%
+  kbl(caption = "State Data: Change in Infant Deaths per 1,000 Total Deaths, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
 table_dist
 ```
@@ -711,7 +711,7 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = p) %>% 
-  kbl(caption = "State Data: Change in Percent Fetal Deaths in Model without Distances", 
+  kbl(caption = "State Data: Change in Fetal Deaths per 1,000 Total Deaths, in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_no_dist
@@ -726,7 +726,7 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Percent Fetal Deaths in Model with Distances") %>%
+  kbl(caption = "State Data: Change in Fetal Deaths per 1,000 Total Deaths, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
 table_dist
 ```
@@ -742,7 +742,7 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = p) %>% 
-  kbl(caption = "State Data: Change in Maternal Deaths per ***** in Model without Distances", 
+  kbl(caption = "State Data: Change in Maternal Deaths per 1,000 Total Deaths, in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_no_dist
@@ -757,7 +757,7 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
                   "p-value" = c(p_1, p_2, p_3)) %>%
-  kbl(caption = "State Data: Change in Percent Maternal Deaths per **** in Model with Distances") %>%
+  kbl(caption = "State Data: Change in Maternal Deaths per 1,000 Total Deaths, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
 table_dist
 ```

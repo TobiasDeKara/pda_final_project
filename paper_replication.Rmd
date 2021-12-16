@@ -478,114 +478,6 @@ countydem$Fertility.Rate <- as.numeric(countydem$Fertility.Rate)
 ```
 
 
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-#### Large County Function
-
-largecountyanalysis <- function(varname) {
-  largecountydem <- countydem %>% filter(Total >= 250000)
-  largecountydem <- largecountydem %>% mutate(hasdata = case_when(is.na(largecountydem[[varname]]) ~ 0, 
-                                                              !(is.na(largecountydem[[varname]])) ~ 1))
-  largecountydemanalysis <- largecountydem %>% filter(hasdata == 1)
-  summarytable <- countydem %>% group_by(state) %>% summarize(totalcounties = n())
-  usedcounties <- aggregate(largecountydem[[varname]] ~ state, data = largecountydem, function(x) {sum(!(is.na(x)))}, na.action = NULL)
-  summarytable <- left_join(summarytable, usedcounties, by = "state")
-  # print(summarytable %>% mutate(percent = summarytable[, 3]/totalcounties) %>% kbl(col.names = c("State", "Total Counties", "Counties with Data in 2010", "Percent"), caption = "Table 1. Number of Counties with Data Included in Analysis by State") %>% kable_styling())
-  
-  largecountydem$hasdatalabel <- factor(largecountydem$hasdata, levels = c(1, 0), labels = c("Counties in States With Data", "Counties in States Without Data"))
-
-  label(largecountydem$Women) = "Women"
-  label(largecountydem$White.pct) = "White"
-  label(largecountydem$Black.pct) = "Black"
-  label(largecountydem$Native.American.pct) = "Native American"
-  label(largecountydem$Asian.pct) = "Asian"
-  label(largecountydem$Hispanic.pct) = "Hispanic"
-  label(largecountydem$Median.Income) = "Median Income"
-  label(largecountydem$College.Grad.pct) = "College Graduates"
-  label(largecountydem$percentdem2008) = "Voting for the Democratic candidate in the most recent presidential election"
-
-  units(largecountydem$Women) = "No."
-  units(largecountydem$White.pct) = "%"
-  units(largecountydem$Black.pct) = "%"
-  units(largecountydem$Native.American.pct) = "%"
-  units(largecountydem$Asian.pct) = "%"
-  units(largecountydem$Hispanic.pct) = "%"
-  units(largecountydem$Median.Income) = "$"
-  units(largecountydem$College.Grad.pct) = "%"
-  units(largecountydem$percentdem2008) = "%"
-  
-
-  # print(table1(~ Women + White.pct + Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + College.Grad.pct + percentdem2008 | hasdatalabel, 
-  #      data = largecountydem,
-  #     ))
-  
-  #calculate propensity scores
-  #include education this time
-  propensitywts <- glm(hasdata ~ Black.pct + Native.American.pct + Asian.pct + Hispanic.pct + Median.Income + Women + percentdem2008 + College.Grad.pct, data=largecountydem, family=binomial())
-
-  p.score <- predict(propensitywts, largecountydem, type = "response")
-  df <- largecountydem
-  df$ps <- p.score
-  
-  #plot of distribution of propensity scores 
-  p1 <- ggplot(df, aes(x = ps, group = hasdatalabel)) + geom_density(aes(fill = hasdatalabel), alpha = 0.2) +
-  xlab('Probability of Being in the Analysis') +
-  ggtitle('Propensity Score Distribution by Group') +
-  scale_fill_discrete('') +
-  theme(legend.position = 'bottom', legend.direction = 'vertical') +
-  ylab("Density")
-  # print(p1)
-  
-  #run model
-  largecountydemanalysis <- df %>% filter(hasdata == 1)
-
-  model_no_dist <- lm(largecountydemanalysis[[varname]] ~ totalrestrict, data = largecountydemanalysis, weights = ps)
-  
-  model_dist <- lm(largecountydemanalysis[[varname]] ~ totalrestrict + distancetoprovider + totalrestrict*distancetoprovider, data = largecountydemanalysis, weights = ps)
-
-  return(list(summary(model_no_dist), summary(model_dist)))
-}
-
-returns <- largecountyanalysis("infantdeathrate")
-large_county_no_dist <- returns[[1]]
-large_county_dist <- returns[[2]]
-
-# Model Summaries
-table_7 <- tibble(Characteristic = "Count of Types of Restrictions",
-                  Beta = large_county_no_dist$coefficients[2],
-                  "p-value" = c('< 0.001')) %>% 
-  kbl(caption = "Large County Data: Change in Infant Death Rate per 1000 **** in Model without Distances", 
-          digits = 4) %>%
-  kable_styling(latex_options = 'hold_position')
-table_7
-
-p_2 <- large_county_dist$coefficients[3,4] %>% round(3)
-p_3 <- large_county_dist$coefficients[4,4] %>% round(3)
-
-table_8 <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
-                                     "Distance/Restriction Interaction"),
-                  Beta = c(large_county_dist$coefficients[2], 
-                           large_county_dist$coefficients[3],
-                           large_county_dist$coefficients[4]),
-                  "p-value" = c('< 0.001', p_2, p_3)) %>%
-  kbl(caption = "Large County Data: Change in Infant Death Rate per 1000 **** in Model with Distances") %>%
-  kable_styling(latex_options = 'hold_position')
-table_8
-
-
-```
-
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# largecountyanalysis("Birth.Rate")
-```
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# largecountyanalysis("Fertility.Rate")
-```
-
-
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #add in state level maternaldeathrate, infantdeathrate, birthrate, and fertilityrate data ####
 
@@ -683,7 +575,33 @@ stateanalysis <- function(varname) {
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# returns <- stateanalysis("AvgAbortionRate2010")
+returns <- stateanalysis("AvgAbortionRate2010")
+model_no_dist <- returns[[1]]
+model_dist <- returns[[2]]
+
+p <- model_no_dist$coefficients[2,4] %>% round(3)
+# Model Summaries
+table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
+                  Beta = model_no_dist$coefficients[2],
+                  "p-value" = c(p)) %>% 
+  kbl(caption = "State Data: Abortion Rate per 1000 Women in Model without Distances", 
+          digits = 4) %>%
+  kable_styling(latex_options = 'hold_position')
+table_no_dist
+
+p_1 <- model_dist$coefficients[2,4] %>% round(3)
+p_2 <- model_dist$coefficients[3,4] %>% round(3)
+p_3 <- model_dist$coefficients[4,4] %>% round(3)
+
+table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Distance to Provider",
+                                     "Distance/Restriction Interaction"),
+                  Beta = c(model_dist$coefficients[2], 
+                           model_dist$coefficients[3],
+                           model_dist$coefficients[4]),
+                  "p-value" = c(p_1, p_2, p_3)) %>%
+  kbl(caption = "State Data: Change in Abortion Rate 1000 Women in Model with Distances") %>%
+  kable_styling(latex_options = 'hold_position')
+table_dist
 ```
 
 
@@ -698,7 +616,7 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 table_9 <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
-  kbl(caption = "State Data: Change in Birth Rate Rate per 1000 People in Model without Distances", 
+  kbl(caption = "State Data: Change in Birth Rate per 1000 People in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_9
@@ -730,7 +648,7 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = c(p)) %>% 
-  kbl(caption = "State Data: Change in Fertility Rate Rate per 1000 Women in Model without Distances", 
+  kbl(caption = "State Data: Change in Fertility Rate per 1000 Women in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_no_dist
@@ -761,7 +679,7 @@ model_dist <- returns[[2]]
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
                   "p-value" = '< 0.001') %>% 
-  kbl(caption = "State Data: Change in Infant Death Rate Rate per 1000 **** in Model without Distances", 
+  kbl(caption = "State Data: Change in Infant Death Rate per 1000 **** in Model without Distances", 
           digits = 4) %>%
   kable_styling(latex_options = 'hold_position')
 table_no_dist

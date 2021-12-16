@@ -537,7 +537,7 @@ all_state_table <- returns[[3]]
 # all_state_table # move to appendix?
 ```
 
-## Extension to Infant Death Rate, Birth Rate, and Fertility Rate
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ###further clean up maternaldeathrate, infantdeathrate, birthrate, and fertilityrate data ####
 countydem$maternaldeathrate <- gsub(countydem$maternaldeathrate, pattern = "[()]", replacement = "")
@@ -695,7 +695,7 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
   kable_styling(latex_options = 'hold_position')
 table_dist
 ```
-
+## Extension to Infant Death Rate, Birth Rate, and Fertility Rate
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ### State Birth Rate

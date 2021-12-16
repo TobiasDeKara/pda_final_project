@@ -2,6 +2,27 @@
 title: "Report"
 output: pdf_document
 ---
+## Abstract
+### Importance
+In the United States, many state legislatures have enacted a range of laws limiting access to abortions.  These laws limit access to healthcare.
+
+### Objectives
+To replicate the analysis of the association of abortion restrictions on abortion rates conducted by Brown et al. (2020), to expand the analysis to a wider data set, and to extend the analysis to associations with maternal, fetal and infant mortality rates, as well as birth and fertility rates.
+
+### Design and Particpants
+Propensity score adjusted linear regression of county level data on abortion rates, and state level data on mortality and natality rates, using data from 2010.
+
+### Exposures
+In the replication, the exposure is a highly restrictive abortion legislation as defined by 3 out 4 common types of abortion restrictions.  For the extension, the exposure is the number of types of abortion legislation.
+
+### Main Outcomes and Measures
+In the replication and extension, county level abortion rates defined as abortions per 1,000 women per year.  In the extension, state level fetal mortality rates ****, infant mortality rates ****, maternal mortality rates ****, birth rates defined as number of live births per 1,000 people, and fertility rates defined as number of live births per 1,000 women per year.
+
+### Results
+
+
+### Conclusions and Relevance
+
 
 
 ## Introduction

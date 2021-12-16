@@ -707,8 +707,8 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
 table_9 <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
-                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1000*1.96,
-                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1000*1.96,
+                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1.96,
+                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1.96,
                   "p-value" = c(p)) %>% 
   kbl(caption = "State Data: Change in Birth Rate per 1,000 People, in Model without Distances", 
           digits = 4) %>%
@@ -724,12 +724,12 @@ table_10 <- tibble(Characteristic = c("Count of Types of Restrictions", "Distanc
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
-                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1000*1.96),
-                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1000*1.96),
+                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1.96),
+                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1.96),
                   "p-value" = c(p_1, p_2, p_3)) %>%
   kbl(caption = "State Data: Change in Birth Rate per 1,000 People, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
@@ -747,8 +747,8 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
-                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1000*1.96,
-                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1000*1.96,
+                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1.96,
+                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1.96,
                   "p-value" = c(p)) %>% 
   kbl(caption = "State Data: Change in Fertility Rate per 1,000 Women, in Model without Distances", 
           digits = 4) %>%
@@ -764,12 +764,12 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
-                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1000*1.96),
-                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1000*1.96),
+                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1.96),
+                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1.96),
                   "p-value" = c(p_1, p_2, p_3)) %>%
   kbl(caption = "State Data: Change in Fertility Rate per 1,000 Women, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
@@ -786,8 +786,8 @@ model_dist <- returns[[2]]
 # Model Summaries
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
-                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1000*1.96,
-                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1000*1.96,
+                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1.96,
+                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1.96,
                   "p-value" = '< 0.001') %>% 
   kbl(caption = "State Data: Change in Infant Deaths per 1,000 Total Deaths, in Model without Distances", 
           digits = 4) %>%
@@ -803,12 +803,12 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
-                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1000*1.96),
-                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1000*1.96),
+                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1.96),
+                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1.96),
                   "p-value" = c('< 0.001', p_2, p_3)) %>%
   kbl(caption = "State Data: Change in Infant Deaths per 1,000 Total Deaths, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
@@ -826,8 +826,8 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
-                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1000*1.96,
-                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1000*1.96,
+                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1.96,
+                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1.96,
                   "p-value" = p) %>% 
   kbl(caption = "State Data: Change in Fetal Deaths per 1,000 Total Deaths, in Model without Distances", 
           digits = 4) %>%
@@ -843,12 +843,12 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
-                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1000*1.96),
-                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1000*1.96),
+                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1.96),
+                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1.96),
                   "p-value" = c(p_1, p_2, p_3)) %>%
   kbl(caption = "State Data: Change in Fetal Deaths per 1,000 Total Deaths, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
@@ -865,8 +865,8 @@ p <- model_no_dist$coefficients[2,4] %>% round(3)
 # Model Summaries
 table_no_dist <- tibble(Characteristic = "Count of Types of Restrictions",
                   Beta = model_no_dist$coefficients[2],
-                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1000*1.96,
-                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1000*1.96,
+                  "95% CI lower" = model_no_dist$coefficients[2,1]*1000-model_no_dist$coefficients[2,2]*1.96,
+                  "95% CI upper" = model_no_dist$coefficients[2,1]*1000+model_no_dist$coefficients[2,2]*1.96,
                   "p-value" = p) %>% 
   kbl(caption = "State Data: Change in Maternal Deaths per 1,000 Total Deaths, in Model without Distances", 
           digits = 4) %>%
@@ -882,12 +882,12 @@ table_dist <- tibble(Characteristic = c("Count of Types of Restrictions", "Dista
                   Beta = c(model_dist$coefficients[2], 
                            model_dist$coefficients[3],
                            model_dist$coefficients[4]),
-                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1000*1.96),
-                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1000*1.96,
-                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1000*1.96,
-                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1000*1.96),
+                  "95% CI lower" = c(model_dist$coefficients[2,1]*1000-model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000-model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000-model_dist$coefficients[4,2]*1.96),
+                  "95% CI upper" = c(model_dist$coefficients[2,1]*1000+model_dist$coefficients[2,2]*1.96,
+                                     model_dist$coefficients[3,1]*1000+model_dist$coefficients[3,2]*1.96,
+                                     model_dist$coefficients[4,1]*1000+model_dist$coefficients[4,2]*1.96),
                   "p-value" = c(p_1, p_2, p_3)) %>%
   kbl(caption = "State Data: Change in Maternal Deaths per 1,000 Total Deaths, in Model with Distances") %>%
   kable_styling(latex_options = 'hold_position')
